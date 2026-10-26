@@ -42,7 +42,6 @@ export function userLogin(req: Request, res: Response) {
     setAuthCookies(req, res, newToken, refreshToken());
     return res.status(200).json({
       message: "Login success.",
-      token: newToken,
     });
   } catch (error) {
     if (error instanceof HttpError) {
