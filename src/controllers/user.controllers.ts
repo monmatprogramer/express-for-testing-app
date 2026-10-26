@@ -36,8 +36,28 @@ export function userProfile(req: Request, res: Response) {
       .json({ error: "Missing or invalid authorization header" });
   }
   // Get token
-  const token: string = authHeader.split(" ").pop();
-  return res.status(200).json({
-    message: "Authorization",
+  const token: string | undefined = authHeader.split(" ").pop();
+  try {
+    //Validate on token first
+    if (!token || token.length === 0) {
+      return res.status(403).json({
+        message: "Forbidden",
+      });
+    }
+    const decoded = jwt.verify(token, env.jwt_secret, {
+      issuer: env.jwt_issuer,
+      audience: env.jwt_audience,
+    });
+
+    console.log("deconded:  ", decoded);
+    return res.status(200).json({
+      message: "Access granted!",
+      userId: decoded.sub,
+      role: decoded.role,
+      tokenClaims: decoded,
+    });
+  } catch (error) {}
+  return res.status(500).json({
+    message: "Profile error",
   });
 }
