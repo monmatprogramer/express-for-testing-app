@@ -21,4 +21,11 @@ export function signAccessToken(claims: AccessClaims): string {
     algorithm: "HS256",
   });
 }
-export function verifyAccessToken(token: string) {}
+export function verifyAccessToken(token: string) {
+  const decoded = jwt.verify(token, env.jwt_secret, {
+    issuer: env.jwt_issuer,
+    audience: env.jwt_audience,
+    algorithms: ["HS384", "HS256"],
+  });
+  return decoded;
+}

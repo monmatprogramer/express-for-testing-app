@@ -3,7 +3,11 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { env } from "../config/env";
 import { HttpError } from "../httpError";
 import { randomBytes, createHash } from "node:crypto";
-import { AccessClaims, signAccessToken } from "../modules/auth/tokens";
+import {
+  AccessClaims,
+  signAccessToken,
+  verifyAccessToken,
+} from "../modules/auth/tokens";
 
 export interface UserTokenPayload extends JwtPayload {
   userId?: number | string;
@@ -69,12 +73,7 @@ export function userProfile(req: Request, res: Response) {
         message: "Forbidden",
       });
     }
-    const decoded = jwt.verify(token, env.jwt_secret, {
-      issuer: env.jwt_issuer,
-      audience: env.jwt_audience,
-      algorithms: ["HS384", "HS256"],
-    });
-
+    const decoded = verifyAccessToken(token);
     if (typeof decoded === "string") {
       return res.status(401).json({
         message: "Invalid token payload",
