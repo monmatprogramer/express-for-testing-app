@@ -200,25 +200,24 @@ curl -X GET http://localhost:4000/api/v1/users/profile \
 
 ---
 
-## 📮 Testing with Postman
+## 📮 Testing with Postman (Local Mode / v3 YAML)
 
-This project comes pre-configured with a ready-to-use Postman Collection and Environment in the `postman/` directory:
-- **Collection**: `postman/collections/express_testing_api.postman_collection.json`
-- **Environment**: `postman/environments/development.postman_environment.json`
+This project is fully configured for **Postman Local Mode** using the new **v3 YAML format**:
+- **Collection (v3 YAML)**: `postman/collections/express-for-testing-api/`
+- **Environment**: `postman/environments/Local Development.environment.yaml`
 
-### Option 1: Using Postman in VS Code
-1. Install the official **Postman** extension for Visual Studio Code.
-2. Click the Postman icon on the activity bar.
-3. Postman automatically recognizes the workspace from `.postman/resources.yaml`.
-4. Select the **Local Development** environment and send your requests directly inside the editor.
+### Option 1: Postman Desktop App (Local Mode)
+1. In Postman Desktop, open or switch to this local workspace directory (`express-for-testing-app`).
+2. Postman will automatically detect the collection and environment with zero error messages.
+3. In the top-right environment picker, select **Local Development**.
+4. Send **User Login (Generates JWT)** — the test script automatically captures and sets `{{accessToken}}`.
+5. Send **Get User Profile (Protected)** — authenticated automatically!
 
-### Option 2: Using Postman Desktop App
-1. Open the Postman Desktop app.
-2. Click **Import** (top left).
-3. Select both `postman/collections/express_testing_api.postman_collection.json` and `postman/environments/development.postman_environment.json`.
-4. In the top-right environment dropdown, select **Local Development**.
-5. Run the **User Login** request — the included test script will automatically extract the JWT token and save it into your `{{accessToken}}` environment variable.
-6. Run the **Get User Profile** request without needing to copy-paste tokens!
+### Option 2: Postman CLI (Command Line)
+You can run automated tests directly using the Postman CLI:
+```bash
+postman collection run postman/collections/express-for-testing-api -e "postman/environments/Local Development.environment.yaml"
+```
 
 ---
 

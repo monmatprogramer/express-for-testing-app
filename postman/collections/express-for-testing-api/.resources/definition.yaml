@@ -1,0 +1,4 @@
+$kind: collection
+id: b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e
+name: Express For Testing API
+description: Postman collection for Express testing app featuring health checks and JWT-authenticated endpoints.

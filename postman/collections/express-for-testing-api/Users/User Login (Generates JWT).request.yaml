@@ -1,0 +1,29 @@
+$kind: http-request
+description: Authenticates user and saves JWT bearer token to the environment variable {{accessToken}}.
+url: "{{baseUrl}}/users/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "id": 101,
+      "username": "monmat",
+      "role": "admin"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("Extract and store JWT token", function () {
+          const response = pm.response.json();
+          pm.expect(response.token).to.be.a('string');
+          pm.environment.set("accessToken", response.token);
+          console.log("Saved accessToken to environment:", response.token);
+      });
+    language: text/javascript
+order: 2000

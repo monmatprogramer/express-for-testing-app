@@ -1,0 +1,22 @@
+$kind: http-request
+description: Fetches the current user profile using the JWT bearer token.
+url: "{{baseUrl}}/users/profile"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{accessToken}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
+      });
+
+      pm.test("User profile decoded from token", function () {
+          const response = pm.response.json();
+          pm.expect(response.user).to.be.an('object');
+          pm.expect(response.user.userId).to.eql(101);
+      });
+    language: text/javascript
+order: 3000
