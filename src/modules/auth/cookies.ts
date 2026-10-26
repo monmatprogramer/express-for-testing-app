@@ -14,5 +14,10 @@ export function setAuthCookies(
     maxAge: 15 * 60 * 1000,
   });
   //Refresh Token
-  res;
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: env.node_env === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 }
