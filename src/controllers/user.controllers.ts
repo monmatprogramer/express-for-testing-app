@@ -74,7 +74,6 @@ export function userProfile(req: Request, res: Response) {
         message: "Forbidden",
       });
     }
-    console.log("refresh token: ", randomBytes(32));
     const decoded = jwt.verify(token, env.jwt_secret, {
       issuer: env.jwt_issuer,
       audience: env.jwt_audience,
