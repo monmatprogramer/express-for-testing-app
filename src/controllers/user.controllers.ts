@@ -3,6 +3,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { env } from "../config/env";
 import { HttpError } from "../httpError";
 import { randomBytes, createHash } from "node:crypto";
+import { AccessClaims, signAccessToken } from "../modules/auth/tokens";
 
 export interface UserTokenPayload extends JwtPayload {
   userId?: number | string;
@@ -25,23 +26,17 @@ export function userLogin(req: Request, res: Response) {
     if (!role || role.length === 0) {
       throw new Error("role is empty");
     }
-    const payload = {
-      userId: id,
-      username: username,
-      role: role,
-    };
 
-    const token = jwt.sign(payload, env.jwt_secret, {
-      subject: id ? String(id) : "usr_98765",
-      issuer: env.jwt_issuer,
-      audience: env.jwt_audience,
-      expiresIn: "15m",
-      algorithm: "HS256",
-    });
+    const claims: AccessClaims = {
+      sub: "sub-123",
+      role: role,
+      sid: id,
+    };
+    const newToken = signAccessToken(claims);
 
     return res.status(200).json({
       message: "Login success.",
-      token: token,
+      token: newToken,
     });
   } catch (error) {
     if (error instanceof HttpError) {
