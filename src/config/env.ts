@@ -11,4 +11,5 @@ export const env = {
   jwt_secret: requiredEnv("JWT_SECRET"),
   jwt_issuer: requiredEnv("JWT_ISSUER"),
   jwt_audience: requiredEnv("JWT_AUDIENCE"),
+  node_env: requiredEnv("NODE_ENV"),
 };
