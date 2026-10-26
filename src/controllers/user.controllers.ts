@@ -3,9 +3,11 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { HttpError } from "../httpError";
 import {
   AccessClaims,
+  refreshToken,
   signAccessToken,
   verifyAccessToken,
 } from "../modules/auth/tokens";
+import { setAuthCookies } from "../modules/auth/cookies";
 
 export interface UserTokenPayload extends JwtPayload {
   userId?: number | string;
@@ -34,8 +36,10 @@ export function userLogin(req: Request, res: Response) {
       role: role,
       sid: id,
     };
-    const newToken = signAccessToken(claims);
 
+    const newToken = signAccessToken(claims);
+    //Set cookie
+    setAuthCookies(req, res, newToken, refreshToken());
     return res.status(200).json({
       message: "Login success.",
       token: newToken,
