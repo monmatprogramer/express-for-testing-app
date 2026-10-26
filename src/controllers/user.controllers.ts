@@ -14,6 +14,9 @@ export function userLogin(req: Request, res: Response) {
     if (!id || id === 0) {
       throw new HttpError(400, "Bad request");
     }
+    if (role.length === 0) {
+      throw new Error("role is empty");
+    }
     const payload = {
       userId: id,
       role: role,
@@ -35,6 +38,9 @@ export function userLogin(req: Request, res: Response) {
     if (error instanceof HttpError) {
       console.log("Message: ", error.message);
       console.log("Status: ", error.status);
+    }
+    if (error instanceof Error) {
+      console.log("Message: ", error.message);
     }
     return res.status(400).json({
       message: "Bad request",
