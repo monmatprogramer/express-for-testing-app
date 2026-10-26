@@ -31,7 +31,7 @@ export function userLogin(req: Request, res: Response) {
     };
 
     const token = jwt.sign(payload, env.jwt_secret, {
-      subject: "usr_98765",
+      subject: id ? String(id) : "usr_98765",
       issuer: env.jwt_issuer,
       audience: env.jwt_audience,
       expiresIn: "15m",
@@ -92,6 +92,7 @@ export function userProfile(req: Request, res: Response) {
       message: "Access granted!",
       userId: userPayload.sub,
       role: userPayload.role,
+      user: userPayload,
       tokenClaims: userPayload,
     });
   } catch (error) {
