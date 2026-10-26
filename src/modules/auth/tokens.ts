@@ -1,8 +1,7 @@
 import jwt from "jsonwebtoken";
 import { env } from "../../config/env";
-import { UserTokenPayload } from "../../controllers/user.controllers";
 import { createHash, randomBytes } from "node:crypto";
-type Role = "ADMIN" | "TENANT";
+export type Role = "ADMIN" | "TENANT";
 export interface AccessClaims {
   sub: string;
   role: Role;

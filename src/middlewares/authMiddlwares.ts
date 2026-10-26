@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import { verifyAccessToken } from "../modules/auth/tokens";
-import { env } from "../config/env";
-
+import type { Role } from "../modules/auth/tokens";
 export interface AuthRequest extends Request {
   user?: {
     id: string;
@@ -15,6 +13,7 @@ export function requireAdmin(
   res: Response,
   next: NextFunction,
 ): void {
+  console.log("req ", req);
   const token = req.cookies.accessToken;
   if (!token) {
     res.status(401).json({ message: "You are not logg in ." });
@@ -22,8 +21,16 @@ export function requireAdmin(
   }
   try {
     const decode = verifyAccessToken(token);
-  } catch (error) {}
-  console.log("👉token from cookie", token);
+    if (decode === "string") {
+      res.status(403).json({
+        message: "Unauthorized",
+      });
+      return;
+    }
+    console.log("decode: ", decode);
+  } catch (error) {
+    console.error("AuthMiddleware: ", error);
+  }
   req.user = { id: "001", role: "admin" };
   next();
 }
