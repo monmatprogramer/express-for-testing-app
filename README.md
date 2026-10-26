@@ -200,6 +200,28 @@ curl -X GET http://localhost:4000/api/v1/users/profile \
 
 ---
 
+## 📮 Testing with Postman
+
+This project comes pre-configured with a ready-to-use Postman Collection and Environment in the `postman/` directory:
+- **Collection**: `postman/collections/express_testing_api.postman_collection.json`
+- **Environment**: `postman/environments/development.postman_environment.json`
+
+### Option 1: Using Postman in VS Code
+1. Install the official **Postman** extension for Visual Studio Code.
+2. Click the Postman icon on the activity bar.
+3. Postman automatically recognizes the workspace from `.postman/resources.yaml`.
+4. Select the **Local Development** environment and send your requests directly inside the editor.
+
+### Option 2: Using Postman Desktop App
+1. Open the Postman Desktop app.
+2. Click **Import** (top left).
+3. Select both `postman/collections/express_testing_api.postman_collection.json` and `postman/environments/development.postman_environment.json`.
+4. In the top-right environment dropdown, select **Local Development**.
+5. Run the **User Login** request — the included test script will automatically extract the JWT token and save it into your `{{accessToken}}` environment variable.
+6. Run the **Get User Profile** request without needing to copy-paste tokens!
+
+---
+
 ## 📄 License
 
 This project is licensed under the [ISC](LICENSE) License.
