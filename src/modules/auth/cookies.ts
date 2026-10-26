@@ -7,6 +7,7 @@ export function setAuthCookies(
   refreshToken: string,
 ): void {
   //Access Token
+  // Syntax: res.cookie(name, value, options)
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: env.node_env === "production",
