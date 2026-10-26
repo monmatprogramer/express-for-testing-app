@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { env } from "../config/env";
 import { HttpError } from "../httpError";
-import { randomBytes, createHash } from "node:crypto";
 import {
   AccessClaims,
   signAccessToken,
@@ -22,7 +20,7 @@ export function userHealth(_req: Request, res: Response) {
 }
 
 export function userLogin(req: Request, res: Response) {
-  const { id, username, role } = req.body;
+  const { id, role } = req.body;
   try {
     if (!id || id === 0) {
       throw new HttpError(400, "Id is 0");
