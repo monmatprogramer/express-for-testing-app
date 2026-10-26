@@ -47,9 +47,9 @@ export function userProfile(req: Request, res: Response) {
     const decoded = jwt.verify(token, env.jwt_secret, {
       issuer: env.jwt_issuer,
       audience: env.jwt_audience,
+      algorithms: ["HS384", "HS256"],
     });
 
-    console.log("deconded:  ", decoded);
     return res.status(200).json({
       message: "Access granted!",
       userId: decoded.sub,
