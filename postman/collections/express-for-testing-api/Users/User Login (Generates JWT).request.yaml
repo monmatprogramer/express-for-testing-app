@@ -8,7 +8,7 @@ body:
   type: text
   content: |-
     {
-      "id": 101,
+      "id": 1,
       "username": "monmat",
       "role": "admin"
     }
