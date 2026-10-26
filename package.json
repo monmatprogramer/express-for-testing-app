@@ -1,0 +1,42 @@
+{
+  "name": "express-for-testing-app",
+  "version": "1.0.0",
+  "description": "Express.js REST API with TypeScript and JWT authentication for testing",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monmatprogramer/express-for-testing-app.git"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "jwt",
+    "authentication",
+    "rest-api",
+    "nodejs"
+  ],
+  "author": "monmatprogramer",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
