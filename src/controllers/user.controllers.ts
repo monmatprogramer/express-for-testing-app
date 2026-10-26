@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env";
+import { HttpError } from "../httpError";
 export function userHealth(_req: Request, res: Response) {
   return res.status(200).json({
     messsage: "User health is ok!",
@@ -9,23 +10,36 @@ export function userHealth(_req: Request, res: Response) {
 
 export function userLogin(req: Request, res: Response) {
   const { id, username, role } = req.body;
-  const payload = {
-    userId: id,
-    role: role,
-  };
+  try {
+    if (!id || id === 0) {
+      throw new HttpError(400, "Bad request");
+    }
+    const payload = {
+      userId: id,
+      role: role,
+    };
 
-  const token = jwt.sign(payload, env.jwt_secret, {
-    subject: "usr_98765",
-    issuer: env.jwt_issuer,
-    audience: env.jwt_audience,
-    expiresIn: "15m",
-    algorithm: "HS256",
-  });
+    const token = jwt.sign(payload, env.jwt_secret, {
+      subject: "usr_98765",
+      issuer: env.jwt_issuer,
+      audience: env.jwt_audience,
+      expiresIn: "15m",
+      algorithm: "HS256",
+    });
 
-  return res.status(200).json({
-    message: "Login success.",
-    token: token,
-  });
+    return res.status(200).json({
+      message: "Login success.",
+      token: token,
+    });
+  } catch (error) {
+    if (error instanceof HttpError) {
+      console.log("Message: ", error.message);
+      console.log("Status: ", error.status);
+    }
+    return res.status(400).json({
+      message: "Bad request",
+    });
+  }
 }
 
 export function userProfile(req: Request, res: Response) {

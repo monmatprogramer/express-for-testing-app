@@ -4,6 +4,7 @@ export class HttpError extends Error {
     message: string,
   ) {
     super(message);
+    Object.setPrototypeOf(this, HttpError.prototype);
     this.status = status;
   }
 }
