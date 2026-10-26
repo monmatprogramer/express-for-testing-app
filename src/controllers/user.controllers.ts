@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { env } from "../config/env";
 import { HttpError } from "../httpError";
+import { randomBytes } from "node:crypto";
 
 export interface UserTokenPayload extends JwtPayload {
   userId?: number | string;
@@ -73,7 +74,7 @@ export function userProfile(req: Request, res: Response) {
         message: "Forbidden",
       });
     }
-
+    console.log("refresh token: ", randomBytes(32));
     const decoded = jwt.verify(token, env.jwt_secret, {
       issuer: env.jwt_issuer,
       audience: env.jwt_audience,
