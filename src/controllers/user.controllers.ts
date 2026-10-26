@@ -10,7 +10,7 @@ import {
 import { setAuthCookies } from "../modules/auth/cookies";
 
 export interface UserTokenPayload extends JwtPayload {
-  userId?: number | string;
+  userId?: string;
   role?: string;
   username?: string;
 }

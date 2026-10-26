@@ -14,7 +14,6 @@ export function requireAdmin(
   next: NextFunction,
 ): void {
   const token = req.cookies.accessToken;
-  req.user = { userId: "0001", role: "admin" };
   console.log("req: ", req.user);
   if (!token) {
     res.status(401).json({ message: "You are not logg in ." });
@@ -35,6 +34,15 @@ export function requireAdmin(
         message: "Access denied.",
       });
     }
+    if (userDeconded === undefined) {
+      res.status(403).json({
+        message: "Access denied",
+      });
+    }
+    req.user = {
+      userId: userDeconded.userId ?? "001",
+      role: userDeconded.role ?? "user",
+    };
     next();
   } catch (error) {
     console.error("AuthMiddleware: ", error);
