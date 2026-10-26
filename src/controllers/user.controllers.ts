@@ -8,6 +8,7 @@ import {
   verifyAccessToken,
 } from "../modules/auth/tokens";
 import { setAuthCookies } from "../modules/auth/cookies";
+import { AuthRequest } from "../middlewares/authMiddlwares";
 
 export interface UserTokenPayload extends JwtPayload {
   userId?: string;
@@ -57,7 +58,8 @@ export function userLogin(req: Request, res: Response) {
   }
 }
 
-export function userProfile(req: Request, res: Response) {
+export function userProfile(req: AuthRequest, res: Response) {
+  console.log(req.user?.role);
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res
