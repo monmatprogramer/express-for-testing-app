@@ -74,8 +74,6 @@ export function userProfile(req: Request, res: Response) {
         message: "Forbidden",
       });
     }
-    const rawToken = randomBytes(32).toString("base64url");
-    console.log(createHash("sha256").update(rawToken).digest("hex"));
     const decoded = jwt.verify(token, env.jwt_secret, {
       issuer: env.jwt_issuer,
       audience: env.jwt_audience,
