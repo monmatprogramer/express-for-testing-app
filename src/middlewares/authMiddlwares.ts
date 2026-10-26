@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { verifyAccessToken } from "../modules/auth/tokens";
-import type { Role } from "../modules/auth/tokens";
 import { UserTokenPayload } from "../controllers/user.controllers";
 export interface AuthRequest extends Request {
   user?: {
-    id: string;
+    userId: string;
     role: string;
   };
 }
@@ -15,6 +14,8 @@ export function requireAdmin(
   next: NextFunction,
 ): void {
   const token = req.cookies.accessToken;
+  req.user = { userId: "0001", role: "admin" };
+  console.log("req: ", req.user);
   if (!token) {
     res.status(401).json({ message: "You are not logg in ." });
     return;
@@ -34,9 +35,8 @@ export function requireAdmin(
         message: "Access denied.",
       });
     }
+    next();
   } catch (error) {
     console.error("AuthMiddleware: ", error);
   }
-  req.user = { id: "001", role: "admin" };
-  next();
 }
