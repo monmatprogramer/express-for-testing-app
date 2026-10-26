@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { env } from "../../config/env";
 import { UserTokenPayload } from "../../controllers/user.controllers";
-import { randomBytes } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 type Role = "ADMIN" | "TENANT";
 export interface AccessClaims {
   sub: string;
@@ -33,4 +33,8 @@ export function verifyAccessToken(token: string) {
 
 export function refreshToken(): string {
   return randomBytes(32).toString("base64url");
+}
+
+export function hashRefreshToken(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
 }
