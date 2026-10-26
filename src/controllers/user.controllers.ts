@@ -1,20 +1,11 @@
 import { Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { HttpError } from "../httpError";
 import {
   AccessClaims,
   refreshToken,
   signAccessToken,
-  verifyAccessToken,
 } from "../modules/auth/tokens";
 import { setAuthCookies } from "../modules/auth/cookies";
-import { AuthRequest } from "../middlewares/authMiddlwares";
-
-export interface UserTokenPayload extends JwtPayload {
-  userId?: string;
-  role?: string;
-  username?: string;
-}
 
 export function userHealth(_req: Request, res: Response) {
   return res.status(200).json({
@@ -33,16 +24,19 @@ export function userLogin(req: Request, res: Response) {
     }
 
     const claims: AccessClaims = {
-      sub: "sub-123",
+      sub: String(id),
       role: role,
-      sid: id,
+      sid: String(id),
     };
 
     const newToken = signAccessToken(claims);
-    //Set cookie
+
+    // Set HTTP-only cookie on the response
     setAuthCookies(req, res, newToken, refreshToken());
+
     return res.status(200).json({
       message: "Login success.",
+      token: newToken,
     });
   } catch (error) {
     if (error instanceof HttpError) {
@@ -58,49 +52,21 @@ export function userLogin(req: Request, res: Response) {
   }
 }
 
-export function userProfile(req: AuthRequest, res: Response) {
-  console.log(req.user?.role);
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res
-      .status(401)
-      .json({ error: "Missing or invalid authorization header" });
-  }
-
-  // Get token
-  const token: string | undefined = authHeader.split(" ").pop();
-  try {
-    // Validate on token first
-    if (!token || token.length === 0) {
-      return res.status(403).json({
-        message: "Forbidden",
-      });
-    }
-    const decoded = verifyAccessToken(token);
-    if (typeof decoded === "string") {
-      return res.status(401).json({
-        message: "Invalid token payload",
-      });
-    }
-
-    const userPayload = decoded as UserTokenPayload;
-
-    return res.status(200).json({
-      message: "Access granted!",
-      userId: userPayload.sub,
-      role: userPayload.role,
-      user: userPayload,
-      tokenClaims: userPayload,
-    });
-  } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({
-        message: "Invalid or expired token",
-        details: error.message,
-      });
-    }
-    return res.status(500).json({
-      message: "Profile error",
+/**
+ * Protected user profile handler.
+ * Authentication & role verification is already performed by middleware.
+ */
+export function userProfile(req: Request, res: Response) {
+  if (!req.user) {
+    return res.status(401).json({
+      message: "Unauthorized",
     });
   }
+
+  return res.status(200).json({
+    message: "Access granted!",
+    userId: req.user.userId,
+    role: req.user.role,
+    user: req.user,
+  });
 }
