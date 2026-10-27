@@ -12,6 +12,7 @@ export function setAuthCookies(
     httpOnly: true,
     secure: env.node_env === "production",
     sameSite: "strict",
+    path: "/",
     maxAge: 15 * 60 * 1000, // 15 minutes
   });
 
@@ -20,6 +21,7 @@ export function setAuthCookies(
     httpOnly: true,
     secure: env.node_env === "production",
     sameSite: "strict",
+    path: "/api/auth",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 }
@@ -29,6 +31,7 @@ export function clearAuthCookies(res: Response): void {
     httpOnly: true,
     secure: env.node_env === "production",
     sameSite: "strict",
+    path: "/",
   });
   res.clearCookie("refreshToken", {
     httpOnly: true,

@@ -36,7 +36,6 @@ export function userLogin(req: Request, res: Response) {
 
     return res.status(200).json({
       message: "Login success.",
-      token: newToken,
     });
   } catch (error) {
     if (error instanceof HttpError) {
