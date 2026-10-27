@@ -13,7 +13,6 @@ export function setAuthCookies(
     secure: env.node_env === "production",
     sameSite: "strict",
     path: "/",
-    signed: true,
     partitioned: true,
     priority: "high",
     maxAge: 15 * 60 * 1000, // 15 minutes
@@ -25,7 +24,6 @@ export function setAuthCookies(
     secure: env.node_env === "production",
     sameSite: "strict",
     path: "/api/auth",
-    signed: true,
     partitioned: true,
     priority: "high",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
