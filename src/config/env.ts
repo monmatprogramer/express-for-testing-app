@@ -1,3 +1,4 @@
+import "dotenv/config";
 function requiredEnv(name: string): string {
   const value = process.env[name];
   if (value === undefined || value.length === 0) {
