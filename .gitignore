@@ -32,3 +32,5 @@ Thumbs.db
 .vscode/
 *.sublime-project
 *.sublime-workspace
+.prisma-composer/
+.alchemy/
