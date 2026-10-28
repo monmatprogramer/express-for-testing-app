@@ -20,4 +20,6 @@ model User {
     email           String          @unique
     passwordHash    String
     role            Role            @default(TENANT)
+    createdAt       DateTime        @default(now())     @map("created_at")
+    updatedAt       DateTime        @updatedAt          @map("updated_at")
 }
