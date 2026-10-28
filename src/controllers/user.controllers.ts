@@ -34,8 +34,8 @@ export function userLogin(req: Request, res: Response) {
       role: role,
       sid: String(id),
     };
-
-    const newToken = signAccessToken(claims);
+    // Sign In
+    const newToken = signAccessToken(claimsNew);
 
     // Set HTTP-only cookie on the response
     setAuthCookies(req, res, newToken, refreshToken());
