@@ -1,3 +1,5 @@
 import "dotenv/config";
 import { db } from "./db";
-import { scryptSync, randomBytes } from "node:crypto";
+import { hashPassword } from "./modules/auth/password";
+
+const seedAdmin = async (): Promise<void> => {};
