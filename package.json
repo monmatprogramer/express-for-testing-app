@@ -28,7 +28,6 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@prisma/client": "^7.10.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
@@ -38,6 +37,7 @@
   },
   "devDependencies": {
     "@prisma/cli-engine": "^0.9.0",
+    "@prisma/client": "^7.10.1",
     "@prisma/orm-postgres": "^8.0.0-rc.21",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
@@ -48,5 +48,9 @@
     "prisma": "^8.0.0-rc.28",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
+  },
+  "overrides": {
+    "@prisma/orm-framework": "8.0.0-rc.21",
+    "@prisma/orm-toolchain": "8.0.0-rc.21"
   }
 }
