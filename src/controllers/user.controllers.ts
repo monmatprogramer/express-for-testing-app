@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { HttpError } from "../httpError";
+import { v4 as uuiv4 } from "uuid";
 import {
   AccessClaims,
   refreshToken,
@@ -15,6 +16,7 @@ export function userHealth(_req: Request, res: Response) {
 
 export function userLogin(req: Request, res: Response) {
   const { id, role } = req.body;
+  const { email, password } = req.body;
   try {
     if (!id || id === 0) {
       throw new HttpError(400, "Id is 0");
@@ -22,7 +24,11 @@ export function userLogin(req: Request, res: Response) {
     if (!role || role.length === 0) {
       throw new Error("role is empty");
     }
-
+    const claimsNew: AccessClaims = {
+      sub: "user-1",
+      role: "ADMIN",
+      sid: uuiv4(),
+    };
     const claims: AccessClaims = {
       sub: String(id),
       role: role,
