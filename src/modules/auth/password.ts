@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import { join } from "node:path";
 
 const BCRYPT_COST = 12;
 export const hashPassword = async (plainPassword: string): Promise<string> => {
@@ -11,6 +12,15 @@ export const verifyPassword = async (
 ): Promise<boolean> => {
   return bcrypt.compare(inputPasword, hashPassword);
 };
+const handleFile = async (): Promise<void> => {
+  const filePath = join(__dirname, "message.txt");
+  console.log(filePath);
+};
+
+handleFile().catch(async (error: unknown) => {
+  console.error(error);
+});
+/*
 console.log("Start");
 hashPassword("123456")
   .then((result) => console.log(result))
@@ -18,3 +28,4 @@ hashPassword("123456")
     console.log(error);
   });
 console.log("end");
+*/
