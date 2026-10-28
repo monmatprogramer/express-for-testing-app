@@ -6,5 +6,31 @@ const seedAdmin = async (): Promise<void> => {
   try {
     const adminEmail = process.env["ADMIN_DEFAULT_EMAIL"];
     const adminPass = process.env["ADMIN_DEFAULT_PASS"];
-  } catch (error: unknown) {}
+    // Check for existing gmail
+    const existingUser = await db.orm.public.User.where({
+      email: adminEmail,
+    }).first();
+    if (existingUser) {
+      console.log("Already exist.");
+      return;
+    }
+    const passwordHash = hashPassword(adminPass!);
+
+    const newAdmin = await db.orm.public.create({
+      name: "Super Admin",
+      phone: "070836110",
+      email: adminEmail,
+      passwordHash: passwordHash,
+      role: "ADMIN",
+    });
+    console.log("Admin successfully seed.");
+    console.log("Admin info: ", newAdmin);
+  } catch (error: unknown) {
+    console.error("Error during admin seeding: ", error);
+    process.exitCode = 1;
+  } finally {
+    await db.close();
+  }
 };
+
+seedAdmin();
