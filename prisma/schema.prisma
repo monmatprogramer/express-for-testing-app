@@ -22,7 +22,23 @@ model User {
     role            Role            @default(TENANT)
     createdAt       DateTime        @default(now())     @map("created_at")
     updatedAt       DateTime        @updatedAt          @map("updated_at")
-
+    
+    sessions       Session[]
 
     @@map("users")
+}
+model Session {
+    id                      String          @id     @default(uuid())
+    userId                  String          @map("user_id")
+    currentTokenHash        String          @unique @map("current_token_hash")
+    previousTokenHash       String          @unique @map("previous_token_hash")
+    expiredAt               DateTime        @map("expired_at")
+    revokedAt               DateTime        @map("revoked_at")
+    ip                      String?         
+    userAgent               String?         @map("user_agent")
+    createdAt               DateTime        @map("created_at")
+    user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
+    
+    @@index([userId])
+    @@map('sessions')
 }
