@@ -6,3 +6,18 @@ datasource db {
     url         = env("DATABASE_URL")
     directUrl   = env("DIRECT_URL")
 }
+
+enum Role {
+    ADMIN
+    TENANT
+}
+
+
+model User {
+    id              String          @id @default(uuid())
+    name            String          
+    phone           String
+    email           String          @unique
+    passwordHash    String
+    role            Role            @default(TENANT)
+}
