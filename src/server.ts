@@ -11,8 +11,16 @@ const start = async (): Promise<void> => {
   // Wait the completion for connecting to db.
   await db.connect({ url: databaseUrl });
   // If the connection is successful
+  // Start the server to linten
+  app.listen(port, () => {
+    console.log(`Server listen on port ${port}`);
+  });
 };
 
-app.listen(port, () => {
-  console.log(`Server listen on port ${port}`);
+start().catch(async (error: unknown) => {
+  console.error("Error at starting the server: ", error);
+  // If the connection has any error, stop connection immedately.
+  await db.close();
+  // Stop application also
+  process.exit(1);
 });
