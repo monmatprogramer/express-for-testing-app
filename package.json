@@ -9,7 +9,8 @@
     "type-check": "tsc --noEmit",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "prisma skills sync || exit 0"
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,8 @@
     "uuid": "^14.0.3"
   },
   "devDependencies": {
+    "@prisma/cli-engine": "^0.9.0",
+    "@prisma/orm-postgres": "^8.0.0-rc.21",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
