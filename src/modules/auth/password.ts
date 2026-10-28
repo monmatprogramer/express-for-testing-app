@@ -1,4 +1,6 @@
 import bcrypt from "bcryptjs";
+import { readFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const BCRYPT_COST = 12;
@@ -14,7 +16,15 @@ export const verifyPassword = async (
 };
 const handleFile = async (): Promise<void> => {
   const filePath = join(__dirname, "message.txt");
-  console.log(filePath);
+  const textToWrite = "New This is first text to be writen in message.txt";
+  try {
+    await writeFile(filePath, textToWrite, "utf-8");
+    console.log("File written successfully!");
+    const data = await readFile(filePath, "utf-8");
+    console.log(data);
+  } catch (error) {
+    console.error("Error from handleFile() : ", error);
+  }
 };
 
 handleFile().catch(async (error: unknown) => {
