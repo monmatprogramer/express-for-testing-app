@@ -35,11 +35,11 @@ hashPassword("123456")
   .catch(async (error) => {
     console.log(error);
   });
-let data: string;
 readPassword(filepath)
-  .then((result) => (data = result))
+  .then((result) => {
+    verifyPassword("1234567", result).then((result) =>
+      console.log("result is ", result),
+    );
+  })
+  .catch(async (err) => console.error("err: ", err))
   .catch(async (error) => console.error("Error", error));
-verifyPassword("123456", await readPassword(filepath)).catch(async (error) => {
-  console.error("Error in verifyPassword: ", error);
-});
-console.log("end");
