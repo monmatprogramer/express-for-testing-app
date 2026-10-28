@@ -1,1 +1,0 @@
-New This is first text to be writen in message.txt

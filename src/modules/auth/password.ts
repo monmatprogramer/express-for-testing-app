@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
+const filepath = join(__dirname, "password.txt");
+
 const BCRYPT_COST = 12;
 export const hashPassword = async (plainPassword: string): Promise<string> => {
   return bcrypt.hash(plainPassword, BCRYPT_COST);
@@ -14,28 +16,27 @@ export const verifyPassword = async (
 ): Promise<boolean> => {
   return bcrypt.compare(inputPasword, hashPassword);
 };
-const handleFile = async (): Promise<void> => {
-  const filePath = join(__dirname, "message.txt");
-  const textToWrite = "New This is first text to be writen in message.txt";
+const writePassword = async (hashPassword: string): Promise<void> => {
   try {
-    await writeFile(filePath, textToWrite, "utf-8");
-    console.log("File written successfully!");
-    const data = await readFile(filePath, "utf-8");
-    console.log(data);
+    await writeFile(filepath, hashPassword, "utf-8");
+    console.log("Password is saved.");
   } catch (error) {
-    console.error("Error from handleFile() : ", error);
+    console.log("Error: ", error);
   }
 };
 
-handleFile().catch(async (error: unknown) => {
-  console.error(error);
-});
-/*
+const readPassword = async (filePath: string): Promise<string> => {
+  return readFile(filePath, "utf-8");
+};
+
 console.log("Start");
 hashPassword("123456")
-  .then((result) => console.log(result))
+  .then((result) => writePassword(result))
   .catch(async (error) => {
     console.log(error);
   });
+
+verifyPassword("123456", await readPassword(filepath)).catch(async (error) => {
+  console.error("Error in verifyPassword: ", error);
+});
 console.log("end");
-*/
