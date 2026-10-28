@@ -6,6 +6,10 @@ const seedAdmin = async (): Promise<void> => {
   try {
     const adminEmail = process.env["ADMIN_DEFAULT_EMAIL"];
     const adminPass = process.env["ADMIN_DEFAULT_PASS"];
+    //Check admin info
+    if (!adminEmail || !adminPass) {
+      throw new Error("Fill admin info");
+    }
     // Check for existing gmail
     const existingUser = await db.orm.public.User.where({
       email: adminEmail,
@@ -14,9 +18,9 @@ const seedAdmin = async (): Promise<void> => {
       console.log("Already exist.");
       return;
     }
-    const passwordHash = hashPassword(adminPass!);
+    const passwordHash = await hashPassword(adminPass!);
 
-    const newAdmin = await db.orm.public.create({
+    const newAdmin = await db.orm.public.User.create({
       name: "Super Admin",
       phone: "070836110",
       email: adminEmail,
