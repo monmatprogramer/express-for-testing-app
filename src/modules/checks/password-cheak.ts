@@ -1,3 +1,9 @@
+import { readFile } from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { hashPassword, verifyPassword } from "../auth/password";
+const filepath = join(__dirname, "password.txt");
+
 const writePassword = async (hashPassword: string): Promise<void> => {
   try {
     await writeFile(filepath, hashPassword, "utf-8");
