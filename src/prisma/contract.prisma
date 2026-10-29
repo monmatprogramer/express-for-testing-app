@@ -1,0 +1,9 @@
+// use prisma-8
+// Contract inferred from the live database schema. Edit as needed, then run `prisma contract emit`.
+
+namespace public {
+  native_enum Role {
+    ADMIN = "ADMIN"
+    TENANT = "TENANT"
+  }
+}
