@@ -36,7 +36,8 @@ model Session {
     revokedAt               DateTime        @map("revoked_at")
     ip                      String?         
     userAgent               String?         @map("user_agent")
-    createdAt               DateTime        @map("created_at")
+    createdAt               DateTime        @default(now())     @map("created_at")
+    updatedAt               DateTime        @updatedAt           @map("created_at")
     user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
     
     @@index([userId])
