@@ -1,9 +1,9 @@
 // use prisma-8
 
 native_enum Role {
-    ADMIN
-    TENANT
-}
+    ADMIN   = "ADMIN"
+    TENANT  = "TENANT"
+}   
 
 
 model User {
