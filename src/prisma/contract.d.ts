@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'24f4c7f2340b179a7ff7a621535c41d47b02243f3d7c3507cada1a5873ae1a15'>;
+  StorageHashBase<'1ac374fb7617cd25769506657632b1e064a00a281cd9516503cc29bd7b2b70a5'>;
 export type ExecutionHash =
   ExecutionHashBase<'274d61b3aafbf9c0b7f98d43fe37a07371aef2d35cecb42f90ec96324f16f3e6'>;
 export type ProfileHash =
@@ -494,19 +494,21 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly role: {
-                  readonly dataType: 'pg/text';
-                  readonly codecId: 'pg/text@1';
+                  readonly dataType: 'pg/enum';
+                  readonly codecId: 'pg/enum@1';
                   readonly nullable: false;
                   readonly default: {
                     readonly kind: 'literal';
-                    readonly value: DefaultLiteralValue<'pg/text@1', 'TENANT'>;
+                    readonly value: DefaultLiteralValue<'pg/enum@1', 'TENANT'>;
                   };
+                  readonly typeParams: { readonly typeName: 'Role' };
                   readonly many: false;
                 };
                 readonly updated_at: {
                   readonly dataType: 'pg/timestamptz';
                   readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                   readonly many: false;
                 };
               };
@@ -645,7 +647,11 @@ type ContractBase = Omit<
               };
               readonly role: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
+                readonly type: {
+                  readonly kind: 'scalar';
+                  readonly codecId: 'pg/enum@1';
+                  readonly typeParams: { readonly typeName: 'Role' };
+                };
               };
               readonly updatedAt: {
                 readonly nullable: false;
@@ -683,21 +689,6 @@ type ContractBase = Omit<
               };
             };
           };
-        };
-        readonly enum: {
-          readonly Role: {
-            readonly codecId: 'pg/text@1';
-            readonly members: readonly [
-              { readonly name: 'ADMIN'; readonly value: 'ADMIN' },
-              { readonly name: 'TENANT'; readonly value: 'TENANT' },
-            ];
-          };
-        };
-        readonly enumMemberTypes?: {
-          readonly Role: readonly [
-            { readonly name: 'ADMIN'; readonly value: 'ADMIN' },
-            { readonly name: 'TENANT'; readonly value: 'TENANT' },
-          ];
         };
       };
     };

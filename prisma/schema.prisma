@@ -13,12 +13,13 @@ model User {
     email           String          @unique
     passwordHash    String
     role            pg.enum(Role)   @default("TENANT")
-    createdAt       DateTime        @default(now())     @map("created_at")
-    updatedAt       DateTime        @onUpdate(now())          @map("updated_at")
+    createdAt       DateTime        @default(now())                   @map("created_at")
+    updatedAt       DateTime        @default(now()) @onUpdate(now())  @map("updated_at")
     
     sessions       Session[]
     
     @@map("users")
+    @@rls
 }
 model Session {
     id                      String          @id     @onCreate(uuid())
@@ -35,4 +36,5 @@ model Session {
     
     @@index([userId])
     @@map("sessions")
+    @@rls
 }

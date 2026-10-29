@@ -16,21 +16,6 @@
   "domain": {
     "namespaces": {
       "public": {
-        "enum": {
-          "Role": {
-            "codecId": "pg/text@1",
-            "members": [
-              {
-                "name": "ADMIN",
-                "value": "ADMIN"
-              },
-              {
-                "name": "TENANT",
-                "value": "TENANT"
-              }
-            ]
-          }
-        },
         "models": {
           "Session": {
             "fields": {
@@ -197,14 +182,11 @@
               "role": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                },
-                "valueSet": {
-                  "entityKind": "enum",
-                  "entityName": "Role",
-                  "namespaceId": "public",
-                  "plane": "domain"
+                  "codecId": "pg/enum@1",
+                  "kind": "scalar",
+                  "typeParams": {
+                    "typeName": "Role"
+                  }
                 }
               },
               "updatedAt": {
@@ -271,6 +253,28 @@
     "namespaces": {
       "public": {
         "entries": {
+          "native_enum": {
+            "Role": {
+              "kind": "postgres-enum",
+              "members": [
+                "ADMIN",
+                "TENANT"
+              ],
+              "typeName": "Role"
+            }
+          },
+          "rls": {
+            "sessions": {
+              "kind": "rls",
+              "namespaceId": "public",
+              "tableName": "sessions"
+            },
+            "users": {
+              "kind": "rls",
+              "namespaceId": "public",
+              "tableName": "users"
+            }
+          },
           "table": {
             "sessions": {
               "columns": {
@@ -324,7 +328,6 @@
                   "nullable": false
                 }
               },
-              "control": "managed",
               "foreignKeys": [
                 {
                   "index": {
@@ -376,13 +379,6 @@
               ]
             },
             "users": {
-              "checks": [
-                {
-                  "expression": "\"role\" IN ('ADMIN', 'TENANT')",
-                  "name": "users_role_check_b56b1992",
-                  "prefix": "users_role_check"
-                }
-              ],
               "columns": {
                 "created_at": {
                   "codecId": "pg/timestamptz-temporal@1",
@@ -419,13 +415,16 @@
                   "nullable": false
                 },
                 "role": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
+                  "codecId": "pg/enum@1",
+                  "dataType": "pg/enum",
                   "default": {
                     "kind": "literal",
                     "value": "TENANT"
                   },
                   "nullable": false,
+                  "typeParams": {
+                    "typeName": "Role"
+                  },
                   "valueSet": {
                     "entityKind": "valueSet",
                     "entityName": "Role",
@@ -436,10 +435,13 @@
                 "updated_at": {
                   "codecId": "pg/timestamptz-temporal@1",
                   "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
                   "nullable": false
                 }
               },
-              "control": "managed",
               "foreignKeys": [],
               "indexes": [],
               "primaryKey": {
@@ -470,7 +472,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "24f4c7f2340b179a7ff7a621535c41d47b02243f3d7c3507cada1a5873ae1a15"
+    "storageHash": "1ac374fb7617cd25769506657632b1e064a00a281cd9516503cc29bd7b2b70a5"
   },
   "execution": {
     "executionHash": "274d61b3aafbf9c0b7f98d43fe37a07371aef2d35cecb42f90ec96324f16f3e6",
