@@ -2,7 +2,13 @@ import { db } from "../../db";
 import { randomBytes } from "node:crypto";
 export async function login(input: { email: string; password: string }) {
   const email = input.email.trim().toLowerCase();
-  const user = await db.orm.public.User.first({ email });
+  const user = await db.orm.public.User.first({
+    where: { email },
+    select: {
+      id: true,
+      role: true,
+    },
+  });
 
   console.log("user: ", user);
   console.log("---create refresh token----");
