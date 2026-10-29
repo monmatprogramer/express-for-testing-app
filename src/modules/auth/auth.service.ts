@@ -1,12 +1,14 @@
 import { db } from "../../db";
-import { randomBytes } from "node:crypto";
+import { verifyPassword } from "./password";
 export async function login(input: { email: string; password: string }) {
   const email = input.email.trim().toLowerCase();
   const user = await db.orm.public.User.where({ email })
-    .select("id", "role")
+    .select("id", "role", "passwordHash")
     .first();
-  console.log("user: ", user);
-  console.log("---create refresh token----");
-  console.log(randomBytes(32).toString("base64url"));
+  const passwordMathes = await verifyPassword(
+    input.password,
+    user!.passwordHash,
+  );
+  console.log(passwordMathes);
   return;
 }
