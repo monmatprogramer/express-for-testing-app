@@ -21,7 +21,7 @@ export async function login(input: { email: string; password: string }) {
   // It take too time (slow)
   // Before it has heavy math
   const passwordMathes = await verifyPassword(input.password, passwordHash);
-  if (!user || !passwordHash) {
+  if (!user || !passwordMathes) {
     throw new Error("Invalid email or password.");
   }
 
@@ -39,7 +39,7 @@ export async function login(input: { email: string; password: string }) {
 
     const newObject = {
       accessToken: signAccessToken({
-        sub: `Session-${uuiv4()}`,
+        sub: session.id,
         role: user.role,
         sid: user.id,
       }),
@@ -51,6 +51,7 @@ export async function login(input: { email: string; password: string }) {
       },
       refreshToken: refreshToken,
     };
+    console.log(newObject);
   } catch (error: unknown) {
     throw new Error("Error on creating session");
   }
