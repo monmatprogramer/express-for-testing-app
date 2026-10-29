@@ -14,13 +14,13 @@ enum Role {
 
 
 model User {
-    id              String          @id @default(uuid())
+    id              String          @id @onCreate(uuid())
     name            String          
     phone           String
     email           String          @unique
     passwordHash    String
-    role            Role            @default(TENANT)
-    createdAt       DateTime        @default(now())     @map("created_at")
+    role            Role            @onCreate(TENANT)
+    createdAt       DateTime        @onCreate(now())     @map("created_at")
     updatedAt       DateTime        @updatedAt          @map("updated_at")
     
     sessions       Session[]
@@ -28,7 +28,7 @@ model User {
     @@map("users")
 }
 model Session {
-    id                      String          @id     @default(uuid())
+    id                      String          @id     @onCreate(uuid())
     userId                  String          @map("user_id")
     currentTokenHash        String          @unique @map("current_token_hash")
     previousTokenHash       String          @unique @map("previous_token_hash")
@@ -36,7 +36,7 @@ model Session {
     revokedAt               DateTime        @map("revoked_at")
     ip                      String?         
     userAgent               String?         @map("user_agent")
-    createdAt               DateTime        @default(now())     @map("created_at")
+    createdAt               DateTime        @onCreate(now())     @map("created_at")
     updatedAt               DateTime        @updatedAt           @map("created_at")
     user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
     
