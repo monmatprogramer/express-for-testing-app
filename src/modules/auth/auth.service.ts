@@ -26,13 +26,17 @@ export async function login(input: { email: string; password: string }) {
 
   const refreshToken = createRefreshToken();
 
-  //Create session
-  const session = await db.orm.public.Session.create({
-    userId: user.id,
-    currentTokenHash: hashRefreshToken(refreshToken),
-    expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
-    ip: "192.168.0.0",
-    userAgent: "windows",
-  });
+  try {
+    //Create session
+    const session = await db.orm.public.Session.create({
+      userId: user.id,
+      currentTokenHash: hashRefreshToken(refreshToken),
+      expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
+      ip: "192.168.0.0",
+      userAgent: "windows",
+    });
+  } catch (error: unknown) {
+    throw new Error("Error on creating session");
+  }
   return;
 }
