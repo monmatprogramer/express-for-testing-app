@@ -33,11 +33,11 @@ model Session {
     currentTokenHash        String          @unique @map("current_token_hash")
     previousTokenHash       String          @unique @map("previous_token_hash")
     expiredAt               DateTime        @map("expired_at")
-    revokedAt               DateTime        @map("revoked_at")
+    revokedAt               DateTime?       @map("revoked_at")
     ip                      String?         
     userAgent               String?         @map("user_agent")
     createdAt               DateTime        @onCreate(now())     @map("created_at")
-    updatedAt               DateTime        @updatedAt           @map("created_at")
+    
     user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
     
     @@index([userId])
