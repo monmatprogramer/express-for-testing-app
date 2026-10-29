@@ -7,7 +7,7 @@ import {
 
 export default definePrismaConfig({
   orm: ormConfig({
-    contract: prisma7Schema("prisma/schema.prisma"),
+    contract: "./prisma/schema.prisma",
     output: "src/prisma",
     db: {
       connection: process.env["DATABASE_URL"]!,
