@@ -1,7 +1,8 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db";
 import { createRefreshToken, hashPassword, verifyPassword } from "./password";
-import { hashRefreshToken } from "./tokens";
+import { hashRefreshToken, signAccessToken } from "./tokens";
+import {v4 as uuiv4} from "uuid"
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
 export async function login(input: { email: string; password: string }) {
@@ -35,6 +36,13 @@ export async function login(input: { email: string; password: string }) {
       ip: "192.168.0.0",
       userAgent: "windows",
     });
+  
+    const new = {
+      accessToken: signAccessToken({sub:`Session-${uuiv4()}`, role:user.role, sid: user.id}),
+      refreshToken,
+      user: , 
+    }
+    
   } catch (error: unknown) {
     throw new Error("Error on creating session");
   }
