@@ -1,6 +1,6 @@
 // use prisma-8
 
-enum Role {
+native_enum Role {
     ADMIN
     TENANT
 }
@@ -12,7 +12,7 @@ model User {
     phone           String
     email           String          @unique
     passwordHash    String
-    role            Role            @default(TENANT)
+    role            pg.enum(Role)   @default(TENANT)
     createdAt       DateTime        @default(now())     @map("created_at")
     updatedAt       DateTime        @onUpdate(now())          @map("updated_at")
     
@@ -34,6 +34,7 @@ model Session {
     
     user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
     
+    @@control(managed)
     @@index([userId])
     @@map("sessions")
 }
