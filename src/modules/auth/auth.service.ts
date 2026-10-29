@@ -31,6 +31,8 @@ export async function login(input: { email: string; password: string }) {
     userId: user.id,
     currentTokenHash: hashRefreshToken(refreshToken),
     expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
+    ip: "192.168.0.0",
+    userAgent: "windows",
   });
   return;
 }

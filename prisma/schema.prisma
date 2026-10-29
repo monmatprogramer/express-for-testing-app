@@ -13,8 +13,8 @@ model User {
     email           String          @unique
     passwordHash    String
     role            pg.enum(Role)   @default("TENANT")
-    createdAt       DateTime        @default(now())                   @map("created_at")
-    updatedAt       DateTime        @default(now()) @onUpdate(now())  @map("updated_at")
+    createdAt       TimestamptzJsDate        @default(now())                   @map("created_at")
+    updatedAt       TimestamptzJsDate        @default(now()) @onUpdate(now())  @map("updated_at")
     
     sessions       Session[]
     
@@ -26,11 +26,11 @@ model Session {
     userId                  String          @map("user_id")
     currentTokenHash        String          @unique @map("current_token_hash")
     previousTokenHash       String?         @unique @map("previous_token_hash")
-    expiredAt               DateTime        @map("expired_at")
-    revokedAt               DateTime?       @map("revoked_at")
+    expiredAt               TimestamptzJsDate        @map("expired_at")
+    revokedAt               TimestamptzJsDate?       @map("revoked_at")
     ip                      String?         
     userAgent               String?         @map("user_agent")
-    createdAt               DateTime        @default(now())     @map("created_at")
+    createdAt               TimestamptzJsDate        @default(now())     @map("created_at")
     
     user                    User            @relation(fields: [userId], references:[id], onDelete: Cascade)
     
