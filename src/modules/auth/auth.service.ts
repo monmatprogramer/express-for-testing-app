@@ -13,6 +13,9 @@ export async function login(input: { email: string; password: string }) {
     input.password,
     user!.passwordHash,
   );
+  if (!passwordMathes) {
+    throw new Error("Incorrect credential.");
+  }
   console.log(passwordMathes);
   return;
 }

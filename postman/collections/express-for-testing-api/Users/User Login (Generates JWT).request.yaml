@@ -8,8 +8,8 @@ body:
   type: text
   content: |-
     {
-        "email":"monsokmeanmon@gmail.com",
-        "password: "123456"
+        "email":"monsokmeanmon@gmail.com1",
+        "password": "12345678"
     }
 scripts:
   - type: afterResponse
