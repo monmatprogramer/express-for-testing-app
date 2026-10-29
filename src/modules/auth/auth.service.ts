@@ -1,7 +1,9 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db";
-import { hashPassword, verifyPassword } from "./password";
+import { createRefreshToken, hashPassword, verifyPassword } from "./password";
+import { hashRefreshToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
+const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
 export async function login(input: { email: string; password: string }) {
   const email = input.email.trim().toLowerCase();
   // Check if user is not existing in db
@@ -21,9 +23,14 @@ export async function login(input: { email: string; password: string }) {
   if (!user || !passwordHash) {
     throw new Error("Invalid email or password.");
   }
-  if (!passwordMathes) {
-    throw new Error("Incorrect credential.");
-  }
-  console.log(passwordMathes);
+
+  const refreshToken = createRefreshToken();
+
+  //Create session
+  const session = await db.orm.public.Session.create({
+    userId: user.id,
+    currentTokenHash: hashRefreshToken(refreshToken),
+    expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
+  });
   return;
 }
