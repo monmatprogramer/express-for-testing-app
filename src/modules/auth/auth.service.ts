@@ -13,6 +13,10 @@ export async function login(input: { email: string; password: string }) {
   }
 
   // It take too time (slow)
+  // Before it has heavy math
+  //
+  //
+  //
   const passwordMathes = await verifyPassword(
     input.password,
     user!.passwordHash,

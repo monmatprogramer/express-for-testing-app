@@ -8,7 +8,7 @@ body:
   type: text
   content: |-
     {
-        "email":"monsokmeanmon@gmail.com1",
+        "email":"monsokmeanmon@gmail.com",
         "password": "12345678"
     }
 scripts:
@@ -25,4 +25,5 @@ scripts:
           console.log("Saved accessToken to environment:", response.token);
       });
     language: text/javascript
+examples: .resources/User Login (Generates JWT).resources/examples
 order: 2000

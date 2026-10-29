@@ -1,0 +1,44 @@
+$kind: http-example
+request:
+  url: "{{baseUrl}}/users/login"
+  method: POST
+  headers:
+    Content-Type: application/json
+  body:
+    type: text
+    content: |-
+      {
+          "email":"monsokmeanmon@gmail.com",
+          "password": "12345678"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    - key: X-Powered-By
+      value: Express
+    - key: Access-Control-Allow-Origin
+      value: "*"
+    - key: Set-Cookie
+      value: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiI5MDAyZmI5ZS1kNjQwLTRmZmYtOWY5OS1lNzc2N2JiNmJmNTgiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3OTMyNjMzODUsImV4cCI6MTc5MzI2NDI4NSwiYXVkIjoiZGVza3RvcC1hcGkiLCJpc3MiOiJleHByZXNzLXRlc3QtYXBwLWFwaSIsInN1YiI6InVzZXItYTFlOTYxY2QtNTU0Mi00MTRlLWE4ZmEtODUzNjBiODRiY2E1In0.9k6splUP-r_HbR4g0TKNDQFgdz5r28sq27cKIuHp4mE; Max-Age=900; Path=/; Expires=Thu, 29 Oct 2026 08:58:05 GMT; HttpOnly; Partitioned; Priority=High; SameSite=Strict
+    - key: Set-Cookie
+      value: refreshToken=1t16fWnRwdst2FlYEQssU2Uc86tB5b1KhbdvAma74aU; Max-Age=604800; Path=/api/auth; Expires=Thu, 05 Nov 2026 08:43:05 GMT; HttpOnly; Partitioned; Priority=High; SameSite=Strict
+    - key: Content-Type
+      value: application/json; charset=utf-8
+    - key: Content-Length
+      value: "28"
+    - key: ETag
+      value: W/"1c-VBdszdvyF+eFnL2px+hNNyqrfKw"
+    - key: Date
+      value: Thu, 29 Oct 2026 08:43:05 GMT
+    - key: Connection
+      value: keep-alive
+    - key: Keep-Alive
+      value: timeout=5
+  body:
+    type: json
+    content: |-
+      {
+        "message": "Login success."
+      }
+order: 1000
