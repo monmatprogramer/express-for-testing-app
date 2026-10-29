@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { HttpError } from "../httpError";
 import { v4 as uuiv4 } from "uuid";
+import { login } from "../modules/auth/auth.service";
 import {
   AccessClaims,
   refreshToken,
@@ -15,31 +16,20 @@ export function userHealth(_req: Request, res: Response) {
 }
 
 export function userLogin(req: Request, res: Response) {
-  const { id, role } = req.body;
   const { email, password } = req.body;
   try {
-    if (!id || id === 0) {
-      throw new HttpError(400, "Id is 0");
-    }
-    if (!role || role.length === 0) {
-      throw new Error("role is empty");
-    }
     const claimsNew: AccessClaims = {
-      sub: "user-1",
+      sub: `user-${uuiv4()}`,
       role: "ADMIN",
       sid: uuiv4(),
     };
-    const claims: AccessClaims = {
-      sub: String(id),
-      role: role,
-      sid: String(id),
-    };
+
     // Sign In
     const newToken = signAccessToken(claimsNew);
 
     // Set HTTP-only cookie on the response
     setAuthCookies(req, res, newToken, refreshToken());
-
+    login({ email, password });
     return res.status(200).json({
       message: "Login success.",
     });
