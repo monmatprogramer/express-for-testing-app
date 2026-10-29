@@ -16,17 +16,29 @@
   "domain": {
     "namespaces": {
       "public": {
+        "enum": {
+          "Role": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "ADMIN",
+                "value": "ADMIN"
+              },
+              {
+                "name": "TENANT",
+                "value": "TENANT"
+              }
+            ]
+          }
+        },
         "models": {
           "Session": {
             "fields": {
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamp-string@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
                 }
               },
               "currentTokenHash": {
@@ -39,11 +51,8 @@
               "expiredAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamp-string@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
                 }
               },
               "id": {
@@ -61,20 +70,17 @@
                 }
               },
               "previousTokenHash": {
-                "nullable": false,
+                "nullable": true,
                 "type": {
                   "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
               "revokedAt": {
-                "nullable": false,
+                "nullable": true,
                 "type": {
-                  "codecId": "pg/timestamp-string@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
                 }
               },
               "userAgent": {
@@ -149,11 +155,8 @@
               "createdAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamp-string@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
                 }
               },
               "email": {
@@ -194,21 +197,21 @@
               "role": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/enum@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "typeName": "Role"
-                  }
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "Role",
+                  "namespaceId": "public",
+                  "plane": "domain"
                 }
               },
               "updatedAt": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/timestamp-string@1",
-                  "kind": "scalar",
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
                 }
               }
             },
@@ -268,26 +271,17 @@
     "namespaces": {
       "public": {
         "entries": {
-          "native_enum": {
-            "Role": {
-              "kind": "postgres-enum",
-              "members": [
-                "ADMIN",
-                "TENANT"
-              ],
-              "typeName": "Role"
-            }
-          },
           "table": {
             "sessions": {
               "columns": {
                 "created_at": {
-                  "codecId": "pg/timestamp-string@1",
-                  "dataType": "pg/timestamp",
-                  "nullable": false,
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nullable": false
                 },
                 "current_token_hash": {
                   "codecId": "pg/text@1",
@@ -295,12 +289,9 @@
                   "nullable": false
                 },
                 "expired_at": {
-                  "codecId": "pg/timestamp-string@1",
-                  "dataType": "pg/timestamp",
-                  "nullable": false,
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
                 },
                 "id": {
                   "codecId": "pg/text@1",
@@ -315,15 +306,12 @@
                 "previous_token_hash": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
-                  "nullable": false
+                  "nullable": true
                 },
                 "revoked_at": {
-                  "codecId": "pg/timestamp-string@1",
-                  "dataType": "pg/timestamp",
-                  "nullable": false,
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": true
                 },
                 "user_agent": {
                   "codecId": "pg/text@1",
@@ -339,10 +327,9 @@
               "foreignKeys": [
                 {
                   "index": {
-                    "name": "sessions_user_id_idx"
+                    "name": "sessions_user_id_idx_6c952402"
                   },
                   "onDelete": "cascade",
-                  "onUpdate": "cascade",
                   "source": {
                     "columns": [
                       "user_id"
@@ -362,23 +349,10 @@
               "indexes": [
                 {
                   "columns": [
-                    "current_token_hash"
-                  ],
-                  "name": "sessions_current_token_hash_key",
-                  "unique": true
-                },
-                {
-                  "columns": [
-                    "previous_token_hash"
-                  ],
-                  "name": "sessions_previous_token_hash_key",
-                  "unique": true
-                },
-                {
-                  "columns": [
                     "user_id"
                   ],
-                  "name": "sessions_user_id_idx",
+                  "name": "sessions_user_id_idx_6c952402",
+                  "prefix": "sessions_user_id_idx",
                   "unique": false
                 }
               ],
@@ -387,21 +361,36 @@
                   "id"
                 ]
               },
-              "uniques": []
+              "uniques": [
+                {
+                  "columns": [
+                    "current_token_hash"
+                  ]
+                },
+                {
+                  "columns": [
+                    "previous_token_hash"
+                  ]
+                }
+              ]
             },
             "users": {
+              "checks": [
+                {
+                  "expression": "\"role\" IN ('ADMIN', 'TENANT')",
+                  "name": "users_role_check_b56b1992",
+                  "prefix": "users_role_check"
+                }
+              ],
               "columns": {
                 "created_at": {
-                  "codecId": "pg/timestamp-string@1",
-                  "dataType": "pg/timestamp",
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
                   "default": {
                     "expression": "now()",
                     "kind": "function"
                   },
-                  "nullable": false,
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "nullable": false
                 },
                 "email": {
                   "codecId": "pg/text@1",
@@ -429,16 +418,13 @@
                   "nullable": false
                 },
                 "role": {
-                  "codecId": "pg/enum@1",
-                  "dataType": "pg/enum",
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
                   "default": {
                     "kind": "literal",
                     "value": "TENANT"
                   },
                   "nullable": false,
-                  "typeParams": {
-                    "typeName": "Role"
-                  },
                   "valueSet": {
                     "entityKind": "valueSet",
                     "entityName": "Role",
@@ -447,30 +433,25 @@
                   }
                 },
                 "updated_at": {
-                  "codecId": "pg/timestamp-string@1",
-                  "dataType": "pg/timestamp",
-                  "nullable": false,
-                  "typeParams": {
-                    "precision": 3
-                  }
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "dataType": "pg/timestamptz",
+                  "nullable": false
                 }
               },
               "foreignKeys": [],
-              "indexes": [
-                {
-                  "columns": [
-                    "email"
-                  ],
-                  "name": "users_email_key",
-                  "unique": true
-                }
-              ],
+              "indexes": [],
               "primaryKey": {
                 "columns": [
                   "id"
                 ]
               },
-              "uniques": []
+              "uniques": [
+                {
+                  "columns": [
+                    "email"
+                  ]
+                }
+              ]
             }
           },
           "valueSet": {
@@ -487,10 +468,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "485b7aa8c0bbac51fadbc85784dfbbaeefd6a45599150d4ab88ee5ec3396eed8"
+    "storageHash": "99538aa702db3d86ef8b1ae459434c98aa91786a09fb2ba82b910afbcfbd53cb"
   },
   "execution": {
-    "executionHash": "4d3d925fe1437accdc8a74efce327c739b048629b1981c57d56c75d0f509e555",
+    "executionHash": "274d61b3aafbf9c0b7f98d43fe37a07371aef2d35cecb42f90ec96324f16f3e6",
     "mutations": {
       "defaults": [
         {
@@ -506,20 +487,6 @@
         },
         {
           "onCreate": {
-            "id": "timestampStringNow",
-            "kind": "generator",
-            "params": {
-              "precision": 3
-            }
-          },
-          "ref": {
-            "entry": "users",
-            "field": "created_at",
-            "namespace": "public"
-          }
-        },
-        {
-          "onCreate": {
             "id": "uuidv4",
             "kind": "generator"
           },
@@ -530,19 +497,9 @@
           }
         },
         {
-          "onCreate": {
-            "id": "timestampStringNow",
-            "kind": "generator",
-            "params": {
-              "precision": 3
-            }
-          },
           "onUpdate": {
-            "id": "timestampStringNow",
-            "kind": "generator",
-            "params": {
-              "precision": 3
-            }
+            "id": "instantNow",
+            "kind": "generator"
           },
           "ref": {
             "entry": "users",

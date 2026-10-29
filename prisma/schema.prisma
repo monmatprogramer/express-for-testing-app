@@ -17,7 +17,8 @@ model User {
     updatedAt       DateTime        @onUpdate(now())          @map("updated_at")
     
     sessions       Session[]
-
+    
+    @@control(managed)
     @@map("users")
 }
 model Session {

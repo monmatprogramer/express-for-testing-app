@@ -23,9 +23,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'485b7aa8c0bbac51fadbc85784dfbbaeefd6a45599150d4ab88ee5ec3396eed8'>;
+  StorageHashBase<'99538aa702db3d86ef8b1ae459434c98aa91786a09fb2ba82b910afbcfbd53cb'>;
 export type ExecutionHash =
-  ExecutionHashBase<'4d3d925fe1437accdc8a74efce327c739b048629b1981c57d56c75d0f509e555'>;
+  ExecutionHashBase<'274d61b3aafbf9c0b7f98d43fe37a07371aef2d35cecb42f90ec96324f16f3e6'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -371,10 +371,10 @@ type ContractBase = Omit<
             readonly sessions: {
               columns: {
                 readonly created_at: {
-                  readonly dataType: 'pg/timestamp';
-                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                   readonly many: false;
                 };
                 readonly current_token_hash: {
@@ -384,10 +384,9 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly expired_at: {
-                  readonly dataType: 'pg/timestamp';
-                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
-                  readonly typeParams: { readonly precision: 3 };
                   readonly many: false;
                 };
                 readonly id: {
@@ -405,14 +404,13 @@ type ContractBase = Omit<
                 readonly previous_token_hash: {
                   readonly dataType: 'pg/text';
                   readonly codecId: 'pg/text@1';
-                  readonly nullable: false;
+                  readonly nullable: true;
                   readonly many: false;
                 };
                 readonly revoked_at: {
-                  readonly dataType: 'pg/timestamp';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly nullable: false;
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
+                  readonly nullable: true;
                   readonly many: false;
                 };
                 readonly user_agent: {
@@ -429,20 +427,14 @@ type ContractBase = Omit<
                 };
               };
               primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [];
+              uniques: readonly [
+                { readonly columns: readonly ['current_token_hash'] },
+                { readonly columns: readonly ['previous_token_hash'] },
+              ];
               indexes: readonly [
                 {
-                  readonly name: 'sessions_current_token_hash_key';
-                  readonly columns: readonly ['current_token_hash'];
-                  readonly unique: true;
-                },
-                {
-                  readonly name: 'sessions_previous_token_hash_key';
-                  readonly columns: readonly ['previous_token_hash'];
-                  readonly unique: true;
-                },
-                {
-                  readonly name: 'sessions_user_id_idx';
+                  readonly name: 'sessions_user_id_idx_6c952402';
+                  readonly prefix: 'sessions_user_id_idx';
                   readonly columns: readonly ['user_id'];
                   readonly unique: false;
                 },
@@ -465,11 +457,10 @@ type ContractBase = Omit<
             readonly users: {
               columns: {
                 readonly created_at: {
-                  readonly dataType: 'pg/timestamp';
-                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
-                  readonly typeParams: { readonly precision: 3 };
                   readonly many: false;
                 };
                 readonly email: {
@@ -503,33 +494,25 @@ type ContractBase = Omit<
                   readonly many: false;
                 };
                 readonly role: {
-                  readonly dataType: 'pg/enum';
-                  readonly codecId: 'pg/enum@1';
+                  readonly dataType: 'pg/text';
+                  readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                   readonly default: {
                     readonly kind: 'literal';
-                    readonly value: DefaultLiteralValue<'pg/enum@1', 'TENANT'>;
+                    readonly value: DefaultLiteralValue<'pg/text@1', 'TENANT'>;
                   };
-                  readonly typeParams: { readonly typeName: 'Role' };
                   readonly many: false;
                 };
                 readonly updated_at: {
-                  readonly dataType: 'pg/timestamp';
-                  readonly codecId: 'pg/timestamp-string@1';
+                  readonly dataType: 'pg/timestamptz';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
-                  readonly typeParams: { readonly precision: 3 };
                   readonly many: false;
                 };
               };
               primaryKey: { readonly columns: readonly ['id'] };
-              uniques: readonly [];
-              indexes: readonly [
-                {
-                  readonly name: 'users_email_key';
-                  readonly columns: readonly ['email'];
-                  readonly unique: true;
-                },
-              ];
+              uniques: readonly [{ readonly columns: readonly ['email'] }];
+              indexes: readonly [];
               foreignKeys: readonly [];
             };
           };
@@ -562,8 +545,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly currentTokenHash: {
@@ -574,8 +556,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly id: {
@@ -587,15 +568,14 @@ type ContractBase = Omit<
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly previousTokenHash: {
-                readonly nullable: false;
+                readonly nullable: true;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly revokedAt: {
-                readonly nullable: false;
+                readonly nullable: true;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly userAgent: {
@@ -640,8 +620,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly email: {
@@ -666,18 +645,13 @@ type ContractBase = Omit<
               };
               readonly role: {
                 readonly nullable: false;
-                readonly type: {
-                  readonly kind: 'scalar';
-                  readonly codecId: 'pg/enum@1';
-                  readonly typeParams: { readonly typeName: 'Role' };
-                };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly updatedAt: {
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamp-string@1';
-                  readonly typeParams: { readonly precision: 3 };
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
             };
@@ -709,6 +683,21 @@ type ContractBase = Omit<
               };
             };
           };
+        };
+        readonly enum: {
+          readonly Role: {
+            readonly codecId: 'pg/text@1';
+            readonly members: readonly [
+              { readonly name: 'ADMIN'; readonly value: 'ADMIN' },
+              { readonly name: 'TENANT'; readonly value: 'TENANT' },
+            ];
+          };
+        };
+        readonly enumMemberTypes?: {
+          readonly Role: readonly [
+            { readonly name: 'ADMIN'; readonly value: 'ADMIN' },
+            { readonly name: 'TENANT'; readonly value: 'TENANT' },
+          ];
         };
       };
     };
@@ -754,18 +743,6 @@ type ContractBase = Omit<
           };
         },
         {
-          readonly onCreate: {
-            readonly id: 'timestampStringNow';
-            readonly kind: 'generator';
-            readonly params: { readonly precision: 3 };
-          };
-          readonly ref: {
-            readonly entry: 'users';
-            readonly field: 'created_at';
-            readonly namespace: 'public';
-          };
-        },
-        {
           readonly onCreate: { readonly id: 'uuidv4'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'users';
@@ -774,16 +751,7 @@ type ContractBase = Omit<
           };
         },
         {
-          readonly onCreate: {
-            readonly id: 'timestampStringNow';
-            readonly kind: 'generator';
-            readonly params: { readonly precision: 3 };
-          };
-          readonly onUpdate: {
-            readonly id: 'timestampStringNow';
-            readonly kind: 'generator';
-            readonly params: { readonly precision: 3 };
-          };
+          readonly onUpdate: { readonly id: 'instantNow'; readonly kind: 'generator' };
           readonly ref: {
             readonly entry: 'users';
             readonly field: 'updated_at';
