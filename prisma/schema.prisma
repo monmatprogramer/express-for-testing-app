@@ -22,7 +22,7 @@ model User {
     passwordHash    String
     role            Role            @default(TENANT)
     createdAt       DateTime        @default(now())     @map("created_at")
-    updatedAt       DateTime        @updatedAt          @map("updated_at")
+    updatedAt       DateTime        @onUpdate(now())          @map("updated_at")
     
     sessions       Session[]
 
