@@ -8,9 +8,8 @@ body:
   type: text
   content: |-
     {
-      "id": 1,
-      "username": "monmat",
-      "role": "ADMIN"
+        "email":"monsokmeanmon@gmail.com",
+        "password: "123456"
     }
 scripts:
   - type: afterResponse
