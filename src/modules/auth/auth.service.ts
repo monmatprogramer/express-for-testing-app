@@ -76,6 +76,14 @@ export async function refresh(refreshToken: string) {
       });
     }
     if (new Date(session.expiredAt).getTime() <= Date.now()) {
+      throw new Error("Expire date");
+    }
+
+    const user = await db.orm.public.User.first({ id: session.userId });
+    if (!user) {
+      await db.orm.public.Session.where({ id: session.id }).update({
+        revokedAt: new Date(),
+      });
     }
     return session;
   } catch (error) {
