@@ -7,6 +7,7 @@ import { hashRefreshToken } from "./modules/auth/tokens";
 async function runTest() {
   try {
     const user = await db.orm.public.User.first();
+    console.log("runTest user: ", user);
     if (!user) {
       console.error("No user found in db.");
       return;
