@@ -65,6 +65,8 @@ export async function refresh(refreshToken: string) {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
+    console.log("This session: ", session);
+    return session;
   } catch (error) {
     console.error(error);
   }
