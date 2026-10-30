@@ -71,6 +71,9 @@ export async function refresh(refreshToken: string) {
     const isCurrent = session.currentTokenHash === tokenHash;
     if (session.revokedAt !== null || !isCurrent) {
       //TODO: Revoke All Session
+      db.orm.public.Session.where({ userId: session.userId }).updateAll({
+        revokedAt: new Date(),
+      });
     }
     if (new Date(session.expiredAt).getTime() <= Date.now()) {
     }
