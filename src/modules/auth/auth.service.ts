@@ -50,9 +50,12 @@ export async function login(input: { email: string; password: string }) {
       },
       refreshToken: refreshToken,
     };
-    console.log(newObject);
   } catch (error: unknown) {
     throw new Error("Error on creating session");
   }
   return;
+}
+
+export async function refresh(refreshToken: string) {
+  const tokenHash = hashRefreshToken(refreshToken);
 }
