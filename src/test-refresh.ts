@@ -14,7 +14,10 @@ async function runTest() {
     }
     const rawRefreshToken = createRefreshToken();
     const hashToken = hashRefreshToken(rawRefreshToken);
-
+    console.log({
+      rawRefreshToken: rawRefreshToken,
+      hashToken: hashToken,
+    });
     const createSession = await db.orm.public.Session.create({
       userId: user.id,
       currentTokenHash: hashToken,
