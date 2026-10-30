@@ -65,7 +65,11 @@ export async function refresh(refreshToken: string) {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
-    console.log("This session: ", session);
+    if (session === null) {
+      throw new Error("Unauthorized");
+    }
+    if (new Date(session.expiredAt).getTime()) {
+    }
     return session;
   } catch (error) {
     console.error(error);
