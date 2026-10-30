@@ -68,7 +68,9 @@ export async function refresh(refreshToken: string) {
     if (session === null) {
       throw new Error("Unauthorized");
     }
-    if (new Date(session.expiredAt).getTime()) {
+    const isCurrent = session.currentTokenHash === tokenHash;
+
+    if (new Date(session.expiredAt).getTime() <= Date.now()) {
     }
     return session;
   } catch (error) {
