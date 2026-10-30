@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db";
 import { createRefreshToken, hashPassword, verifyPassword } from "./password";
-import { or } from "@prisma/orm-postgres/orm-client";
+import { or, and } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
@@ -65,6 +65,7 @@ export async function refresh(refreshToken: string) {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
+    console.log("session: ", session);
     if (session === null) {
       throw new Error("Unauthorized");
     }
@@ -80,11 +81,23 @@ export async function refresh(refreshToken: string) {
     }
 
     const user = await db.orm.public.User.first({ id: session.userId });
+    console.log("user: ", user);
     if (!user) {
       await db.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
       });
+      throw new Error("Anauthorized");
     }
+    const refreshToken = createRefreshToken();
+    console.log("refreshToken: ", refreshToken);
+    const rotated = await db.orm.public.Session.where((s) =>
+      and(s.id.eq(session.id), s.currentTokenHash.eq(tokenHash)),
+    ).update({
+      previousTokenHash: tokenHash,
+      currentTokenHash: hashRefreshToken(refreshToken),
+      expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
+    });
+    console.log("rotated: ", rotated);
     return session;
   } catch (error) {
     console.error(error);
