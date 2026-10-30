@@ -1,6 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db";
 import { createRefreshToken, hashPassword, verifyPassword } from "./password";
+import { or } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
@@ -60,12 +61,9 @@ export async function refresh(refreshToken: string) {
   const tokenHash = hashRefreshToken(refreshToken);
   // Find the hash token in session db
   try {
-    const session = await db.orm.public.Session.where((session) =>
-      or(
-        session.currentTokenHash.eq(tokenHash),
-        session.previousTokenHash.eq(tokenHash),
-      ).first(),
-    );
+    const session = await db.orm.public.Session.where((s) =>
+      or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
+    ).first();
   } catch (error) {
     console.error(error);
   }
