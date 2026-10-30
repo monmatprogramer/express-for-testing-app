@@ -58,4 +58,9 @@ export async function login(input: { email: string; password: string }) {
 
 export async function refresh(refreshToken: string) {
   const tokenHash = hashRefreshToken(refreshToken);
+  // Find the hash token in session db
+  try {
+  } catch (error) {
+    console.error(error);
+  }
 }
