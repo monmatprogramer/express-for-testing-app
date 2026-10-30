@@ -60,6 +60,12 @@ export async function refresh(refreshToken: string) {
   const tokenHash = hashRefreshToken(refreshToken);
   // Find the hash token in session db
   try {
+    const session = await db.orm.public.Session.where((session) =>
+      or(
+        session.currentTokenHash.eq(tokenHash),
+        session.previousTokenHash.eq(tokenHash),
+      ).first(),
+    );
   } catch (error) {
     console.error(error);
   }
