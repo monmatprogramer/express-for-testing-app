@@ -106,6 +106,8 @@ async function refreshTransaction(hashedToken: string) {
       await tx.orm.public.Session.where({ userId: session.userId }).updateAll({
         revokedAt: new Date(),
       });
+
+      throw new Error("Token reuse detected. All sessions revoked.");
     }
   });
 }
