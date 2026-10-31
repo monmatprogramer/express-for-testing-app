@@ -100,8 +100,22 @@ export async function refresh(refreshToken: string) {
       await db.orm.public.Session.where({ userId: user.id }).updateAll({
         revokedAt: new Date(),
       });
+      throw new Error("Anauthorized");
     }
-    return session;
+    return {
+      accessToken: signAccessToken({
+        sub: user.id,
+        role: user.role,
+        sid: session.id,
+      }),
+      refreshToken,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
   } catch (error) {
     console.error(error);
   }
