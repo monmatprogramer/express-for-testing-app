@@ -92,9 +92,9 @@ async function refreshTransaction(hashedToken: string) {
 
     // Set up new refreshToken when currentTokenHash is expired
     if (!isCurrent) {
-      const lastRetatedTime =
+      const lastRotatedTime =
         new Date(session.expiredAt).getTime() - REFRESH_TTL_MS;
-      const timeSinceRotation = Date.now() - lastRetatedTime;
+      const timeSinceRotation = Date.now() - lastRotatedTime;
       const REFRESH_GRACE_PERIOD_MS = 10 * 1000;
 
       if (timeSinceRotation <= REFRESH_GRACE_PERIOD_MS) {
