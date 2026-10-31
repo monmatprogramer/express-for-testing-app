@@ -97,7 +97,7 @@ export async function refresh(refreshToken: string) {
     });
 
     if (!rotated) {
-      await db.orm.public.Session.where({ userId }).updateAll({
+      await db.orm.public.Session.where({ userId: user.id }).updateAll({
         revokedAt: new Date(),
       });
     }
