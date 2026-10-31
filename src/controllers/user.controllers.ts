@@ -22,6 +22,7 @@ export function userLogin(req: Request, res: Response) {
   const parser = new UAParser(rawUserAgent);
   const result = parser.getResult();
   const broswer = result.browser.name;
+  const os = result.os.name;
   try {
     const claimsNew: AccessClaims = {
       sub: `user-${uuiv4()}`,
@@ -38,7 +39,7 @@ export function userLogin(req: Request, res: Response) {
       email,
       password,
       ip: req.ip,
-      userAgent: broswer,
+      userAgent: `${broswer} ${os}`,
     });
     return res.status(200).json({
       message: "Login success.",
