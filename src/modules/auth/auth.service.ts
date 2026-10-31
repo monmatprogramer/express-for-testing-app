@@ -95,9 +95,9 @@ async function refreshTransaction(hashedToken: string) {
       const lastRetatedTime =
         new Date(session.expiredAt).getTime() - REFRESH_TTL_MS;
       const timeSinceRotation = Date.now() - lastRetatedTime;
-      const REFRESH_GRACE_ERIOD_MS = 10 * 1000;
+      const REFRESH_GRACE_PERIOD_MS = 10 * 1000;
 
-      if (timeSinceRotation <= REFRESH_GRACE_ERIOD_MS) {
+      if (timeSinceRotation <= REFRESH_GRACE_PERIOD_MS) {
         throw new Error(
           "Token was already refreshed concurrently. Please retry with the last token",
         );
