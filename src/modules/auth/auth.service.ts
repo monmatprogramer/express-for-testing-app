@@ -96,6 +96,12 @@ async function refreshTransaction(hashedToken: string) {
         new Date(session.expiredAt).getTime() - REFRESH_TTL_MS;
       const timeSinceRotation = Date.now() - lastRetatedTime;
       const REFRESH_GRACE_ERIOD_MS = 10 * 1000;
+
+      if (timeSinceRotation <= REFRESH_GRACE_ERIOD_MS) {
+        throw new Error(
+          "Token was already refreshed concurrently. Please retry with the last token",
+        );
+      }
     }
   });
 }
