@@ -109,6 +109,9 @@ export async function refresh(refreshToken: string) {
         sid: session.id,
       }),
       refreshToken,
+      session: {
+        id: session.id,
+      },
       user: {
         id: user.id,
         name: user.name,
