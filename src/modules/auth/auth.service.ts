@@ -61,8 +61,9 @@ export async function login(input: {
   return;
 }
 //
-export async function refresh(refreshToken: string) {
-  const tokenHash = hashRefreshToken(refreshToken);
+export async function refresh(rawRefreshToken: string) {
+  // To hash the rawRefreshToken
+  const tokenHash = hashRefreshToken(rawRefreshToken);
   // Find the hash token in session db
   try {
     const session = await db.orm.public.Session.where((s) =>
