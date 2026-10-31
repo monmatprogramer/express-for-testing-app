@@ -28,7 +28,7 @@ async function runTest() {
     console.log("create test session id: ", createSession.id);
     const foundSession = await refresh(rawRefreshToken);
 
-    if (foundSession && foundSession.id === createSession.id) {
+    if (foundSession && foundSession.user.id === createSession.id) {
       console.log("Success");
     } else {
       console.error("Fail");
