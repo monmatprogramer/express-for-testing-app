@@ -90,6 +90,7 @@ export async function refresh(refreshToken: string) {
       });
       throw new Error("Anauthorized");
     }
+    //Create a new refresh token
     const refreshToken = createRefreshToken();
     console.log("5. refreshToken: ", refreshToken);
     const rotated = await db.orm.public.Session.where((s) =>
