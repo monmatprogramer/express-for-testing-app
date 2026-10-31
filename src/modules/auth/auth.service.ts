@@ -13,6 +13,7 @@ export async function login(input: { email: string; password: string }) {
   const user = await db.orm.public.User.where({ email })
     .select("id", "role", "passwordHash", "name", "email")
     .first();
+
   if (!user) {
     throw new Error("User does not exist");
   }
