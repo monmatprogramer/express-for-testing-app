@@ -109,6 +109,8 @@ async function refreshTransaction(hashedToken: string) {
 
       throw new Error("Token reuse detected. All sessions revoked.");
     }
+
+    const user = await tx.orm.public.User.first({ id: session.id });
   });
 }
 //
