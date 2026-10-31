@@ -125,3 +125,6 @@ export async function refresh(refreshToken: string) {
     console.error(error);
   }
 }
+
+// Logout
+export async function logout(rawRefreshToken: string | null): Promise<void> {}
