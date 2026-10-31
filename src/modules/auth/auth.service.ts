@@ -13,11 +13,9 @@ export async function login(input: { email: string; password: string }) {
   const user = await db.orm.public.User.where({ email })
     .select("id", "role", "passwordHash", "name", "email")
     .first();
-  if (!user) {
-    throw new Error("User does not exist");
-  }
 
   const passwordHash = user?.passwordHash ?? (await dummyPasswordHash);
+
   // It take too time (slow)
   // Before it has heavy math
   const passwordMathes = await verifyPassword(input.password, passwordHash);
@@ -33,7 +31,7 @@ export async function login(input: { email: string; password: string }) {
       userId: user.id,
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
-      ip: "192.168.0.0",
+      ip: req.ip || "192.168.0.0",
       userAgent: "windows",
     });
 

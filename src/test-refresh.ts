@@ -1,10 +1,20 @@
 import "dotenv/config";
 import { db } from "./db";
-import { refresh, logout } from "./modules/auth/auth.service";
+import { refresh, logout, login } from "./modules/auth/auth.service";
 import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
-
-async function runTest() {
+async function runTestLogin() {
+  const inputEmail = "";
+  const rightPass = "";
+  try {
+    await login({ email: inputEmail, password: rightPass });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await db.close();
+  }
+}
+async function runTestLogout() {
   try {
     const user = await db.orm.public.User.first();
     console.log("runTest user(search user first): ", user);
@@ -46,4 +56,4 @@ async function runTest() {
   }
 }
 
-runTest();
+runTestLogin();
