@@ -102,7 +102,7 @@ export async function refresh(refreshToken: string) {
       });
       throw new Error("Anauthorized");
     }
-    return {
+    const returnResult = {
       accessToken: signAccessToken({
         sub: user.id,
         role: user.role,
@@ -116,6 +116,8 @@ export async function refresh(refreshToken: string) {
         role: user.role,
       },
     };
+    console.log("returnResult: ", returnResult);
+    return returnResult;
   } catch (error) {
     console.error(error);
   }
