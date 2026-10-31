@@ -4,7 +4,7 @@ import { createRefreshToken, hashPassword, verifyPassword } from "./password";
 import { or, and } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
-const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
+const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 export async function login(input: {
   email: string;
   password: string;
@@ -115,7 +115,33 @@ async function refreshTransaction(hashedToken: string) {
       await tx.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
       });
+      throw new Error("User not found");
     }
+
+    const newRefreshToken = createRefreshToken();
+
+    await tx.orm.public.Session.where({ id: session.id }).update({
+      previousTokenHash: hashedToken,
+      currentTokenHash: newRefreshToken,
+      expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
+    });
+    return {
+      accessToken: signAccessToken({
+        sub: user.id,
+        role: user.role,
+        sid: session.id,
+      }),
+      refreshToken: newRefreshToken,
+      session: {
+        id: session.id,
+      },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
   });
 }
 //
