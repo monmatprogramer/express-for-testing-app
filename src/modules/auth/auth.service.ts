@@ -71,9 +71,14 @@ async function refreshTransaction(hashedToken: string) {
     )
       .forUpdate()
       .first();
-
+    // If not found
     if (session === null) {
       throw new Error("Unauthorized");
+    }
+
+    // Session is found but has revoke at time
+    if (session.revokedAt !== null) {
+      throw new Error("Session has been revoked");
     }
   });
 }
