@@ -92,9 +92,10 @@ async function refreshTransaction(hashedToken: string) {
 
     // Set up new refreshToken when currentTokenHash is expired
     if (!isCurrent) {
-      const lastRetatedTime = new Date(
-        session.expiredAt.getTime() - REFRESH_TTL_MS,
-      );
+      const lastRetatedTime =
+        new Date(session.expiredAt).getTime() - REFRESH_TTL_MS;
+      const timeSinceRotation = Date.now() - lastRetatedTime;
+      const REFRESH_GRACE_ERIOD_MS = 10 * 1000;
     }
   });
 }
