@@ -5,7 +5,7 @@ import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
 async function runTestLogin() {
   const inputEmail = "monsokmeanmon@gmail.com";
-  const rightPass = "12345678";
+  const rightPass = "";
   try {
     await login({ email: inputEmail, password: rightPass });
   } catch (error) {

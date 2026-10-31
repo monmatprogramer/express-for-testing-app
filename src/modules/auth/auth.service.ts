@@ -14,10 +14,6 @@ export async function login(input: { email: string; password: string }) {
     .select("id", "role", "passwordHash", "name", "email")
     .first();
 
-  if (!user) {
-    throw new Error("User does not exist");
-  }
-
   const passwordHash = user?.passwordHash ?? (await dummyPasswordHash);
   // It take too time (slow)
   // Before it has heavy math
