@@ -58,7 +58,6 @@ export async function login(input: {
   } catch (error: unknown) {
     throw new Error("Error on creating session");
   }
-  return;
 }
 async function refreshTransaction(hashedToken: string) {
   return await db.transaction(async (tx) => {
