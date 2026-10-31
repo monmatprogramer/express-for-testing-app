@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db";
 import { createRefreshToken, hashPassword, verifyPassword } from "./password";
-import { or, and } from "@prisma/orm-postgres/orm-client";
+import { or } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
