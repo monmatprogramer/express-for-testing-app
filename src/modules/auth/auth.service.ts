@@ -15,6 +15,7 @@ export async function login(input: { email: string; password: string }) {
     .first();
 
   const passwordHash = user?.passwordHash ?? (await dummyPasswordHash);
+
   // It take too time (slow)
   // Before it has heavy math
   const passwordMathes = await verifyPassword(input.password, passwordHash);
@@ -30,7 +31,7 @@ export async function login(input: { email: string; password: string }) {
       userId: user.id,
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
-      ip: "192.168.0.0",
+      ip: req.ip || "192.168.0.0",
       userAgent: "windows",
     });
 

@@ -4,7 +4,7 @@ import { refresh, logout, login } from "./modules/auth/auth.service";
 import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
 async function runTestLogin() {
-  const inputEmail = "monsokmeanmon@gmail.com";
+  const inputEmail = "";
   const rightPass = "";
   try {
     await login({ email: inputEmail, password: rightPass });
