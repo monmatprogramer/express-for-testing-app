@@ -54,7 +54,7 @@ export async function login(input: {
       },
       refreshToken: refreshToken,
     };
-    console.log(newObject);
+    return newObject;
   } catch (error: unknown) {
     throw new Error("Error on creating session");
   }
