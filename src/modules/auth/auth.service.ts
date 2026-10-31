@@ -60,10 +60,23 @@ export async function login(input: {
   }
   return;
 }
+async function refreshTransaction(hashedToken: string) {
+  return await db.transaction(async (tx) => {
+    const session = await tx.orm.public.Session.where((s) =>
+      or(
+        s.currentTokenHash.eq(hashedToken),
+        s.previousTokenHash.eq(hashedToken),
+      ),
+    )
+      .forUpdate()
+      .first();
+  });
+}
 //
 export async function refresh(rawRefreshToken: string) {
   // To hash the rawRefreshToken
   const tokenHash = hashRefreshToken(rawRefreshToken);
+  return await refreshTransaction(tokenHash);
   // Find the hash token in session db
   try {
     const session = await db.orm.public.Session.where((s) =>
