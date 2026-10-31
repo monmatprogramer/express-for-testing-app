@@ -85,6 +85,17 @@ async function refreshTransaction(hashedToken: string) {
     if (new Date(session.expiredAt).getTime() <= Date.now()) {
       throw new Error("Session expired");
     }
+
+    // Create a current token
+    // When currentTokenHash == hashedToken mean token is not expire
+    const isCurrent = session.currentTokenHash === hashedToken;
+
+    // Set up new refreshToken when currentTokenHash is expired
+    if (!isCurrent) {
+      const lastRetatedTime = new Date(
+        session.expiredAt.getTime() - REFRESH_TTL_MS,
+      );
+    }
   });
 }
 //
