@@ -57,3 +57,5 @@ async function runTestLogout() {
     await db.close();
   }
 }
+
+// Refresh test
