@@ -9,6 +9,7 @@ export async function login(input: {
   email: string;
   password: string;
   ip?: string;
+  userAgent?: string;
 }) {
   const email = input.email.trim().toLowerCase();
   // Check if user is not existing in db
@@ -35,8 +36,8 @@ export async function login(input: {
       userId: user.id,
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
-      ip: "192.168.0.0",
-      userAgent: "windows",
+      ip: input.ip,
+      userAgent: input.userAgent,
     });
 
     const newObject = {
