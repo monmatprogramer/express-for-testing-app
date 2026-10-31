@@ -3,6 +3,7 @@ import { db } from "./db";
 import { refresh, logout, login } from "./modules/auth/auth.service";
 import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
+// Login test
 async function runTestLogin() {
   const inputEmail = "";
   const rightPass = "";
@@ -14,6 +15,7 @@ async function runTestLogin() {
     await db.close();
   }
 }
+// Logout test
 async function runTestLogout() {
   try {
     const user = await db.orm.public.User.first();
@@ -55,5 +57,3 @@ async function runTestLogout() {
     await db.close();
   }
 }
-
-runTestLogin();
