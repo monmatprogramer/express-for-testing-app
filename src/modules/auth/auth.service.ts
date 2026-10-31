@@ -95,6 +95,12 @@ export async function refresh(refreshToken: string) {
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
     });
+
+    if (!rotated) {
+      await db.orm.public.Session.where({ userId }).updateAll({
+        revokedAt: new Date(),
+      });
+    }
     return session;
   } catch (error) {
     console.error(error);
