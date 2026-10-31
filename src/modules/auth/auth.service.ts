@@ -60,18 +60,15 @@ export async function login(input: { email: string; password: string }) {
 //
 export async function refresh(refreshToken: string) {
   const tokenHash = hashRefreshToken(refreshToken);
-  console.log("1. tokenHash: ", tokenHash);
   // Find the hash token in session db
   try {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
-    console.log("2. session: ", session);
     if (session === null) {
       throw new Error("Unauthorized");
     }
     const isCurrent = session.currentTokenHash === tokenHash;
-    console.log("3. isCurrent: ", isCurrent);
     if (session.revokedAt !== null || !isCurrent) {
       //TODO: Revoke All Session
       db.orm.public.Session.where({ userId: session.userId }).updateAll({
@@ -83,7 +80,6 @@ export async function refresh(refreshToken: string) {
     }
 
     const user = await db.orm.public.User.first({ id: session.userId });
-    console.log("4. user: ", user);
     if (!user) {
       await db.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
@@ -92,7 +88,6 @@ export async function refresh(refreshToken: string) {
     }
     //Create a new refresh token
     const refreshToken = createRefreshToken();
-    console.log("5. refreshToken: ", refreshToken);
     const rotated = await db.orm.public.Session.where((s) =>
       and(s.id.eq(session.id), s.currentTokenHash.eq(tokenHash)),
     ).update({
@@ -100,7 +95,6 @@ export async function refresh(refreshToken: string) {
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
     });
-    console.log("6. rotated: ", rotated);
     return session;
   } catch (error) {
     console.error(error);
