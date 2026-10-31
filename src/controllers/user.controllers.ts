@@ -8,6 +8,7 @@ import {
   signAccessToken,
 } from "../modules/auth/tokens";
 import { setAuthCookies } from "../modules/auth/cookies";
+import { UAParser } from "ua-parser-js";
 
 export function userHealth(_req: Request, res: Response) {
   return res.status(200).json({
@@ -17,6 +18,10 @@ export function userHealth(_req: Request, res: Response) {
 
 export function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
+  const rawUserAgent = req.headers["user-agent"];
+  const parser = new UAParser(rawUserAgent);
+  const result = parser.getResult();
+  const broswer = result.browser.name;
   try {
     const claimsNew: AccessClaims = {
       sub: `user-${uuiv4()}`,
@@ -33,7 +38,7 @@ export function userLogin(req: Request, res: Response) {
       email,
       password,
       ip: req.ip,
-      userAgent: req.headers["user-agent"],
+      userAgent: broswer,
     });
     return res.status(200).json({
       message: "Login success.",
