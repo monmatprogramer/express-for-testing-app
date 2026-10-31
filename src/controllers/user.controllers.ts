@@ -29,7 +29,7 @@ export function userLogin(req: Request, res: Response) {
 
     // Set HTTP-only cookie on the response
     setAuthCookies(req, res, newToken, refreshToken());
-    login({ email, password });
+    login({ email, password, ip: req.ip });
     return res.status(200).json({
       message: "Login success.",
     });

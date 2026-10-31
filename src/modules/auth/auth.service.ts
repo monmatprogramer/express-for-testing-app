@@ -5,7 +5,11 @@ import { or, and } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 + 24 * 60 * 60 * 1000;
-export async function login(input: { email: string; password: string }) {
+export async function login(input: {
+  email: string;
+  password: string;
+  ip?: string;
+}) {
   const email = input.email.trim().toLowerCase();
   // Check if user is not existing in db
   // Take time to search user
@@ -31,7 +35,7 @@ export async function login(input: { email: string; password: string }) {
       userId: user.id,
       currentTokenHash: hashRefreshToken(refreshToken),
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
-      ip: req.ip || "192.168.0.0",
+      ip: "192.168.0.0",
       userAgent: "windows",
     });
 
