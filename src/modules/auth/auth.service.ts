@@ -102,6 +102,10 @@ async function refreshTransaction(hashedToken: string) {
           "Token was already refreshed concurrently. Please retry with the last token",
         );
       }
+
+      await tx.orm.public.Session.where({ userId: session.userId }).updateAll({
+        revokedAt: new Date(),
+      });
     }
   });
 }
