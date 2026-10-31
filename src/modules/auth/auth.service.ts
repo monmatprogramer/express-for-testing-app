@@ -134,6 +134,7 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
   console.log("-----Logout function---");
   console.log("rawRefreshToken before hash again: ", rawRefreshToken);
   const tokenHash = hashRefreshToken(rawRefreshToken);
+  console.log("rawRefreshToken after hash: ", tokenHash);
   try {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
