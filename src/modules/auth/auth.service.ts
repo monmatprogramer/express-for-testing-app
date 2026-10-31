@@ -128,5 +128,7 @@ export async function refresh(refreshToken: string) {
 
 // Logout
 export async function logout(rawRefreshToken: string | null): Promise<void> {
-  if(!rawRefreshToken)
+  if (!rawRefreshToken || rawRefreshToken.length === 0) {
+    return;
+  }
 }
