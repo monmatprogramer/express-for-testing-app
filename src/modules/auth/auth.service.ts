@@ -131,11 +131,13 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
   if (!rawRefreshToken || rawRefreshToken.length === 0) {
     return;
   }
+  console.log("rawRefreshToken before hash again: ", rawRefreshToken);
   const tokenHash = hashRefreshToken(rawRefreshToken);
   try {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
+    console.log("Result searching session by tokenHash: ", session);
     if (!session || session.currentTokenHash !== tokenHash) {
       return;
     }

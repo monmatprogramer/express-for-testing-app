@@ -33,6 +33,7 @@ async function runTest() {
     } else {
       console.error("Fail");
     }
+    console.log("rawRefreshToken for logout: ", rawRefreshToken);
     await logout(rawRefreshToken);
 
     await db.orm.public.Session.where({ id: createSession.id }).delete();
