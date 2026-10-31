@@ -80,6 +80,11 @@ async function refreshTransaction(hashedToken: string) {
     if (session.revokedAt !== null) {
       throw new Error("Session has been revoked");
     }
+
+    // Session is found and not revoke time, check expired date
+    if (new Date(session.expiredAt).getTime() <= Date.now()) {
+      throw new Error("Session expired");
+    }
   });
 }
 //
