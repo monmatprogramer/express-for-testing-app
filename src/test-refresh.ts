@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { db } from "./db";
-import { refresh } from "./modules/auth/auth.service";
+import { refresh, logout } from "./modules/auth/auth.service";
 import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
 
@@ -33,6 +33,7 @@ async function runTest() {
     } else {
       console.error("Fail");
     }
+    await logout(rawRefreshToken);
 
     await db.orm.public.Session.where({ id: createSession.id }).delete();
   } catch (error) {
