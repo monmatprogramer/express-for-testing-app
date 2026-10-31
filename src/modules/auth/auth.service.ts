@@ -111,6 +111,11 @@ async function refreshTransaction(hashedToken: string) {
     }
 
     const user = await tx.orm.public.User.first({ id: session.id });
+    if (!user) {
+      await tx.orm.public.Session.where({ id: session.id }).update({
+        revokedAt: new Date(),
+      });
+    }
   });
 }
 //
