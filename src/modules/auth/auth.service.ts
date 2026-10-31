@@ -62,6 +62,7 @@ export async function login(input: {
 }
 async function refreshTransaction(hashedToken: string) {
   return await db.transaction(async (tx) => {
+    // Search session by hashed token
     const session = await tx.orm.public.Session.where((s) =>
       or(
         s.currentTokenHash.eq(hashedToken),
@@ -70,6 +71,10 @@ async function refreshTransaction(hashedToken: string) {
     )
       .forUpdate()
       .first();
+
+    if (session === null) {
+      throw new Error("Unauthorized");
+    }
   });
 }
 //
