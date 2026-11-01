@@ -90,7 +90,9 @@ async function refreshTransaction(hashedToken: string) {
     // Create a current token
     // When currentTokenHash == hashedToken mean token is not expire
     const isCurrent = session.currentTokenHash === hashedToken;
-
+    console.log("hashedToken: ", hashedToken);
+    console.log("currentTokenHash: ", session.currentTokenHash);
+    return;
     // Set up new refreshToken when currentTokenHash is expired
     if (!isCurrent) {
       const lastRotatedTime =
