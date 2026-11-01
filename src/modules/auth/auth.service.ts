@@ -126,7 +126,7 @@ async function refreshTransaction(hashedToken: string) {
       currentTokenHash: newRefreshToken,
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
     });
-    const updatedSession = {
+    const updatedRefresh = {
       accessToken: signAccessToken({
         sub: user.id,
         role: user.role,
@@ -143,8 +143,13 @@ async function refreshTransaction(hashedToken: string) {
         role: user.role,
       },
     };
-    console.log("updatedSession: ", updatedSession);
-    return updatedSession;
+    console.log("updatedSession: ", updatedRefresh);
+    console.log("\n\nseesion updated: ");
+    const updatedSession = await db.orm.public.Session.where({
+      id: session.userId,
+    });
+    console.log(updatedSession);
+    return updatedRefresh;
   });
 }
 //
