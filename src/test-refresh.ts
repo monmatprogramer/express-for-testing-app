@@ -65,7 +65,9 @@ async function runTestRefresh() {
     console.log("---RunTestRefresh()----");
     const email: string = "monsokmeanmon@gmail.com";
     const pass: string = "12345678";
-    await login({ email, password: pass });
+    const result = await login({ email, password: pass });
+    console.log(result);
+    return;
     const rawRefreshToken = createRefreshToken();
     console.log("rawRefreshToken: ", rawRefreshToken);
     await refresh(rawRefreshToken);
