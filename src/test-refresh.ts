@@ -16,6 +16,8 @@ interface ResultLogin {
   user: User;
   refreshToken: string;
 }
+
+// @ts-expect-error
 // Login test
 async function runTestLogin() {
   const inputEmail = "";
@@ -28,6 +30,8 @@ async function runTestLogin() {
     await db.close();
   }
 }
+
+// @ts-expect-error
 // Logout test
 async function runTestLogout() {
   try {
