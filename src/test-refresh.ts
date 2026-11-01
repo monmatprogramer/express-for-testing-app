@@ -3,6 +3,19 @@ import { db } from "./db";
 import { refresh, logout, login } from "./modules/auth/auth.service";
 import { createRefreshToken } from "./modules/auth/password";
 import { hashRefreshToken } from "./modules/auth/tokens";
+type SingAccessToken = string;
+interface User {
+  id: string;
+  role: string;
+  email: string;
+  name: string;
+}
+interface ResultLogin {
+  sessionid: string;
+  accessToken: SingAccessToken;
+  user: User;
+  refreshToken: string;
+}
 // Login test
 async function runTestLogin() {
   const inputEmail = "";
@@ -65,7 +78,7 @@ async function runTestRefresh() {
     console.log("---RunTestRefresh()----");
     const email: string = "monsokmeanmon@gmail.com";
     const pass: string = "12345678";
-    const result = await login({ email, password: pass });
+    const result: ResultLogin = await login({ email, password: pass });
     console.log(result);
     await db.orm.public.Session.where({ id: result.sessionid }).delete();
     return;
