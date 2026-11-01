@@ -61,8 +61,10 @@ async function runTestLogout() {
 // Refresh test
 async function runTestRefresh() {
   try {
-    const user = await db.orm.public.User.first();
+    // const user = await db.orm.public.User.first();
+    console.log("---RunTestRefresh()----");
     const rawRefreshToken = createRefreshToken();
+    console.log("rawRefreshToken: ", rawRefreshToken);
     await refresh(rawRefreshToken);
   } catch (error) {
     console.error("Error: ", error);
