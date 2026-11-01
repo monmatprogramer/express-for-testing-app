@@ -59,6 +59,14 @@ async function runTestLogout() {
 }
 
 // Refresh test
-function runTestRefresh(){
-  await refresh(rawRefreshToken: string);
+async function runTestRefresh() {
+  try {
+    const user = await db.orm.public.User.first();
+    const rawRefreshToken = "";
+    await refresh(rawRefreshToken);
+  } catch (error) {
+    console.error("Error: ", error);
+  }
 }
+
+runTestRefresh();
