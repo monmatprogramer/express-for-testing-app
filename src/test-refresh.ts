@@ -79,7 +79,7 @@ async function runTestRefresh() {
     const email: string = "monsokmeanmon@gmail.com";
     const pass: string = "12345678";
     const result: ResultLogin = await login({ email, password: pass });
-    const rawRefreshToken = result.refreshToken;
+    const rawRefreshToken = createRefreshToken();
     const resultRefres = await refresh(rawRefreshToken);
     const updatedSession = await db.orm.public.Session.first({
       id: resultRefres.session.id,

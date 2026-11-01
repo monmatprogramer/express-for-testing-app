@@ -95,6 +95,7 @@ async function refreshTransaction(hashedToken: string) {
     if (!isCurrent) {
       const lastRotatedTime =
         new Date(session.expiredAt).getTime() - REFRESH_TTL_MS;
+
       const timeSinceRotation = Date.now() - lastRotatedTime;
       const REFRESH_GRACE_PERIOD_MS = 10 * 1000;
 
