@@ -61,7 +61,6 @@ export async function login(input: {
   }
 }
 async function refreshTransaction(hashedToken: string) {
-  console.log("hashedToken: ", hashedToken);
   return await db.transaction(async (tx) => {
     // Search session by hashed token
     const session = await tx.orm.public.Session.where((s) =>
@@ -72,7 +71,6 @@ async function refreshTransaction(hashedToken: string) {
     )
       .forUpdate()
       .first();
-    console.log("👉 session: ", session);
     // If not found
     if (session === null) {
       throw new Error("Unauthorized");
