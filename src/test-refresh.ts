@@ -73,6 +73,9 @@ async function runTestRefresh() {
     await refresh(rawRefreshToken);
   } catch (error) {
     console.error("Error: ", error);
+  } finally {
+    await db.close();
+    process.exit(1);
   }
 }
 
