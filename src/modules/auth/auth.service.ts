@@ -111,8 +111,9 @@ async function refreshTransaction(hashedToken: string) {
       throw new Error("Token reuse detected. All sessions revoked.");
     }
 
-    const user = await tx.orm.public.User.first({ id: session.id });
+    const user = await tx.orm.public.User.first({ id: session.userId });
     console.log("user: ", user);
+    return;
     if (!user) {
       await tx.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
