@@ -112,8 +112,6 @@ async function refreshTransaction(hashedToken: string) {
     }
 
     const user = await tx.orm.public.User.first({ id: session.userId });
-    console.log("user: ", user);
-    return;
     if (!user) {
       await tx.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
@@ -128,7 +126,7 @@ async function refreshTransaction(hashedToken: string) {
       currentTokenHash: newRefreshToken,
       expiredAt: new Date(Date.now() + REFRESH_TTL_MS),
     });
-    return {
+    const updatedSession = {
       accessToken: signAccessToken({
         sub: user.id,
         role: user.role,
@@ -145,6 +143,7 @@ async function refreshTransaction(hashedToken: string) {
         role: user.role,
       },
     };
+    return updatedSession;
   });
 }
 //
