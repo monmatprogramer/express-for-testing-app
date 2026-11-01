@@ -146,9 +146,9 @@ async function refreshTransaction(hashedToken: string) {
   });
 }
 //
-export async function refresh(rawRefreshToken: string) {
+export async function refresh(refreshToken: string) {
   // To hash the rawRefreshToken
-  const tokenHash = hashRefreshToken(rawRefreshToken);
+  const tokenHash = hashRefreshToken(refreshToken);
   return await refreshTransaction(tokenHash);
 }
 
