@@ -63,6 +63,9 @@ async function runTestRefresh() {
   try {
     // const user = await db.orm.public.User.first();
     console.log("---RunTestRefresh()----");
+    const email: string = "monsokmeanmon@gmail.com";
+    const pass: string = "12345678";
+    await login({ email, password: pass });
     const rawRefreshToken = createRefreshToken();
     console.log("rawRefreshToken: ", rawRefreshToken);
     await refresh(rawRefreshToken);
