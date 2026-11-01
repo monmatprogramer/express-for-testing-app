@@ -59,3 +59,6 @@ async function runTestLogout() {
 }
 
 // Refresh test
+function runTestRefresh(){
+  await refresh(rawRefreshToken: string);
+}
