@@ -143,6 +143,7 @@ async function refreshTransaction(hashedToken: string) {
         role: user.role,
       },
     };
+    console.log("updatedSession: ", updatedSession);
     return updatedSession;
   });
 }
