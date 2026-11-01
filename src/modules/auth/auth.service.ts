@@ -61,6 +61,7 @@ export async function login(input: {
   }
 }
 async function refreshTransaction(hashedToken: string) {
+  console.log("hashedToken: ", hashedToken);
   return await db.transaction(async (tx) => {
     // Search session by hashed token
     const session = await tx.orm.public.Session.where((s) =>
@@ -90,9 +91,6 @@ async function refreshTransaction(hashedToken: string) {
     // Create a current token
     // When currentTokenHash == hashedToken mean token is not expire
     const isCurrent = session.currentTokenHash === hashedToken;
-    console.log("hashedToken: ", hashedToken);
-    console.log("currentTokenHash: ", session.currentTokenHash);
-    return;
     // Set up new refreshToken when currentTokenHash is expired
     if (!isCurrent) {
       const lastRotatedTime =
@@ -114,6 +112,7 @@ async function refreshTransaction(hashedToken: string) {
     }
 
     const user = await tx.orm.public.User.first({ id: session.id });
+    console.log("user: ", user);
     if (!user) {
       await tx.orm.public.Session.where({ id: session.id }).update({
         revokedAt: new Date(),
