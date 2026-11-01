@@ -41,6 +41,7 @@ export async function login(input: {
     });
 
     const newObject = {
+      sessionid: session.id,
       accessToken: signAccessToken({
         sub: session.id,
         role: user.role,
