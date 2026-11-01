@@ -143,12 +143,6 @@ async function refreshTransaction(hashedToken: string) {
         role: user.role,
       },
     };
-    console.log("updatedSession: ", updatedRefresh);
-    console.log("\n\nseesion updated: ");
-    const updatedSession = await db.orm.public.Session.first({
-      userId: user.id,
-    });
-    console.log(updatedSession);
     return updatedRefresh;
   });
 }

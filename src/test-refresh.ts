@@ -80,7 +80,12 @@ async function runTestRefresh() {
     const pass: string = "12345678";
     const result: ResultLogin = await login({ email, password: pass });
     const rawRefreshToken = result.refreshToken;
-    await refresh(rawRefreshToken);
+    const resultRefres = await refresh(rawRefreshToken);
+    const updatedSession = await db.orm.public.Session.first({
+      id: resultRefres.session.id,
+    });
+    console.log("updatedSession: ");
+    console.log(updatedSession);
     await db.orm.public.Session.where({ id: result.sessionid }).delete();
   } catch (error) {
     console.error("Error: ", error);
