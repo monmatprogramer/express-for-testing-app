@@ -70,6 +70,7 @@ async function refreshTransaction(hashedToken: string) {
     )
       .forUpdate()
       .first();
+    console.log("👉 session: ", session);
     // If not found
     if (session === null) {
       throw new Error("Unauthorized");
