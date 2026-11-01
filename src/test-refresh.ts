@@ -79,10 +79,7 @@ async function runTestRefresh() {
     const email: string = "monsokmeanmon@gmail.com";
     const pass: string = "12345678";
     const result: ResultLogin = await login({ email, password: pass });
-
-    console.log(result);
     const rawRefreshToken = createRefreshToken();
-    console.log("rawRefreshToken: ", rawRefreshToken);
     await refresh(rawRefreshToken);
     await db.orm.public.Session.where({ id: result.sessionid }).delete();
   } catch (error) {
