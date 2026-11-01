@@ -67,6 +67,7 @@ async function runTestRefresh() {
     const pass: string = "12345678";
     const result = await login({ email, password: pass });
     console.log(result);
+    await db.orm.public.Session.where({ id: result.sessionid }).delete();
     return;
     const rawRefreshToken = createRefreshToken();
     console.log("rawRefreshToken: ", rawRefreshToken);
