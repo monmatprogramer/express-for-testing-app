@@ -23,7 +23,7 @@ jobs:
           node-version: '26'
 
       - name: Install project packages
-        run: npm Install
+        run: npm install
 
       - name: Generate Prisma Client
         run: npx prisma contract emit
