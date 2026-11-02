@@ -2,7 +2,7 @@ name: Node.js Test Robot
 
 # 1. It works when robo is called then push code to main.
 on:
-  push:
+  pull_request:
     branches: ["main"]
 
 # 2. Assign task to robot
