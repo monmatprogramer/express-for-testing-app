@@ -14,11 +14,11 @@ jobs:
     steps:
       # Step A: Copy your code into the Linux server 
       - name: Get code from GitHub
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       # Step B: Install Node.js version 20 on the Linux server 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with: 
           node-version: '26'
 
@@ -27,6 +27,8 @@ jobs:
 
       - name: Generate Prisma Client
         run: npx prisma contract emit
+        env: 
+          DIRECT_URL: ${{secrets.DIRECT_URL}}
       
       - name: Check code for errors
         run: npm run build
