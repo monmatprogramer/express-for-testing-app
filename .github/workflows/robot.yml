@@ -17,24 +17,32 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
-          POSTGRES_PASSWORD: ${secrets.POSTGRES_PASSWORD}
-          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: express_test
         ports:
           - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      # prisma.config.ts reads DATABASE_URL. This URL matches the service above.
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/express_test
 
     steps:
-      # Step A: Copy your code into the Linux server 
+      # Step A: Copy your code into the Linux server
       - name: Get code from GitHub
         uses: actions/checkout@v5
 
-      # Step B: Install Node.js version 20 on the Linux server 
+      # Step B: Install Node.js version 20 on the Linux server
       - name: Install Node.js
         uses: actions/setup-node@v5
-        with: 
-          node-version: '26'
-          cache: 'npm'
+        with:
+          node-version: "26"
+          cache: "npm"
 
       - name: Install project packages
         run: npm install
@@ -43,10 +51,6 @@ jobs:
         run: |
           npx prisma contract emit
           npx prisma db update
-        env: 
-          DIRECT_URL: ${{secrets.DIRECT_URL}}
-      
+
       - name: Check code for errors
         run: npm run build
-
-      
