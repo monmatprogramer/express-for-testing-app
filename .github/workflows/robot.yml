@@ -1,3 +1,27 @@
 name: Node.js Test Robot
 
 # 1. It works when robo is called then push code to main.
+on:
+  push:
+    branches: ["main"]
+
+# 2. Assign task to robot
+jobs:
+  check-my-code:
+    # Rent a free Ubuntu Linux server from GitHub
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step A: Copy your code into the Linux server 
+      - name: Get code from GitHub
+        uses: actions/checkout@v4
+
+      # Step B: Install Node.js version 20 on the Linux server 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '20'
+      # Step C: Run project
+      - name: Run Node.js project
+        run: npm run dev
+
