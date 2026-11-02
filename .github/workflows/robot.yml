@@ -26,6 +26,10 @@ jobs:
 
       - name: Generate Prisma Client
         run: npx prisma contract emit
+      
+      - name: Check code for errors
+        run: npm run build
+
       # Step C: Run project
       - name: Run Node.js project
         run: npm run dev
