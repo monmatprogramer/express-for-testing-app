@@ -21,6 +21,11 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version: '20'
+      - name: Install project packages
+        run: npm Install
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
       # Step C: Run project
       - name: Run Node.js project
         run: npm run dev
