@@ -2,6 +2,8 @@ name: Node.js Test Robot
 
 # 1. It works when robo is called then push code to main.
 on:
+  push:
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 
@@ -10,6 +12,17 @@ jobs:
   check-my-code:
     # Rent a free Ubuntu Linux server from GitHub
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_USER}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+        ports:
+          - 5432:5432
+        optional: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       # Step A: Copy your code into the Linux server 
@@ -21,12 +34,15 @@ jobs:
         uses: actions/setup-node@v5
         with: 
           node-version: '26'
+          cache: 'npm'
 
       - name: Install project packages
         run: npm install
 
       - name: Generate Prisma Client
-        run: npx prisma contract emit
+        run: |
+          npx prisma contract emit
+          npx prisma db update
         env: 
           DIRECT_URL: ${{secrets.DIRECT_URL}}
       
