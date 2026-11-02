@@ -44,7 +44,7 @@ jobs:
           npx prisma contract emit
           npx prisma db update
         env: 
-        DIRECT_URL: postgresql://admin:password123@localhost:5432/test_db
+          DIRECT_URL: "postgresql://admin:password123@localhost:5432/test_db"
       
       - name: Check code for errors
         run: npm run build
