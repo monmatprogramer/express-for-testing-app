@@ -32,6 +32,6 @@ USER app
 
 COPY --from=build --chown=app:app /app/package.json /app/package-lock.json ./
 
-RUN npm ci --omit=dev \
+RUN npm ci --omit=dev  && npm cache clean --force
 && npm install --no-save --package-lock=false @prisma/orm-postgres@8.0.0.21 \
 
