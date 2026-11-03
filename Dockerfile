@@ -18,6 +18,9 @@ RUN npx prisma contract emit && npm run build
 
 
 
-FROM node:26-alpine as runtime
+FROM node:26-alpine as runtim
 ENV NODE_ENV=production
 ENV PORT=3000
+
+WORKDIR /app
+RUN addgroup -S app && adduser -G app && chown app:app /app
