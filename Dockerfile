@@ -7,5 +7,5 @@ COPY package.json package-lock.json ./
 
 FROM
 
-RUN
+RUN npm ci && npm cache clean --force
 
