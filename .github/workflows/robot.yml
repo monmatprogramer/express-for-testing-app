@@ -55,4 +55,4 @@ jobs:
       - name: Check code for errors
         run: npm run build
       - name: Build Docker Image
-        run: docker build -t express-for-test-app
+        run: docker build -t express-for-test-app .
