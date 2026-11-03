@@ -26,18 +26,13 @@ ENV PORT=3000
 WORKDIR /app
 
 
-RUN addgroup -S app && adduser -S app -G app && chown -R app:app /app
+RUN addgroup -S app && adduser -S app -G app && chown  app:app
 USER app
 
 
 COPY --from=build --chown=app:app /app/package.json /app/package-lock.json ./
 
-RUN npm ci --omit=dev  && npm cache clean --force
-
-COPY --from=build --chown=app:app /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build --chown=app:app /app/dist ./dis
-COPY --from=build --chown=app:app /app/prisma ./prisma
-
-EXPOSE $PORT
-
-CMD ["node", "dist/server.js"]
+RUN npm ci --omit=dev \
+&& npm install --no-save --package-lock=false @prisma/orm-postgres@8.0.0-rc.21 \
+&& npm cache clean --force \
+&& chown -R app:app node_modules
