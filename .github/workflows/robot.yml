@@ -1,21 +1,21 @@
-name: Node.js Test Robot
+name: Check and publish
 
-# 1. It works when robo is called then push code to main.
+# Pull requests prove the app compiles and the contract applies.
+# A push to main also publishes the image a host can run.
+# Applying the real database schema stays a manual run.
 on:
   push:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+  workflow_dispatch:
 
-# 2. Assign task to robot
 jobs:
-  check-my-code:
-    # Rent a free Ubuntu Linux server from GitHub
+  check:
+    name: Check code
     runs-on: ubuntu-latest
-   
     permissions:
       contents: read
-      packages: write
 
     services:
       postgres:
@@ -33,15 +33,13 @@ jobs:
           --health-retries 5
 
     env:
-      # prisma.config.ts reads DATABASE_URL. This URL matches the service above.
+      # Throwaway database for this job. The host database is a secret.
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/express_test
 
     steps:
-      # Step A: Copy your code into the Linux server
       - name: Get code from GitHub
         uses: actions/checkout@v5
 
-      # Step B: Install Node.js version 20 on the Linux server
       - name: Install Node.js
         uses: actions/setup-node@v5
         with:
@@ -49,14 +47,84 @@ jobs:
           cache: "npm"
 
       - name: Install project packages
-        run: npm install
+        run: npm ci
 
-      - name: Generate Prisma Client
+      - name: Generate the contract and apply it to the CI database
         run: |
           npx prisma contract emit
           npx prisma db update
 
-      - name: Check code for errors
+      - name: Compile TypeScript
         run: npm run build
-      - name: Build Docker Image
-        run: docker build -t express-for-test-app .
+
+  publish:
+    name: Publish image
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Get code from GitHub
+        uses: actions/checkout@v5
+
+      - name: Image name
+        id: image
+        run: echo "name=ghcr.io/$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker tags
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.image.outputs.name }}
+          tags: |
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  update-database:
+    name: Update the host database
+    needs: check
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Get code from GitHub
+        uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "26"
+          cache: "npm"
+
+      - name: Install project packages
+        run: npm ci
+
+      - name: Apply the contract to the host database
+        run: npx prisma db update
