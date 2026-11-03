@@ -38,5 +38,6 @@ COPY --from=build --chown=app:app /app/node_modules/.prisma ./node_modules/.pris
 COPY --from=build --chown=app:app /app/dist ./dis
 COPY --from=build --chown=app:app /app/prisma ./prisma
 
-&& npm install --no-save --package-lock=false @prisma/orm-postgres@8.0.0.21 \
+EXPOSE $PORT
 
+CMD["node", "dist/server.js"]
