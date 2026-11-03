@@ -12,6 +12,10 @@ jobs:
   check-my-code:
     # Rent a free Ubuntu Linux server from GitHub
     runs-on: ubuntu-latest
+   
+    permissions:
+      contents: read
+      packages: write
 
     services:
       postgres:
