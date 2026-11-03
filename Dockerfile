@@ -24,7 +24,10 @@ ENV NODE_ENV=production
 ENV PORT=3000
 
 WORKDIR /app
-RUN addgroup -S app && adduser -S app -G app && chown app:app /app
+
+
+RUN addgroup -S app && adduser -S app -G app && chown -R app:app /app
+
 USER app
 COPY --from=build --chown=app:app /app/package.json /app/package-lock.json ./
 
