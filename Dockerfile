@@ -5,7 +5,6 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-FROM
 
 RUN npm ci && npm cache clean --force
 
