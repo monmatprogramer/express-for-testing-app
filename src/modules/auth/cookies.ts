@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { env } from "../../config/env";
+import { env } from "../../config/env.js";
 
 export function setAuthCookies(
   _req: Request,

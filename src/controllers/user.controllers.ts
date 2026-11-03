@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { HttpError } from "../httpError";
+import { HttpError } from "../httpError.js";
 import { v4 as uuiv4 } from "uuid";
-import { login } from "../modules/auth/auth.service";
+import { login } from "../modules/auth/auth.service.js";
 import {
   AccessClaims,
   refreshToken,
   signAccessToken,
-} from "../modules/auth/tokens";
-import { setAuthCookies } from "../modules/auth/cookies";
+} from "../modules/auth/tokens.js";
+import { setAuthCookies } from "../modules/auth/cookies.js";
 import { UAParser } from "ua-parser-js";
 
 export function userHealth(_req: Request, res: Response) {

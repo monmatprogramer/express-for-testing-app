@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { db } from "./db";
-import { hashPassword } from "./modules/auth/password";
+import { db } from "./db.js";
+import { hashPassword } from "./modules/auth/password.js";
 
 const seedAdmin = async (): Promise<void> => {
   try {

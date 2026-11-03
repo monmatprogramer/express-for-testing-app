@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { db } from "./db";
-import { refresh, logout, login } from "./modules/auth/auth.service";
-import { createRefreshToken } from "./modules/auth/password";
-import { hashRefreshToken } from "./modules/auth/tokens";
+import { db } from "./db.js";
+import { refresh, logout, login } from "./modules/auth/auth.service.js";
+import { createRefreshToken } from "./modules/auth/password.js";
+import { hashRefreshToken } from "./modules/auth/tokens.js";
 type SingAccessToken = string;
 interface User {
   id: string;

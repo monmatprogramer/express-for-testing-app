@@ -3,8 +3,8 @@ import {
   userHealth,
   userLogin,
   userProfile,
-} from "../controllers/user.controllers";
-import { requireAdmin } from "../middlewares/authMiddlwares";
+} from "../controllers/user.controllers.js";
+import { requireAdmin } from "../middlewares/authMiddlwares.js";
 
 const router = Router();
 

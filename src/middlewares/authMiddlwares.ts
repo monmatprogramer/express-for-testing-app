@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { verifyAccessToken } from "../modules/auth/tokens";
+import { verifyAccessToken } from "../modules/auth/tokens.js";
 
 // 1. Strongly typed user object attached to the request
 export interface AuthUser {

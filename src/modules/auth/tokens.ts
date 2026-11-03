@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { env } from "../../config/env";
+import { env } from "../../config/env.js";
 import { createHash, randomBytes } from "node:crypto";
 export type Role = "ADMIN" | "TENANT";
 export interface AccessClaims {

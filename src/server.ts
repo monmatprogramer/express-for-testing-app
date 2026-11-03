@@ -1,6 +1,6 @@
-import { env } from "./config/env";
-import app from "./app";
-import { databaseUrl, db } from "./db";
+import { env } from "./config/env.js";
+import app from "./app.js";
+import { databaseUrl, db } from "./db.js";
 
 // Define the port for server first.
 const port = Number(env.port ?? 3000);
