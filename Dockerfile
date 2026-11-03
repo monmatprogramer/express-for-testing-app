@@ -16,3 +16,8 @@ ARG DEFAULT_DATABASE_URL=postgresql://placeholder:placeholder@127.0.0.1:5432/pla
 ENV DATABASE_URL=$DEFAULT_DATABASE_URL
 RUN npx prisma contract emit && npm run build
 
+
+
+FROM nde:26-alpine as runtime
+ENV NODE_ENV=production
+ENV PORT=3000
