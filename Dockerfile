@@ -1,3 +1,4 @@
+# Stage 1: 
 FROM node:26-alpine AS build
 
 WORKDIR /app
@@ -18,7 +19,7 @@ RUN npx prisma contract emit && npm run build
 
 
 
-FROM node:26-alpine as runtim
+FROM node:26-alpine AS runtim
 ENV NODE_ENV=production
 ENV PORT=3000
 
