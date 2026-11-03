@@ -18,6 +18,6 @@ RUN npx prisma contract emit && npm run build
 
 
 
-FROM nde:26-alpine as runtime
+FROM node:26-alpine as runtime
 ENV NODE_ENV=production
 ENV PORT=3000
