@@ -39,3 +39,6 @@ RUN npm ci --omit=dev \
 
 COPY --from=build --chown=app:app /app/dist ./dist
 COPY --from=build --chown=app:app /app/src/prisma/contract.json ./dist/prisma/contract.json
+
+
+USER app
