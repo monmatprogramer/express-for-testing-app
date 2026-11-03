@@ -1,0 +1,23 @@
+# Build context exclusions. Docker never sends these to the daemon.
+# The Dockerfile copies specific paths; this file still keeps `docker build`
+# from uploading secrets and local install trees.
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output (reinstalled / recompiled inside the image)
+node_modules
+dist
+
+# Git and editor metadata
+.git
+.github
+.cursor
+.vscode
+
+# Docs and local-only files
+*.md
+coverage
+npm-debug.log*
