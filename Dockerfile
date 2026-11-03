@@ -12,7 +12,7 @@ COPY tsconfig.json prisma.config.ts ./
 COPY prisma ./prisma
 COPY src ./src
 
-ARG DATABASE_URL=postgresql://placeholder:placeholder@127.0.0.1:5432/placeholder
-ENV DATABASE_URL=$DATABASE_URL
+ARG DEFAULT_DATABASE_URL=postgresql://placeholder:placeholder@127.0.0.1:5432/placeholder
+ENV DATABASE_URL=$DEFAULT_DATABASE_URL
 RUN npx prisma contract emit && npm run build
 
