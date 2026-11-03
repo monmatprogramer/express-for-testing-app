@@ -42,3 +42,8 @@ COPY --from=build --chown=app:app /app/src/prisma/contract.json ./dist/prisma/co
 
 
 USER app
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+CMD node e "fetch('http://127.0.0.1: '+process.env.PORT+'/api/v1/users/health ').then((r) => process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
