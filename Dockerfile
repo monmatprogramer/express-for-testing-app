@@ -37,4 +37,5 @@ RUN npm ci --omit=dev \
 && chown -R app:app node_modules
 
 
-
+COPY --from=build --chown=app:app /app/dist ./dist
+COPY --from=build --chown=app:app /app/src/prisma/contract.json ./dist/prisma/contract.json
