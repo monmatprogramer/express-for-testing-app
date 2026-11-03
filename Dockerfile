@@ -40,4 +40,4 @@ COPY --from=build --chown=app:app /app/prisma ./prisma
 
 EXPOSE $PORT
 
-CMD["node", "dist/server.js"]
+CMD ["node", "dist/server.js"]
