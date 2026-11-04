@@ -66,6 +66,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # allow to upload/push the Docker container image to GitHub Container Registry
       packages: write
       actions: write
       attestations: write
