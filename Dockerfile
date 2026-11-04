@@ -4,7 +4,7 @@ WORKDIR /app
 
 
 # Install all packages (including heavy dev tools)
-COPY packages.json packages-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 
