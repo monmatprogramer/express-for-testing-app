@@ -37,3 +37,8 @@ COPY --from=build --chown=app:app /app/node_modules ./node_modules
 COPY --from=build --chown=app:app /app/dist ./dist
 
 
+USER  app
+EXPOSE 3000
+
+HEALTHCHECK
+
