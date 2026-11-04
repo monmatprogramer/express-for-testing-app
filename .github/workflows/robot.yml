@@ -62,6 +62,7 @@ jobs:
     name: Publish image
     # If "check" job above sucess, it will continue to execute
     needs: check
+    # Run on GitHub's hosted Linux runner
     runs-on: ubuntu-latest
     permissions:
       contents: read
