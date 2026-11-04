@@ -57,7 +57,7 @@ jobs:
 
       - name: Compile TypeScript
         run: npm run build
-
+  # ID of this job
   publish:
     name: Publish image
     needs: check
