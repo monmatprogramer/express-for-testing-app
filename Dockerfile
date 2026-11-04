@@ -20,3 +20,9 @@ RUN npx prisma contract emit && npm run build
 
 # Delete havy develooper tools before moving to Stage 2
 RUN npm prune --omit=dev && npm cache clean --force
+
+
+# Stage 2: Runtime (Tiny and Clean)
+FROM node:26-alpine AS runtime
+ENV NODE_ENV=production
+ENV PORT=3000
