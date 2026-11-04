@@ -40,5 +40,6 @@ COPY --from=build --chown=app:app /app/dist ./dist
 USER  app
 EXPOSE 3000
 
-HEALTHCHECK
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+  CMD node -e "fetch('http://127.0.0.1:'+process.env.PORT+'/api/v1/users/health').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
