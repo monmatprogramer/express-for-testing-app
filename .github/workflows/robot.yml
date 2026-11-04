@@ -89,6 +89,7 @@ jobs:
         
       # Login into GitHub Converts Registry
       - name: Log in to GitHub Container Registry
+      # Prevent untrusted pull request from attempting to push to our repo
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
