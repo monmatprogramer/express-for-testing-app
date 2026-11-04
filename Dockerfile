@@ -29,3 +29,11 @@ ENV PORT=3000
 
 WORKDIR /app
 RUN addgroup -S app && adduser -S app -G app && chown app:app /app
+
+
+# Copy only the clean files from Stage 1.
+COPY --from=build --chown=app:app /app/packages.json ./
+COPY --from=build --chown=app:app /app/node_modules ./node_modules
+COPY --from=build --chown=app:app /app/dist ./dist
+
+
