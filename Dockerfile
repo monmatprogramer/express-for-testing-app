@@ -16,3 +16,7 @@ COPY src ./src
 ARG DEFAULT_DATABASE_URL=postgresql://placeholder:placeholder@127.0.0.1:5432/placeholder
 ENV DATABASE_URL=$DEFAULT_DATABASE_URL
 RUN npx prisma contract emit && npm run build
+
+
+# Delete havy develooper tools before moving to Stage 2
+RUN npm prune --omit=dev && npm cache clean --force
