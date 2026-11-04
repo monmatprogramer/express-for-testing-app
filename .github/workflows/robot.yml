@@ -60,6 +60,7 @@ jobs:
   # ID of this job
   publish:
     name: Publish image
+    # If "check" job above sucess, it will continue to execute
     needs: check
     runs-on: ubuntu-latest
     permissions:
