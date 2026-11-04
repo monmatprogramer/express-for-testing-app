@@ -70,10 +70,13 @@ jobs:
       # allow to upload/push the Docker container image to GitHub Container Registry
       packages: write
       actions: write
+      # signing images
       attestations: write
       id-token: write
 
     steps:
+      # Clone repo into Ubuntu runner
+      # Docker can access Dockerfile
       - name: Get code from GitHub
         uses: actions/checkout@v5
 
