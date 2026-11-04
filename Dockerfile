@@ -19,6 +19,7 @@ RUN npx prisma contract emit && npm run build
 
 
 # Delete havy develooper tools before moving to Stage 2
+# 'npm prune' -> Docker deletes heavy develoment tools (like TypeScript) from node_modules
 RUN npm prune --omit=dev && npm cache clean --force
 
 
