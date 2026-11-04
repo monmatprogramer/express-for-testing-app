@@ -130,6 +130,7 @@ jobs:
   update-database:
     name: Update the host database
     needs: check
+    # It does not run automatically on 'git push'
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
