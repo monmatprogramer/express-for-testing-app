@@ -103,6 +103,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ steps.image.outputs.name }}
+          # Generate a tag with the Git commit hash
           tags: |
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
