@@ -65,6 +65,7 @@ jobs:
     # Run on GitHub's hosted Linux runner
     runs-on: ubuntu-latest
     permissions:
+      # Read source code
       contents: read
       # allow to upload/push the Docker container image to GitHub Container Registry
       packages: write
