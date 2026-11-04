@@ -142,6 +142,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
+      # Clone the repo into Linux runner
       - name: Get code from GitHub
         uses: actions/checkout@v5
 
@@ -152,7 +153,9 @@ jobs:
           cache: "npm"
 
       - name: Install project packages
+        # install dependencies fastly and clean
         run: npm ci
 
       - name: Apply the contract to the host database
+        # Incorrect: npx prisma 
         run: npx prisma db update
