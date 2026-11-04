@@ -26,3 +26,5 @@ RUN npm prune --omit=dev && npm cache clean --force
 FROM node:26-alpine AS runtime
 ENV NODE_ENV=production
 ENV PORT=3000
+
+WORKDIR /app
