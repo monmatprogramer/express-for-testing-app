@@ -119,6 +119,7 @@ jobs:
         with:
           # Use the repo root where Dockerfile site
           context: .
+          # Push the image only if this is not a pull request
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
