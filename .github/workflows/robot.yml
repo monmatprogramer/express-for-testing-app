@@ -79,7 +79,8 @@ jobs:
       # Docker can access Dockerfile & project file
       - name: Get code from GitHub
         uses: actions/checkout@v5
-
+      
+      # Docker image registries require all lowercase letters
       - name: Image name
         id: image
         run: echo "name=ghcr.io/$(echo "${GITHUB_REPOSITORY}" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
