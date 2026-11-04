@@ -4,6 +4,7 @@ services:
     # Build Docker image using Dockerfile in the current directory
     build: .
     # Map ports between host and container
+    # Syntax: host_post:container_port
     ports:
       - "4000:4000"
     env_file:
