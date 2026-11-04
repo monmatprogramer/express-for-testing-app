@@ -1,4 +1,5 @@
 services:
+  # This is Service name or Container
   api:
     # Build Docker image using Dockerfile in the current directory
     build: .
