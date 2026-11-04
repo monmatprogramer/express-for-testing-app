@@ -157,5 +157,6 @@ jobs:
         run: npm ci
 
       - name: Apply the contract to the host database
-        # Incorrect: npx prisma 
-        run: npx prisma db update
+        # Incorrect: npx prisma db update 
+        # Correct: npx prisma migrate deploy
+        run: npx prisma migrate deploy
