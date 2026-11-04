@@ -138,6 +138,7 @@ jobs:
       contents: read
 
     env:
+      # It pulls database url from Github Repo Secrets
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
