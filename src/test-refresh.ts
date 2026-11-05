@@ -133,6 +133,7 @@ function runtTestCorrelation() {
     actor: actor1,
   };
   runWithCorrelationId(requestContext, () => {
+    console.log(requestContext);
     console.log("Call back function");
     return "string";
   });
