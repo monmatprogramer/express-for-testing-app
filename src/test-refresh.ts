@@ -132,7 +132,10 @@ function runtTestCorrelation() {
     clientTrackId: "0000a",
     actor: actor1,
   };
-  runWithCorrelationId(requestContext);
+  runWithCorrelationId(requestContext, () => {
+    console.log("Call back function");
+    return "string";
+  });
 }
 
 runtTestCorrelation();

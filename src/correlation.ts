@@ -26,7 +26,6 @@ export function runWithCorrelationId(context: RequestContext) {
   } catch (error) {
     console.error(error);
   }
-  console.log("=> ", storage.getStore());
 }
 
 // export function first() {
