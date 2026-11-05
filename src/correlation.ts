@@ -28,5 +28,6 @@ try {
     throw new Error();
   });
 } catch (error) {
-  storage.getStore();
+  console.log("Error: ", error);
+  console.log(storage.getStore());
 }
