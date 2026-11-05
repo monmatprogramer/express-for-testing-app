@@ -128,7 +128,6 @@ function runtTestCorrelation() {
     clientTrackId: "0000a",
     actor: actor1,
   };
-  first();
 }
 
 runtTestCorrelation();
