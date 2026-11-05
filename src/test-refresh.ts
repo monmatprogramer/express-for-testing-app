@@ -82,6 +82,7 @@ async function runTestLogout() {
     const result: ResultLogin = await login({ email, password: pass });
     const rawRefreshToken = result.refreshToken;
     await logout(rawRefreshToken);
+    console.log("Logout successfull");
   } catch (error) {
     console.error(error);
   } finally {
