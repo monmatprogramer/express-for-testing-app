@@ -165,22 +165,18 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
     if (!token.isValid) {
       return;
     }
-  } catch (error) {}
-
-  const tokenHash = hashRefreshToken(rawRefreshToken);
-  // Find session by hash token
-  const session = await db.orm.public.Session.where((s) =>
-    or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
-  ).first();
-  // 1. if Session is null or empty or underfine
-  // 2. If Session has data but its currentTokenHash is not equal tokenHash therefore
-  // user invalid
-  if (!session || session.currentTokenHash !== tokenHash) {
-    // Stop execute here
-    return;
-  }
-
-  try {
+    const tokenHash = hashRefreshToken(rawRefreshToken);
+    // Find session by hash token
+    const session = await db.orm.public.Session.where((s) =>
+      or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
+    ).first();
+    // 1. if Session is null or empty or underfine
+    // 2. If Session has data but its currentTokenHash is not equal tokenHash therefore
+    // user invalid
+    if (!session || session.currentTokenHash !== tokenHash) {
+      // Stop execute here
+      return;
+    }
     await db.orm.public.Session.where({ id: session.id }).update({
       revokedAt: new Date(),
     });
