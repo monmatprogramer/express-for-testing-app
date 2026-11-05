@@ -14,15 +14,12 @@ export interface RequestContext {
 
 const storage = new AsyncLocalStorage<RequestContext>();
 
-export function runWithCorrelationId(context: RequestContext) {
+export function runWithCorrelationId<T>(
+  context: RequestContext,
+  next: () => T,
+) {
   try {
-    storage.run(context, () => {
-      storage.getStore();
-      setTimeout(() => {
-        console.log(storage.getStore());
-      }, 200);
-      console.log("Hello world");
-    });
+    storage.run(context, next);
   } catch (error) {
     console.error(error);
   }
