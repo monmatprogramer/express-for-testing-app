@@ -125,6 +125,7 @@ function runtTestCorrelation() {
   };
   const requestContext: RequestContext = {
     trackId: "0001",
+    clientTrackId: "0000a",
     actor: actor1,
   };
   console.log(requestContext);
