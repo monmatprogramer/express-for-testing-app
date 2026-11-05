@@ -162,10 +162,11 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
     return;
   }
   const tokenHash = hashRefreshToken(rawRefreshToken);
+  const session = await db.orm.public.Session.where((s) =>
+    or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
+  ).first();
+
   try {
-    const session = await db.orm.public.Session.where((s) =>
-      or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
-    ).first();
     if (!session || session.currentTokenHash !== tokenHash) {
       return;
     }
