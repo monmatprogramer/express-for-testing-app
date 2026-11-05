@@ -84,6 +84,9 @@ async function runTestLogout() {
     await logout(rawRefreshToken);
   } catch (error) {
     console.error(error);
+  } finally {
+    await db.close();
+    process.exit(1);
   }
 }
 // Refresh test
