@@ -14,8 +14,18 @@ export interface RequestContext {
 
 const storage = new AsyncLocalStorage<RequestContext>();
 
-export function runWithCorrelationId<T>(context: RequestContext): T {
-  return storage.run(context, () => {});
+export function runWithCorrelationId<T>(context: RequestContext) {
+  try {
+    storage.run(context, () => {
+      storage.getStore();
+      setTimeout(() => {
+        console.log(storage.getStore());
+      }, 200);
+      throw new Error();
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // export function first() {
