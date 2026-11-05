@@ -3,32 +3,39 @@ services:
   api:
     build: .
     ports:
-      # Door on your computer : door inside the api container.
       - "4000:4000"
     env_file:
       - .env
-    # This one value replaces DATABASE_URL from .env.
-    # "db" is the service name below. It is the database's address
-    # inside Compose. localhost would mean the api container itself.
+    # Use the same local database password as the db service.
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/express_test
-    # Wait until Postgres can accept connections, then start the app.
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/express_test
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  # Apply the Prisma schema before starting the API.
+  migrate:
+    build:
+      context: .
+      target: build
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/express_test
+    command: ["npm", "run", "prisma:push"]
     depends_on:
       db:
         condition: service_healthy
 
-  # A second service. Compose starts a Postgres container from a ready-made image.
   db:
     image: postgres:15
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       POSTGRES_DB: express_test
     ports:
-      # Open a door on your computer so you can reach this database from the host.
       - "5432:5432"
     volumes:
-      # Keep the database files after "docker compose down".
       - db_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d express_test"]
@@ -36,6 +43,5 @@ services:
       timeout: 5s
       retries: 10
 
-# A named disk for the database. It lives outside the container.
 volumes:
   db_data:
