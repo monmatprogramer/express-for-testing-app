@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db.js";
+import { Logger } from "@/common/logger";
 import {
   createRefreshToken,
   hashPassword,
@@ -7,6 +8,7 @@ import {
 } from "./password.js";
 import { or } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens.js";
+
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));
 const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 export async function login(input: {

@@ -3,6 +3,7 @@ import { db } from "./db.js";
 import { refresh, logout, login } from "./modules/auth/auth.service.js";
 import { createRefreshToken } from "./modules/auth/password.js";
 import { hashRefreshToken } from "./modules/auth/tokens.js";
+import type { Actor } from "./correlation.js";
 type SingAccessToken = string;
 interface User {
   id: string;
@@ -114,4 +115,15 @@ async function runTestRefresh() {
   }
 }
 
-runTestLogout();
+// Test Correlation files
+// -- Type of Actor---
+function runtTestCorrelation() {
+  const actor1: Actor = {
+    userId: "0001",
+    email: "test@test.com",
+    role: "ADMIN",
+  };
+  console.log(actor1);
+}
+
+runtTestCorrelation();
