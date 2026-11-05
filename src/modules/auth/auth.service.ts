@@ -166,9 +166,13 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
     ).first();
+    console.log("Find session by hash token: ");
+    console.log(session);
+
     if (!session || session.currentTokenHash !== tokenHash) {
       return;
     }
+    console.log("start revoking...");
     await db.orm.public.Session.where({ id: session.id }).update({
       revokedAt: new Date(),
     });
