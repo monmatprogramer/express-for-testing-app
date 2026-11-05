@@ -11,3 +11,14 @@ export interface RequestContext {
   clientTrackId?: string;
   actor?: Actor;
 }
+
+const storage = new AsyncLocalStorage<RequestContext>();
+
+// export function runWithCorrelationId<T>(context: RequestContext): T {
+//   return storage.run(context);
+// }
+const store = { id: 2 };
+
+try {
+  storage.run(store, () => {});
+} catch (error) {}
