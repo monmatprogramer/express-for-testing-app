@@ -165,7 +165,7 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
     if (!token.isValid) {
       return;
     }
-    const tokenHash = hashRefreshToken(rawRefreshToken);
+    const tokenHash = hashRefreshToken(token.value);
     // Find session by hash token
     const session = await db.orm.public.Session.where((s) =>
       or(s.currentTokenHash.eq(tokenHash), s.previousTokenHash.eq(tokenHash)),
