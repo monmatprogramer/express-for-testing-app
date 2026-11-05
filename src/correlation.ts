@@ -5,3 +5,9 @@ export interface Actor {
   email: string;
   role: "ADMIN" | "TENANT";
 }
+
+export interface RequestContext {
+  trackId: string;
+  clientTrackId?: string;
+  actor?: Actor;
+}

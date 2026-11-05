@@ -3,7 +3,7 @@ import { db } from "./db.js";
 import { refresh, logout, login } from "./modules/auth/auth.service.js";
 import { createRefreshToken } from "./modules/auth/password.js";
 import { hashRefreshToken } from "./modules/auth/tokens.js";
-import type { Actor } from "./correlation.js";
+import type { Actor, RequestContext } from "./correlation.js";
 type SingAccessToken = string;
 interface User {
   id: string;
@@ -123,7 +123,11 @@ function runtTestCorrelation() {
     email: "test@test.com",
     role: "ADMIN",
   };
-  console.log(actor1);
+  const requestContext: RequestContext = {
+    trackId: "0001",
+    actor: actor1,
+  };
+  console.log(requestContext);
 }
 
 runtTestCorrelation();
