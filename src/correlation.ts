@@ -24,7 +24,8 @@ try {
     const r = storage.getStore();
     console.log("In run : ", r);
     setTimeout(() => {
-      storage.getStore();
+      const r = storage.getStore();
+      console.log("setTimeout r: ", r);
     }, 200);
     throw new Error();
   });
