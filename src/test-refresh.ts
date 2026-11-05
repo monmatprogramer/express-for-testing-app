@@ -75,7 +75,17 @@ async function runTestRefreshToken() {
   }
 }
 
-async function runTestLogout() {}
+async function runTestLogout() {
+  const email: string = "monsokmeanmon@gmail.com";
+  const pass: string = "12345678";
+  try {
+    const result: ResultLogin = await login({ email, password: pass });
+    const rawRefreshToken = result.refreshToken;
+    await logout(rawRefreshToken);
+  } catch (error) {
+    console.error(error);
+  }
+}
 // Refresh test
 async function runTestRefresh() {
   try {
