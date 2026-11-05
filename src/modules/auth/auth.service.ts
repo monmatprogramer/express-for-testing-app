@@ -170,6 +170,7 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
   // 2. If Session has data but its currentTokenHash is not equal tokenHash therefore
   // user invalid
   if (!session || session.currentTokenHash !== tokenHash) {
+    // Stop execute here
     return;
   }
 
