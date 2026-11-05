@@ -160,9 +160,13 @@ export async function refresh(refreshToken: string) {
 
 // Logout
 export async function logout(rawRefreshToken: string | null): Promise<void> {
-  if (!rawRefreshToken) {
-    return;
-  }
+  try {
+    const token = normalizeToken(rawRefreshToken);
+    if (!token.isValid) {
+      return;
+    }
+  } catch (error) {}
+
   const tokenHash = hashRefreshToken(rawRefreshToken);
   // Find session by hash token
   const session = await db.orm.public.Session.where((s) =>
@@ -189,9 +193,12 @@ function normalizeToken(rawRefreshToken: string | null): {
   isValid: boolean;
   value: string;
 } {
-  if (!rawRefreshToken || rawRefreshToken.trim().length === 0)
-    return {
-      isValid: true,
-      value: "value",
-    };
+  if (!rawRefreshToken || rawRefreshToken.trim().length === 0) {
+    return { isValid: false, value: "" };
+  }
+
+  return {
+    isValid: true,
+    value: rawRefreshToken.trim(),
+  };
 }
