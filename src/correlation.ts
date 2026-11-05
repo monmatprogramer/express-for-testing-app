@@ -21,7 +21,8 @@ const store = { id: 2 };
 
 try {
   storage.run(store, () => {
-    storage.getStore();
+    const r = storage.getStore();
+    console.log("In run : ", r);
     setTimeout(() => {
       storage.getStore();
     }, 200);
