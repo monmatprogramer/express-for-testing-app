@@ -1,6 +1,7 @@
 # Perform one jop
 services:
   # The app from lesson 1.
+  # Jop 1
   api:
     build: .
     ports:
@@ -15,6 +16,7 @@ services:
         condition: service_completed_successfully
 
   # Apply the Prisma schema before starting the API.
+  # Jop 2
   migrate:
     build:
       context: .
@@ -27,7 +29,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
+  # Jop 3
   db:
     image: postgres:15
     environment:
