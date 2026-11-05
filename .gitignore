@@ -33,3 +33,7 @@ docker-backup.txt
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+
+# Custom folder
+.continue/
