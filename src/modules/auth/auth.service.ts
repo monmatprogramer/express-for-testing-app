@@ -1,6 +1,10 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db.js";
-import { createRefreshToken, hashPassword, verifyPassword } from "./password.js";
+import {
+  createRefreshToken,
+  hashPassword,
+  verifyPassword,
+} from "./password.js";
 import { or } from "@prisma/orm-postgres/orm-client";
 import { hashRefreshToken, signAccessToken } from "./tokens.js";
 const dummyPasswordHash = hashPassword(randomBytes(32).toString("hex"));

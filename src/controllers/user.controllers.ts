@@ -76,3 +76,5 @@ export function userProfile(req: Request, res: Response) {
     user: req.user,
   });
 }
+
+export function userLogout(req: Request, res: Response) {}
