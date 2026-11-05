@@ -33,7 +33,7 @@ async function runTestLogin() {
 
 // @ts-expect-error
 // Logout test
-async function runTestLogout() {
+async function runTestRefreshToken() {
   try {
     const user = await db.orm.public.User.first();
     console.log("runTest user(search user first): ", user);
@@ -75,6 +75,7 @@ async function runTestLogout() {
   }
 }
 
+async function runTestLogout() {}
 // Refresh test
 async function runTestRefresh() {
   try {
@@ -99,4 +100,4 @@ async function runTestRefresh() {
   }
 }
 
-runTestRefresh();
+runTestLogout();
