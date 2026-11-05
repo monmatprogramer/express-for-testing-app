@@ -21,11 +21,12 @@ export function runWithCorrelationId(context: RequestContext) {
       setTimeout(() => {
         console.log(storage.getStore());
       }, 200);
-      throw new Error();
+      console.log("Hello world");
     });
   } catch (error) {
     console.error(error);
   }
+  console.log("=> ", storage.getStore());
 }
 
 // export function first() {
