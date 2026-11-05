@@ -12,7 +12,7 @@ export interface RequestContext {
   actor?: Actor;
 }
 
-const storage = new AsyncLocalStorage<RequestContext>();
+const storage = new AsyncLocalStorage();
 
 // export function runWithCorrelationId<T>(context: RequestContext): T {
 //   return storage.run(context);
@@ -20,5 +20,13 @@ const storage = new AsyncLocalStorage<RequestContext>();
 const store = { id: 2 };
 
 try {
-  storage.run(store, () => {});
-} catch (error) {}
+  storage.run(store, () => {
+    storage.getStore();
+    setTimeout(() => {
+      storage.getStore();
+    }, 200);
+    throw new Error();
+  });
+} catch (error) {
+  storage.getStore();
+}
