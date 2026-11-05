@@ -184,3 +184,14 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
     console.error("Logout error: ", error);
   }
 }
+
+function normalizeToken(rawRefreshToken: string | null): {
+  isValid: boolean;
+  value: string;
+} {
+  if (!rawRefreshToken || rawRefreshToken.trim().length === 0)
+    return {
+      isValid: true,
+      value: "value",
+    };
+}
