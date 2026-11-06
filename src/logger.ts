@@ -18,7 +18,7 @@ export const correlationFormat = winston.format((info) => {
     info.trackId = context.trackId;
     info.clientTracktId = context.clientTrackId;
   }
-  console.log(info);
+  console.log("info: ", info);
   return info;
 });
 
