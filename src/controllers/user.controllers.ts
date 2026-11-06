@@ -30,10 +30,9 @@ export function userLogin(req: Request, res: Response) {
   };
   try {
     // Sign In
-    const newToken = signAccessToken(claimsNew);
-
+    const accessToken = signAccessToken(claimsNew);
     // Set HTTP-only cookie on the response
-    setAuthCookies(req, res, newToken, refreshToken());
+    setAuthCookies(req, res, accessToken, refreshToken());
     login({
       email,
       password,
