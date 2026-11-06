@@ -8,7 +8,7 @@ export function correlationMiddleware(
   next: NextFunction,
 ) {
   logger.info("---- Middlewar ----");
-  logger.debug(`req.headers : ${req.headers}`);
+  logger.debug(`req.headers : ${JSON.stringify(req.headers)}`);
   // Create Client Tracking ID
   const clientTrackId =
     (req.headers["x-request-id"] as string) ||
@@ -19,7 +19,7 @@ export function correlationMiddleware(
     clientTrackId,
   };
 
-  logger.debug(`Context: $${context}`);
+  logger.debug(`Context: $${JSON.stringify(context)}`);
 
   req.context = context;
 
