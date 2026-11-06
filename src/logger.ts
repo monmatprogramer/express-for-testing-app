@@ -5,6 +5,7 @@ import path from "node:path";
 import { env } from "./config/env";
 export function test() {
   console.log(process.cwd());
+  console.log(path.join("root", "logs"));
 }
 const logDir = path.join(process.cwd(), "logs");
 // Logger for Dev
