@@ -46,7 +46,12 @@ const proFormat = winston.format.combine(
   winston.format.timestamp(),
   winston.format.json(),
 );
-
+const fileFormat = winston.format.combine(
+  correlationFormat(),
+  metadataFormat(),
+  winston.format.timestamp(),
+  winston.format.json(),
+);
 // Caller
 export const logger = winston.createLogger({
   level: env.node_env === "development" ? "debug" : "info",
@@ -57,10 +62,7 @@ export const logger = winston.createLogger({
       datePattern: "YYYY-MM-DD",
       maxSize: "20m",
       maxFiles: "14d",
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json(),
-      ),
+      format: fileFormat,
     }),
   ],
   format: env.node_env === "development" ? devFormat : proFormat,

@@ -1,3 +1,3 @@
 import { logger } from "./logger";
 
-console.log(logger);
+logger.info("Testing", { email: "email", ip: "1233" });
