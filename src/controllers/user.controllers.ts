@@ -48,8 +48,10 @@ export function userLogin(req: Request, res: Response) {
     });
   } catch (error) {
     if (error instanceof HttpError) {
-      console.log("Message: ", error.message);
-      console.log("Status: ", error.status);
+      logger.warn("Login HTTP error", {
+        status: error.status,
+        message: error.message,
+      });
     }
     if (error instanceof Error) {
       console.log("Message: ", error.message);
