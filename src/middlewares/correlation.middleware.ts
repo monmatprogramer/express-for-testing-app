@@ -18,4 +18,8 @@ export function correlationMiddleware(
   };
 
   req.context = context;
+
+  // Add response header
+  res.setHeader("X-Request-Id", context.trackId);
+  next();
 }
