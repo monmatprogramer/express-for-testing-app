@@ -16,4 +16,6 @@ export function correlationMiddleware(
     trackId: uuidv4(),
     clientTrackId,
   };
+
+  req.context = context;
 }
