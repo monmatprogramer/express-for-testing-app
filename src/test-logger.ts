@@ -1,3 +1,3 @@
 import { logger } from "./logger";
 
-console.log(logger);
+logger.error("Logout error");

@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import { db } from "../../db.js";
-import { Logger } from "@/common/logger";
+import { logger } from "../../logger.js";
 import {
   createRefreshToken,
   hashPassword,
@@ -174,7 +174,7 @@ export async function logout(rawRefreshToken: string | null): Promise<void> {
       revokedAt: now,
     });
   } catch (error) {
-    console.error("Logout error: ", error);
+    logger.error("Logout error", { error });
   }
 }
 
