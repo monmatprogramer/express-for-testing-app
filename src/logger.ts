@@ -1,6 +1,18 @@
 import winston from "winston";
 import { env } from "./config/env";
-const devFormat = winston.format.combine();
+// Logger for Dev
+const devFormat = winston.format.combine(
+  winston.format.timestamp(),
+  winston.format.colorize(),
+  winston.format.printf(({ level, message, timestamp }) => {
+    return `${timestamp} [${level}]: ${message}`;
+  }),
+);
+
+// Logger for Pro
+const proFormat = winston.format.combine();
+
+// Caller
 export const logger = winston.createLogger({
   level: "info",
   transports: [new winston.transports.Console()],
