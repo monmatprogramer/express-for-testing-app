@@ -31,6 +31,7 @@ const devFormat = winston.format.combine(
 
 // Logger for Pro
 const proFormat = winston.format.combine(
+  correlationFormat(),
   winston.format.timestamp(),
   winston.format.json(),
 );
