@@ -1,3 +1,3 @@
-import { logger } from "./logger";
+import { logger, test } from "./logger";
 
-logger.error("Logout error");
+test();
