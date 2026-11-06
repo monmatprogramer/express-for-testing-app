@@ -1,14 +1,7 @@
 import { Request, Response } from "express";
 import { HttpError } from "../httpError.js";
-import { v4 as uuiv4 } from "uuid";
 import { login } from "../modules/auth/auth.service.js";
 import { logger } from "../logger.js";
-import {
-  AccessClaims,
-  refreshToken,
-  signAccessToken,
-} from "../modules/auth/tokens.js";
-import { setAuthCookies } from "../modules/auth/cookies.js";
 import { getUserAgent } from "../utils/userAgent.js";
 
 export function userHealth(_req: Request, res: Response) {
@@ -22,7 +15,6 @@ export function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
   // Get brower and OS name
   const userAgent = getUserAgent(req);
-  console.log("req.ip ", req.ip);
   try {
     login({
       email,
