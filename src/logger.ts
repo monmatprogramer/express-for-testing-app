@@ -13,6 +13,7 @@ const logDir = path.join(process.cwd(), "logs");
 mkdirSync(logDir, { recursive: true });
 
 export const correlationFormat = winston.format((info) => {
+  console.log("get info: ", info);
   const context = getContext();
   if (context) {
     info.trackId = context.trackId;
