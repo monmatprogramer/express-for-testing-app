@@ -27,9 +27,12 @@ const metadataFormat = winston.format((info) => {
 // Logger for Dev
 const devFormat = winston.format.combine(
   correlationFormat(),
-  winston.format.timestamp(),
   winston.format.colorize(),
-  winston.format.printf(({ level, message, timestamp }) => {
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+  winston.format.printf(({ level, message, timestamp, ...meta }) => {
+    const metaStr =
+      Object.keys(meta).length > 0 ? `${JSON.stringify(meta)}` : "";
+    const trackStr = meta.trackId ? `[trackId: ${meta.trackId}]` : "";
     return `${timestamp} [${level}]: ${message}`;
   }),
 );
