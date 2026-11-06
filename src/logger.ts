@@ -54,6 +54,8 @@ const fileFormat = winston.format.combine(
 // Caller
 export const logger = winston.createLogger({
   level: env.node_env === "development" ? "debug" : "info",
+  format: env.node_env === "development" ? devFormat : proFormat,
+
   transports: [
     new winston.transports.Console(),
     new DailyRotateFile({
@@ -78,5 +80,4 @@ export const logger = winston.createLogger({
       format: fileFormat,
     }),
   ],
-  format: env.node_env === "development" ? devFormat : proFormat,
 });
