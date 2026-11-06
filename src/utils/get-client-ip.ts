@@ -7,6 +7,8 @@ export function getClientIp(req: Request) {
   if (rawIp?.startsWith("::ffff:")) {
     rawIp = rawIp.replace("::ffff:", "");
   }
-  console.log(rawIp);
+  if (rawIp === "::1") {
+    rawIp = "127.0.0.1";
+  }
   return "";
 }
