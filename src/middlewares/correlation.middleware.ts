@@ -8,7 +8,9 @@ export function correlationMiddleware(
   next: NextFunction,
 ) {
   logger.info("---- Middlewar ----");
-  logger.debug(`req.headers : ${JSON.stringify(req.headers)}`);
+  logger.debug(
+    `req.headers : ${JSON.stringify(req.headers["x-correlation-id"])}`,
+  );
   // Create Client Tracking ID
   const clientTrackId =
     (req.headers["x-request-id"] as string) ||
