@@ -10,6 +10,7 @@ export interface AccessClaims {
 
 // Login
 export function signAccessToken(claims: AccessClaims): string {
+  //
   const payload = {
     sid: claims.sid,
     role: claims.role,
