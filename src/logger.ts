@@ -1,4 +1,6 @@
 import winston from "winston";
+import { env } from "./config/env";
+const devFormat = winston.format.combine();
 export const logger = winston.createLogger({
   level: "info",
   transports: [new winston.transports.Console()],
