@@ -4,6 +4,7 @@ import cors from "cors";
 import userRoute from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import { correlationMiddleware } from "./middlewares/correlation.middleware.js";
+import { requestLogger } from "./middlewares/requestLogger.middleware.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(correlationMiddleware);
+app.use(requestLogger);
 
 app.set("trust proxy", true);
 
