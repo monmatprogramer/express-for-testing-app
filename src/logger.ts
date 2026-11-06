@@ -33,6 +33,7 @@ export const logger = winston.createLogger({
     new DailyRotateFile({
       filename: path.join(logDir, "app-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
+      maxSize: "20m",
     }),
   ],
   format: env.node_env === "development" ? devFormat : proFormat,
