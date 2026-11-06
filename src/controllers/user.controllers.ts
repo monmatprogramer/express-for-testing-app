@@ -10,13 +10,13 @@ export function userHealth(_req: Request, res: Response) {
   });
 }
 
-export function userLogin(req: Request, res: Response) {
+export async function userLogin(req: Request, res: Response) {
   //TODO: Add validation of these field
   const { email, password } = req.body;
   // Get brower and OS name
   const userAgent = getUserAgent(req);
   try {
-    login({
+    await login({
       email,
       password,
       ip: req.ip,
