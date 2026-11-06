@@ -21,7 +21,7 @@ const correlationFormat = winston.format((info) => {
 });
 const metadataFormat = winston.format((info) => {
   info.service = "express-for-testing-app";
-  info.environment = "env.node_env";
+  info.environment = env.node_env;
   return info;
 });
 
