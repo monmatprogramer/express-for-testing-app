@@ -18,9 +18,5 @@ export function runWithCorrelationId<T>(
   context: RequestContext,
   next: () => T,
 ) {
-  try {
-    storage.run(context, next);
-  } catch (error) {
-    console.error(error);
-  }
+  storage.run(context, next);
 }

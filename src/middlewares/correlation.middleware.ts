@@ -20,5 +20,5 @@ export function correlationMiddleware(
 
   // Add response header
   res.setHeader("X-Request-Id", context.trackId);
-  next();
+  runWithCorrelationId(context, next);
 }
