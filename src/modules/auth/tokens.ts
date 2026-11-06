@@ -7,6 +7,8 @@ export interface AccessClaims {
   role: Role;
   sid: string;
 }
+
+// Login
 export function signAccessToken(claims: AccessClaims): string {
   const payload = {
     sid: claims.sid,
