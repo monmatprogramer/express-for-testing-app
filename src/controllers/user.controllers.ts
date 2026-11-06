@@ -22,17 +22,8 @@ export function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
   // Get brower and OS name
   const userAgent = getUserAgent(req);
-
-  const claimsNew: AccessClaims = {
-    sub: `user-${uuiv4()}`,
-    role: "ADMIN",
-    sid: uuiv4(),
-  };
+  console.log("req.ip ", req.ip);
   try {
-    // Sign In
-    // const accessToken = signAccessToken(claimsNew);
-    // Set HTTP-only cookie on the response
-    // setAuthCookies(req, res, accessToken, refreshToken());
     login({
       email,
       password,
