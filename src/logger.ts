@@ -6,6 +6,9 @@ import { env } from "./config/env";
 export function test() {}
 // Create logs folder under root foder of the project
 const logDir = path.join(process.cwd(), "logs");
+
+// Create a folder in the project
+mkdirSync(logDir, { recursive: true });
 // Logger for Dev
 const devFormat = winston.format.combine(
   winston.format.timestamp(),
