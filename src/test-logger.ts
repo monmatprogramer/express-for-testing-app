@@ -1,3 +1,3 @@
 import { logger } from "./logger";
 
-console.log(logger.format);
+console.log(logger);
