@@ -54,6 +54,9 @@ export function userLogin(req: Request, res: Response) {
       });
     }
     if (error instanceof Error) {
+      logger.error("Login Error", {
+        message: error.message,
+      });
       console.log("Message: ", error.message);
     }
     return res.status(400).json({
