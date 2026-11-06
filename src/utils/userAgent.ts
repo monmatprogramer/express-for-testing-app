@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { UAParser } from "ua-parser-js";
+import { LRUCache } from "lru-cache";
 export function getUserAgent(req: Request): string {
   const rawUserAgent = req.headers["user-agent"];
   const parser = new UAParser(rawUserAgent);
