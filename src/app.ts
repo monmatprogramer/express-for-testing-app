@@ -19,8 +19,8 @@ app.use(requestLogger);
 
 app.set("trust proxy", true);
 
-app.get(`/${baseUrl}`, (_req, res) => {
-  res.json({ message: "Hello from Express!" });
+app.get(`/${baseUrl}`, (req, res) => {
+  res.json({ message: "Hello from Express!", ip: req.ip });
 });
 
 app.use(`/${baseUrl}/users`, userRoute);
