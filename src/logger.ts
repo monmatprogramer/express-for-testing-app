@@ -34,6 +34,11 @@ export const logger = winston.createLogger({
       filename: path.join(logDir, "app-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
       maxSize: "20m",
+      maxFiles: "14d",
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json(),
+      ),
     }),
   ],
   format: env.node_env === "development" ? devFormat : proFormat,
