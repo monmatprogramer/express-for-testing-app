@@ -10,7 +10,10 @@ const devFormat = winston.format.combine(
 );
 
 // Logger for Pro
-const proFormat = winston.format.combine();
+const proFormat = winston.format.combine(
+  winston.format.timestamp(),
+  winston.format.json(),
+);
 
 // Caller
 export const logger = winston.createLogger({
