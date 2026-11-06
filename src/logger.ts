@@ -3,10 +3,8 @@ import DailyRotateFile from "winston-daily-rotate-file";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { env } from "./config/env";
-export function test() {
-  console.log(process.cwd());
-  console.log(path.join("root", "logs"));
-}
+export function test() {}
+// Create logs folder under root foder of the project
 const logDir = path.join(process.cwd(), "logs");
 // Logger for Dev
 const devFormat = winston.format.combine(
