@@ -1,3 +1,6 @@
-import { logger, test } from "./logger";
+import { correlationFormat } from "./logger";
 
-console.log(logger);
+correlationFormat({
+  trackId: "trackid sample",
+  clientTrackId: "Client track id",
+});

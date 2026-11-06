@@ -4,6 +4,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { env } from "./config/env";
 import { getContext } from "./correlation";
+import { on } from "node:cluster";
 export function test() {}
 // Create logs folder under root foder of the project
 const logDir = path.join(process.cwd(), "logs");
@@ -11,13 +12,16 @@ const logDir = path.join(process.cwd(), "logs");
 // Create a folder in the project
 mkdirSync(logDir, { recursive: true });
 
-const correlationFormat = winston.format((info) => {
+export const correlationFormat = winston.format((info) => {
   const context = getContext();
   if (context) {
     info.trackId = context.trackId;
     info.clientTracktId = context.clientTrackId;
   }
+  console.log(info);
+  return info;
 });
+
 // Logger for Dev
 const devFormat = winston.format.combine(
   winston.format.timestamp(),
