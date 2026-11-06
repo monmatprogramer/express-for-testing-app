@@ -22,6 +22,7 @@ const correlationFormat = winston.format((info) => {
 const metadataFormat = winston.format((info) => {
   info.service = "express-for-testing-app";
   info.environment = "env.node_env";
+  return info;
 });
 
 // Logger for Dev
@@ -33,13 +34,14 @@ const devFormat = winston.format.combine(
     const metaStr =
       Object.keys(meta).length > 0 ? `${JSON.stringify(meta)}` : "";
     const trackStr = meta.trackId ? `[trackId: ${meta.trackId}]` : "";
-    return `${timestamp} [${level}]: ${message}`;
+    return `${timestamp} [${level}]${trackStr}: ${message}${metaStr}`;
   }),
 );
 
 // Logger for Pro
 const proFormat = winston.format.combine(
   correlationFormat(),
+  metadataFormat(),
   winston.format.timestamp(),
   winston.format.json(),
 );
