@@ -18,15 +18,6 @@ app.set("trust proxy", true);
 
 app.use(correlationMiddleware);
 
-app.get(`/${baseUrl}/user-test`, (req: Request, res: Response) => {
-  logger.info("---- SERVER CONSOLE LOG ---");
-  logger.info(`Internal Track ID: ${req.context?.trackId}`);
-  logger.info(`Client Track ID: ${req.context?.clientTrackId}`);
-  return res.json({
-    message: "Request processed successfully!",
-    context: req.context,
-  });
-});
 app.get(`/${baseUrl}`, (_req, res) => {
   res.json({ message: "Hello from Express!" });
 });
