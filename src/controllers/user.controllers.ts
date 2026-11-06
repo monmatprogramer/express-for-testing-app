@@ -9,7 +9,6 @@ import {
   signAccessToken,
 } from "../modules/auth/tokens.js";
 import { setAuthCookies } from "../modules/auth/cookies.js";
-import { UAParser } from "ua-parser-js";
 import { getUserAgent } from "../utils/userAgent.js";
 
 export function userHealth(_req: Request, res: Response) {
