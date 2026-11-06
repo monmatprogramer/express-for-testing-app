@@ -4,6 +4,7 @@ import cors from "cors";
 import userRoute from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import { correlationMiddleware } from "./middlewares/correlation.middleware.js";
+import { logger } from "./logger.js";
 
 const app = express();
 
@@ -17,6 +18,10 @@ app.set("trust proxy", true);
 
 app.use(correlationMiddleware);
 
+app.get(`/${baseUrl}/user-test`, (req: Request, res: Response) => {
+  logger.info("---- SERVER CONSOLE LOG ---");
+  logger.info(`Internal Track ID: ${req.context?.trackId}`);
+});
 app.get(`/${baseUrl}`, (_req, res) => {
   res.json({ message: "Hello from Express!" });
 });
