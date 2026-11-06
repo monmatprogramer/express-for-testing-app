@@ -6,6 +6,7 @@ import { RequestContext } from "../correlation";
 
 declare global {
   namespace Express {
+    // Merge new property 'context' into the existing Express request interface
     export interface Request {
       context?: RequestContext;
     }
