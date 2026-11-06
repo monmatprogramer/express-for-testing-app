@@ -16,7 +16,7 @@ export async function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
   // Get brower and OS name
   const userAgent = getUserAgent(req);
-  //
+  // Get clean client IP
   const clientIp = getClientIp(req);
   try {
     await login({
