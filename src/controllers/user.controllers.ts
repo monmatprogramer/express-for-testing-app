@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { HttpError } from "../httpError.js";
 import { v4 as uuiv4 } from "uuid";
 import { login } from "../modules/auth/auth.service.js";
+import { logger } from "../logger.js";
 import {
   AccessClaims,
   refreshToken,
@@ -41,6 +42,7 @@ export function userLogin(req: Request, res: Response) {
       ip: req.ip,
       userAgent: `${broswer} ${os}`,
     });
+    logger.info("User login request", { email: req.body.email, ip: req.ip });
     return res.status(200).json({
       message: "Login success.",
     });
