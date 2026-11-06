@@ -64,6 +64,14 @@ export const logger = winston.createLogger({
       maxFiles: "14d",
       format: fileFormat,
     }),
+    new DailyRotateFile({
+      filename: path.join(logDir, "error-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      maxSize: "20m",
+      maxFiles: "30d",
+      level: "error",
+      format: fileFormat,
+    }),
   ],
   format: env.node_env === "development" ? devFormat : proFormat,
 });
