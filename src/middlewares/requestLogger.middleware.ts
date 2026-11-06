@@ -10,10 +10,10 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
     logger.http("Request completed", {
       method: req.method,
       path: req.path,
-      statusCode: req.statusCode,
+      statusCode: res.statusCode,
       durationMs: duration,
       ip: req.ip,
-      // userAgent: req.userAgent,
+      userAgent: req.headers["user-agent"],
     });
   });
   next();
