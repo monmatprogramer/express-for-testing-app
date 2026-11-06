@@ -1,7 +1,7 @@
 import { env } from "./config/env.js";
 import app from "./app.js";
 import { databaseUrl, db } from "./db.js";
-
+import { logger } from "./logger.js";
 // Define the port for server first.
 const port = Number(env.port ?? 3000);
 
@@ -13,7 +13,7 @@ const start = async (): Promise<void> => {
   // If the connection is successful
   // Start the server to linten
   app.listen(port, () => {
-    console.log(`Server listen on port ${port}`);
+    logger.info(`Server listen on port ${port}`);
   });
 };
 
