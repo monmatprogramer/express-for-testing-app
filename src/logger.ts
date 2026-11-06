@@ -9,6 +9,7 @@ const logDir = path.join(process.cwd(), "logs");
 
 // Create a folder in the project
 mkdirSync(logDir, { recursive: true });
+
 // Logger for Dev
 const devFormat = winston.format.combine(
   winston.format.timestamp(),
@@ -27,6 +28,11 @@ const proFormat = winston.format.combine(
 // Caller
 export const logger = winston.createLogger({
   level: env.node_env === "development" ? "debug" : "info",
-  transports: [new winston.transports.Console()],
+  transports: [
+    new winston.transports.Console(),
+    new DailyRotateFile({
+      filename: path.join(logDir, "app-%DATE%.log"),
+    }),
+  ],
   format: env.node_env === "development" ? devFormat : proFormat,
 });
