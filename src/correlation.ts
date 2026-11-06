@@ -20,3 +20,7 @@ export function runWithCorrelationId<T>(
 ) {
   storage.run(context, next);
 }
+
+export function getContext(): RequestContext | undefined {
+  return storage.getStore();
+}
