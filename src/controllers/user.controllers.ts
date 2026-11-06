@@ -20,11 +20,7 @@ export function userHealth(_req: Request, res: Response) {
 
 export function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
-  const rawUserAgent = req.headers["user-agent"];
-  const parser = new UAParser(rawUserAgent);
-  const result = parser.getResult();
-  const broswer = result.browser.name;
-  const os = result.os.name;
+  // Get brower and OS name
   const userAgent = getUserAgent(req);
   try {
     const claimsNew: AccessClaims = {
