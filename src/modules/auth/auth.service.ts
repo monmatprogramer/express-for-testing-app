@@ -20,6 +20,8 @@ export async function login(input: {
   userAgent?: string;
 }) {
   const email = input.email.trim().toLowerCase();
+  // Log user login
+  logger.info("Login attemp:", { email, ip: input.ip });
   // Check if user is not existing in db
   // Take time to search user
   // But it search very fast (5milliseconds)
