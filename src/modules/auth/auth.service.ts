@@ -35,6 +35,7 @@ export async function login(input: {
   // Before it has heavy math
   const passwordMathes = await verifyPassword(input.password, passwordHash);
   if (!user || !passwordMathes) {
+    logger.warn("Login failed - invalid credential", { email, ip: input.ip });
     throw new Error("Invalid email or password.");
   }
 
