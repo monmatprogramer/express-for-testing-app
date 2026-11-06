@@ -66,6 +66,11 @@ export async function login(input: {
       },
       refreshToken: refreshToken,
     };
+    logger.info("Login succcessfull", {
+      userId: user.id,
+      email: user.email,
+      sessionId: session.id,
+    });
     return newObject;
   } catch (error: unknown) {
     throw new Error("Error on creating session");
