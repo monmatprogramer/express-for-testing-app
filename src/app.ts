@@ -5,7 +5,6 @@ import userRoute from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import { correlationMiddleware } from "./middlewares/correlation.middleware.js";
 import { requestLogger } from "./middlewares/requestLogger.middleware.js";
-import { getClientIp } from "./utils/get-client-ip.js";
 
 const app = express();
 
@@ -22,7 +21,6 @@ app.set("trust proxy", true);
 
 app.get(`/${baseUrl}/health`, (req, res) => {
   //Test get client ip
-  getClientIp(req);
   res.json({ message: "Hello from Express!", ip: req.ip });
 });
 

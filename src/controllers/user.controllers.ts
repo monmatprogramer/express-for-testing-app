@@ -3,6 +3,7 @@ import { HttpError } from "../httpError.js";
 import { login } from "../modules/auth/auth.service.js";
 import { logger } from "../logger.js";
 import { getUserAgent } from "../utils/userAgent.js";
+import { getClientIp } from "../utils/get-client-ip.js";
 
 export function userHealth(_req: Request, res: Response) {
   return res.status(200).json({
@@ -15,11 +16,13 @@ export async function userLogin(req: Request, res: Response) {
   const { email, password } = req.body;
   // Get brower and OS name
   const userAgent = getUserAgent(req);
+  //
+  const clientIp = getClientIp(req);
   try {
     await login({
       email,
       password,
-      ip: req.ip,
+      ip: clientIp,
       userAgent: userAgent,
     });
     logger.info("User login request", { email: req.body.email, ip: req.ip });
