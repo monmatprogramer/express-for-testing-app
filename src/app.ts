@@ -19,7 +19,7 @@ app.use(requestLogger);
 
 app.set("trust proxy", true);
 
-app.get(`/${baseUrl}`, (req, res) => {
+app.get(`/${baseUrl}/health`, (req, res) => {
   res.json({ message: "Hello from Express!", ip: req.ip });
 });
 
