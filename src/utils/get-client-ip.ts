@@ -10,5 +10,5 @@ export function getClientIp(req: Request) {
   if (rawIp === "::1") {
     rawIp = "127.0.0.1";
   }
-  return "";
+  return rawIp;
 }
