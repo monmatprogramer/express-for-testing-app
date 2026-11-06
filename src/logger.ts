@@ -3,6 +3,7 @@ import DailyRotateFile from "winston-daily-rotate-file";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { env } from "./config/env";
+import { getContext } from "./correlation";
 export function test() {}
 // Create logs folder under root foder of the project
 const logDir = path.join(process.cwd(), "logs");
@@ -10,6 +11,13 @@ const logDir = path.join(process.cwd(), "logs");
 // Create a folder in the project
 mkdirSync(logDir, { recursive: true });
 
+const correlationFormat = winston.format((info) => {
+  const context = getContext();
+  if (context) {
+    info.trackId = context.trackId;
+    info.clientTracktId = context.clientTrackId;
+  }
+});
 // Logger for Dev
 const devFormat = winston.format.combine(
   winston.format.timestamp(),
