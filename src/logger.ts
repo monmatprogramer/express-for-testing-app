@@ -19,9 +19,14 @@ const correlationFormat = winston.format((info) => {
   }
   return info;
 });
+const metadataFormat = winston.format((info) => {
+  info.service = "express-for-testing-app";
+  info.environment = "env.node_env";
+});
 
 // Logger for Dev
 const devFormat = winston.format.combine(
+  correlationFormat(),
   winston.format.timestamp(),
   winston.format.colorize(),
   winston.format.printf(({ level, message, timestamp }) => {
