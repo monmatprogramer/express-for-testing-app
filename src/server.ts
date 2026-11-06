@@ -19,7 +19,7 @@ const start = async (): Promise<void> => {
 
 // This is our server start
 start().catch(async (error: unknown) => {
-  console.error("Error at starting the server: ", error);
+  logger.error("Error at starting the server: ", error);
   // If the connection has any error, stop connection immedately.
   await db.close();
   // Stop application also
