@@ -10,6 +10,7 @@ import {
 } from "../modules/auth/tokens.js";
 import { setAuthCookies } from "../modules/auth/cookies.js";
 import { UAParser } from "ua-parser-js";
+import { getUserAgent } from "../utils/userAgent.js";
 
 export function userHealth(_req: Request, res: Response) {
   return res.status(200).json({
@@ -24,6 +25,7 @@ export function userLogin(req: Request, res: Response) {
   const result = parser.getResult();
   const broswer = result.browser.name;
   const os = result.os.name;
+  const userAgent = getUserAgent(req);
   try {
     const claimsNew: AccessClaims = {
       sub: `user-${uuiv4()}`,
@@ -40,7 +42,7 @@ export function userLogin(req: Request, res: Response) {
       email,
       password,
       ip: req.ip,
-      userAgent: `${broswer} ${os}`,
+      userAgent: userAgent,
     });
     logger.info("User login request", { email: req.body.email, ip: req.ip });
     return res.status(200).json({
@@ -57,7 +59,6 @@ export function userLogin(req: Request, res: Response) {
       logger.error("Login Error", {
         message: error.message,
       });
-      console.log("Message: ", error.message);
     }
     return res.status(400).json({
       message: "Bad request",
