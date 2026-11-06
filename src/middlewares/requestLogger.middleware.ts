@@ -2,13 +2,10 @@
 
 import { NextFunction, Response, Request } from "express";
 import { logger } from "../logger";
-import { UAParser } from "ua-parser-js";
+import { getUserAgent } from "../utils/userAgent";
 export function requestLogger(req: Request, res: Response, next: NextFunction) {
-  const rawUserAgent = req.headers["user-agent"];
-  const parser = new UAParser(rawUserAgent);
-  const result = parser.getResult();
-  const browser = result.browser.name;
-  const os = result.os.name;
+  // Get broser & OS name
+  const userAgent = getUserAgent(req);
   const start = Date.now();
   res.on("finish", () => {
     const duration = Date.now() - start;
@@ -18,7 +15,7 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
       statusCode: res.statusCode,
       durationMs: duration,
       ip: req.ip,
-      userAgent: `${browser} ${os}`,
+      userAgent: userAgent,
     });
   });
   next();
