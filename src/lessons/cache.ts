@@ -19,7 +19,7 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     for (let i: number = ms; i >= 1; i--) {
-      resolve(test(i));
+      setTimeout(() => resolve(test(i)), 1000);
     }
   });
 }
