@@ -19,10 +19,10 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      for (let i: number = 3; i >= 1; i--) {
-        resolve(test(ms));
+      for (let i: number = ms; i >= 1; i--) {
+        resolve(test(i));
       }
-    }, 4000);
+    }, 1000);
   });
 }
 
