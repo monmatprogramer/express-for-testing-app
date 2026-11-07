@@ -1,4 +1,4 @@
-import { LRUCache } from "lru-cache/raw";
+import { LRUCache } from "lru-cache";
 
 export const myCache = new LRUCache<string, string>({
   max: 3,
