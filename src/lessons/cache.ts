@@ -19,11 +19,11 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(test());
+      resolve(test(ms));
     }, 1000);
   });
 }
 
-function test() {
-  console.log("hello");
+function test(ms: number) {
+  console.log(`${ms}...`);
 }
