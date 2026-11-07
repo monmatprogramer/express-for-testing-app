@@ -10,7 +10,9 @@ async function showUser() {
 }
 async function runCountDown() {
   console.log("Cont down is start...");
-  await delay(3);
+  for (let i: number = 3; i >= 1; i--) {
+    await delay(i);
+  }
   console.log("Finish");
 }
 
