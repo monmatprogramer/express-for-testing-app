@@ -18,12 +18,12 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 // The countdown timer
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
-    setTimeout(() => test(ms), 1000);
+    resolve(test(ms));
   });
 }
 
-function test(ms: number) {
+async function test(ms: number): Promise<void> {
   for (let i: number = ms; i >= 1; i--) {
-    console.log(`${ms}...`);
+    setTimeout(() => console.log(`${ms}...`), 1000);
   }
 }
