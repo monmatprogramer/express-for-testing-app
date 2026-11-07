@@ -1,5 +1,6 @@
 import { delay, getUserFromDatabase } from "./cache";
 
+// @ts-expect-error
 async function showUser() {
   console.log("Fetching user...");
 
