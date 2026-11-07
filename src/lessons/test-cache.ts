@@ -1,4 +1,4 @@
-import { getUserFromDatabase } from "./cache";
+import { delay, getUserFromDatabase } from "./cache";
 
 async function showUser() {
   console.log("Fetching user...");
@@ -7,7 +7,12 @@ async function showUser() {
 
   console.log(user);
 }
+async function runCountDown() {
+  console.log("Cont down is start...");
+  await delay(3);
+  console.log("Finish");
+}
 
 // Call the function
 
-showUser();
+runCountDown();
