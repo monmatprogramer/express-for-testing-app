@@ -26,6 +26,8 @@ export async function delay(ms: number): Promise<void> {
 
 function test(ms: number) {
   for (let i: number = ms; i >= 1; i--) {
-    console.log(`${i}...`);
+    setTimeout(() => {
+      console.log(`${i}...`);
+    }, 1000);
   }
 }
