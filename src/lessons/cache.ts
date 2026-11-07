@@ -17,7 +17,7 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 // Challenge 1
 // The countdown timer
 export async function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => {});
+  return new Promise(() => console.log("Hello"));
 }
 
 function test(resolve) {
