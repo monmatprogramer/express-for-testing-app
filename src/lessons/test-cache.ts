@@ -13,7 +13,7 @@ async function runCountDown() {
   for (let i: number = 3; i >= 1; i--) {
     await delay(i);
   }
-  console.log("Finish");
+  console.log("Go!");
 }
 
 // Call the function
