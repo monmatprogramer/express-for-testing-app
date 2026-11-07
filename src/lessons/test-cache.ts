@@ -10,7 +10,6 @@ async function showUser() {
 }
 async function runCountDown() {
   await delay(3);
-  console.log("Go!");
 }
 
 // Call the function
