@@ -13,3 +13,13 @@ export async function getUserFromDatabase(id: string): Promise<string> {
     }, 2000);
   });
 }
+
+// Challenge 1
+// The countdown timer
+export async function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`${resolve}...`);
+    }, 1000);
+  });
+}
