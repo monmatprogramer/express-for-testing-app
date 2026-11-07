@@ -6,3 +6,10 @@ export const myCache = new LRUCache<string, string>({
 });
 
 // Fake slow database function (take 2 seconds)
+async function getUserFromDatabase(id: string): Promise<string> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(`User_Profile_Date_For_${id}`);
+    }, 2000);
+  });
+}
