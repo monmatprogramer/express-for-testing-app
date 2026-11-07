@@ -7,3 +7,7 @@ async function showUser() {
 
   console.log(user);
 }
+
+// Call the function
+
+showUser();
