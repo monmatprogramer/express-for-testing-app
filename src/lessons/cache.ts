@@ -20,14 +20,12 @@ export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(test(ms));
-    }, 1000);
+    }, 3000);
   });
 }
 
 function test(ms: number) {
   for (let i: number = ms; i >= 1; i--) {
-    setTimeout(() => {
-      console.log(`${i}...`);
-    }, 1000);
+    console.log(`${i}...`);
   }
 }
