@@ -25,5 +25,5 @@ export async function delay(ms: number): Promise<void> {
 }
 
 function test() {
-  setTimeout(() => "hello", 4000);
+  setTimeout(() => console.log("Hello "), 4000);
 }
