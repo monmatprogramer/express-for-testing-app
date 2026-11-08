@@ -24,13 +24,13 @@ export async function delay(ms: number): Promise<void> {
   });
 }
 
-async function test(): Promise<string> {
+async function test(stringi): Promise<void> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve("Hello"), 3000);
+    setTimeout(() => resolve(console.log(i)), 3000);
   });
 }
 async function countDown() {
   for (let i: number = 1; i <= 3; i++) {
-    await test();
+    await test(i);
   }
 }
