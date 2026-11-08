@@ -29,6 +29,8 @@ async function test(): Promise<void> {
     setTimeout(() => resolve(countDown()), 3000);
   });
 }
-function countDown() {
-  for (let i: number = 1; i <= 3; i++) {}
+async function countDown() {
+  for (let i: number = 1; i <= 3; i++) {
+    await test();
+  }
 }
