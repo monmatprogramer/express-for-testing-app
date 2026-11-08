@@ -24,8 +24,11 @@ export async function delay(ms: number): Promise<void> {
   });
 }
 
-function test() {
-  for (let i: number = 1; i <= 3; i++) {
-    setTimeout(() => console.log(i), 4000);
-  }
+async function test(): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(countDown()), 3000);
+  });
+}
+function countDown() {
+  for (let i: number = 1; i <= 3; i++) {}
 }
