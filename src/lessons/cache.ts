@@ -24,4 +24,8 @@ export async function delay(ms: number): Promise<void> {
   });
 }
 
-function test() {}
+function test() {
+  for (let i: number = 1; i <= 3; i++) {
+    console.log(i);
+  }
+}
