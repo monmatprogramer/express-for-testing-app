@@ -24,4 +24,6 @@ export async function delay(ms: number): Promise<void> {
   });
 }
 
-function test() {}
+function test() {
+  console.log("In resole");
+}
