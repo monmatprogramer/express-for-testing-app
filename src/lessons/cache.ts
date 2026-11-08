@@ -19,14 +19,14 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     console.log("Before");
-    resolve(test());
+    resolve(countDown());
     console.log("after");
   });
 }
 
-async function test(): Promise<void> {
+async function test(): Promise<string> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(countDown()), 3000);
+    setTimeout(() => resolve("Hello"), 3000);
   });
 }
 async function countDown() {
