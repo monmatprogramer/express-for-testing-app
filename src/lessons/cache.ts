@@ -17,7 +17,7 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 // Challenge 1
 // The countdown timer
 // Before enhance
-export async function delay(ms: number): Promise<void> {
+export async function delayOld(ms: number): Promise<void> {
   return new Promise((resolve) => {
     console.log("Before");
     resolve(countDown(ms));
@@ -29,7 +29,7 @@ async function test(i: number): Promise<void> {
     setTimeout(() => resolve(console.log(`${i}...`)), 1000);
   });
 }
-async function countDown(ms: number) {
+async function countDown2(ms: number) {
   for (let i: number = 1; i <= ms; i++) {
     await test(i);
   }
@@ -44,10 +44,11 @@ function sleep(ms: number): Promise<void> {
   });
 }
 
-export async function countDownNew(seconds: number): Promise<void> {
+export async function delay(seconds: number): Promise<void> {
   console.log("Before");
   for (let i: number = 1; i <= seconds; i++) {
-    await sleep(100);
+    await sleep(1000);
     console.log(`${i}...`);
   }
+  console.log("Go!");
 }
