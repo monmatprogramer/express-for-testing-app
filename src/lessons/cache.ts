@@ -48,5 +48,6 @@ export async function countDownNew(seconds: number): Promise<void> {
   console.log("Before");
   for (let i: number = 1; i <= seconds; i++) {
     await sleep(100);
+    console.log(`${i}...`);
   }
 }
