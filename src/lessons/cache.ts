@@ -41,7 +41,6 @@ async function countDown2(ms: number) {
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(), ms);
-    console.log("Hello world");
   });
 }
 
@@ -53,3 +52,5 @@ export async function delay(seconds: number): Promise<void> {
   }
   console.log("Go!");
 }
+
+// Promise chaining
