@@ -43,3 +43,10 @@ function sleep(ms: number): Promise<void> {
     setTimeout(() => resolve(), ms);
   });
 }
+
+export async function countDownNew(seconds: number): Promise<void> {
+  console.log("Before");
+  for (let i: number = 1; i <= seconds; i++) {
+    await sleep(100);
+  }
+}
