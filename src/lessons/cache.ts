@@ -19,7 +19,7 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     console.log("Before");
-    resolve(countDown());
+    resolve(countDown(ms));
   });
 }
 
@@ -28,8 +28,8 @@ async function test(i: number): Promise<void> {
     setTimeout(() => resolve(console.log(`${i}...`)), 1000);
   });
 }
-async function countDown() {
-  for (let i: number = 1; i <= 3; i++) {
+async function countDown(ms: number) {
+  for (let i: number = 1; i <= ms; i++) {
     await test(i);
   }
 
