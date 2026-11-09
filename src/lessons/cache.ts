@@ -56,6 +56,7 @@ export async function delay(seconds: number): Promise<void> {
 // Promise chaining
 async function getUser(id: number): Promise<{ id: number; name: string }> {
   return new Promise((resolve) => {
+    console.log("getUser");
     resolve({ id: id, name: "John" });
   });
 }
