@@ -25,7 +25,7 @@ export async function delay(ms: number): Promise<void> {
 
 async function test(i: number): Promise<void> {
   return new Promise((resolve) => {
-    setTimeout(() => resolve(console.log(i)), 3000);
+    setTimeout(() => resolve(console.log(`${i}...`)), 3000);
   });
 }
 async function countDown() {
