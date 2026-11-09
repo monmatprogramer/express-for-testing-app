@@ -54,3 +54,14 @@ export async function delay(seconds: number): Promise<void> {
 }
 
 // Promise chaining
+function getUser(id: number) {
+  return new Promise((resolve) => {
+    resolve({ id: 1, name: "John" });
+  });
+}
+
+function getUserPosts(name: string) {
+  return new Promise((resolve) => {
+    resolve(["Post 1", "Post 2"]);
+  });
+}
