@@ -1,4 +1,4 @@
-import { delay, getUserFromDatabase } from "./cache";
+import { callGetUser, delay, getUserFromDatabase } from "./cache";
 
 // @ts-expect-error
 async function showUser() {
@@ -8,10 +8,10 @@ async function showUser() {
 
   console.log(user);
 }
+// @ts-expect-error
 async function runCountDown() {
   await delay(3);
 }
 
 // Call the function
-
-runCountDown();
+callGetUser();

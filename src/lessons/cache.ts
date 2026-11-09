@@ -61,11 +61,11 @@ async function getUser(id: number): Promise<{ id: number; name: string }> {
   });
 }
 
-async function getUserPosts(name: string): Promise<string[]> {
+async function getUserPosts(name: string): Promise<{ name: string[] }> {
   return new Promise((resolve) => {
-    resolve(["Post 1", "Post 2"]);
+    resolve({ name: ["Post 1", "Post 2"] });
   });
 }
-async function callGetUser() {
+export async function callGetUser() {
   await getUser(1).then((result) => getUserPosts(result.name));
 }
