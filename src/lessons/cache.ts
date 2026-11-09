@@ -20,7 +20,6 @@ export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     console.log("Before");
     resolve(countDown());
-    console.log("after");
   });
 }
 
@@ -33,4 +32,6 @@ async function countDown() {
   for (let i: number = 1; i <= 3; i++) {
     await test(i);
   }
+
+  console.log("GO!");
 }
