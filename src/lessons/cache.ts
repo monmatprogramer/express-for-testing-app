@@ -16,6 +16,7 @@ export async function getUserFromDatabase(id: string): Promise<string> {
 
 // Challenge 1
 // The countdown timer
+// Before enhance
 export async function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
     console.log("Before");
@@ -34,4 +35,11 @@ async function countDown(ms: number) {
   }
 
   console.log("GO!");
+}
+
+// After enhance
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), ms);
+  });
 }
