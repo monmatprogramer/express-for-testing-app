@@ -67,6 +67,7 @@ function getParser(): UAParser {
   }
   return sharedParser;
 }
+
 function parseUserAgent(
   userAgent: string,
   config: UserAgentConfig,
