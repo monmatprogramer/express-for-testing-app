@@ -52,5 +52,9 @@ export function getUserAgent(
 function getRawUserAgent(req: Request): string {
   // Req objects
   const header = req.headers["user-agent"];
+
+  if (Array.isArray(header)) {
+    return header[0] ?? "";
+  }
   return "";
 }
