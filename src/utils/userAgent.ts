@@ -28,13 +28,14 @@ const DEFAULT_DEVICE = "Unknown Device";
 const DEFAULT_SEPARATOR = " | ";
 
 /**
-  * Extract and formats user agent information from an Express request
-*  @param req - Express Request Object
-*  @param config - Optional configuration for output format
-  *@returns Formatted user agent information string
-  @example
-  // Return: "Chrome | Windows | Desktop | Mozilla/5.0"
-**/
+ * Extract and formats user agent information from an Express request
+ * @param req - Express Request Object
+ * @param config - Optional configuration for output format
+ * @returns Formatted user agent information string
+ * @example
+ * // Return: "Chrome | Windows | Desktop | Mozilla/5.0"
+ *
+ */
 // Get user agent
 export function getUserAgent(
   req: Request,
@@ -44,6 +45,7 @@ export function getUserAgent(
   const userAgent = getRawUserAgent(req);
 
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
+  console.log(cacheKey);
 
   // Req object
   const rawUserAgent = req.headers["user-agent"];
