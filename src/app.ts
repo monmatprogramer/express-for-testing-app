@@ -18,7 +18,11 @@ app.use(correlationMiddleware);
 app.use(requestLogger);
 
 app.set("trust proxy", true);
-
+app.get(`/${baseUrl}/headers`, (req, res) => {
+  return res.json({
+    useragents: req.headers["user-agent"],
+  });
+});
 app.get(`/${baseUrl}/health`, (req, res) => {
   //Test get client ip
   res.json({ message: "Hello from Express!", ip: req.ip });
