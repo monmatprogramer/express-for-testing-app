@@ -27,8 +27,19 @@ const DEFAULT_OS = "Unknown OS";
 const DEFAULT_DEVICE = "Unknown Device";
 const DEFAULT_SEPARATOR = " | ";
 
+/**
+  * Extract and formats user agent information from an Express request
+*  @param req - Express Request Object
+*  @param config - Optional configuration for output format
+  *@returns Formatted user agent information string
+  @example
+  // Return: "Chrome | Windows | Desktop | Mozilla/5.0"
+**/
 // Get user agent
-export function getUserAgent(req: Request): string {
+export function getUserAgent(
+  req: Request,
+  config: UserAgentConfig = {},
+): string {
   const rawUserAgent = req.headers["user-agent"];
   const parser = new UAParser(rawUserAgent);
   const result = parser.getResult();
