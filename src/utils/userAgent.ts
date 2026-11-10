@@ -1,6 +1,7 @@
 import { Request } from "express";
 import { UAParser } from "ua-parser-js";
 import { LRUCache } from "lru-cache";
+import { warn } from "node:console";
 // Create interface UserAgentInfo
 export interface UserAgentInfo {
   browser: string;
@@ -56,7 +57,36 @@ export function getUserAgent(
   const os = result.os.name ?? "Unknown";
   return `${brower} ${os}`;
 }
-function parseUserAgent(userAgent: string, config: UserAgentConfig);
+function parseUserAgent(
+  userAgent: string,
+  config: UserAgentConfig,
+): UserAgentInfo {
+  // If user agent is empty, this will be return default value in object of user agent
+  if (!userAgent) {
+    // It return object user agent that we want to use in the application
+    return {
+      browser: config.defaultBrowser ?? DEFAULT_BROWSER,
+      os: config.defaultOS ?? DEFAULT_OS,
+      device: DEFAULT_DEVICE,
+      isMobile: false,
+      fullUserAgent: "",
+    };
+  }
+  const parser = getParser();
+  parser.setUA(userAgent).getResult();
+  // If user agent is not empty
+  const userAgentInfo: UserAgentInfo = {
+    browser: "",
+    os: "",
+    device: "",
+    isMobile: false,
+    fullUserAgent: "",
+  };
+
+  console.log(userAgentInfo);
+
+  return userAgentInfo;
+}
 function getRawUserAgent(req: Request): string {
   // Req objects
   const header = req.headers["user-agent"];
