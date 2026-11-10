@@ -45,8 +45,8 @@ export function getUserAgent(
   const userAgent = getRawUserAgent(req);
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
   const cachedResult = userAgentCache.get(cacheKey);
-  console.log(cachedResult);
-  console.log(cacheKey);
+  // if(cachedResult) return formatResult(cachedResult, config)
+  const resultNew = parseUserAgent(userAgent, config);
 
   // Req object
   const rawUserAgent = req.headers["user-agent"];
@@ -56,6 +56,7 @@ export function getUserAgent(
   const os = result.os.name ?? "Unknown";
   return `${brower} ${os}`;
 }
+function parseUserAgent(userAgent: string, config: UserAgentConfig);
 function getRawUserAgent(req: Request): string {
   // Req objects
   const header = req.headers["user-agent"];
