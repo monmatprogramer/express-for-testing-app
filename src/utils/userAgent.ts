@@ -57,17 +57,15 @@ export function getUserAgent(
   const os = result.os.name ?? "Unknown";
   return `${brower} ${os}`;
 }
-function getParser() {
-  return {
-    setUA: (userAgent: string) => {
-      console.log("hello world : ", userAgent);
-      return {
-        getResult: () => {
-          console.log("and I love it.");
-        },
-      };
-    },
-  };
+
+//  Reusable parser instance - created once for performance
+let sharedParser: UAParser | null = null;
+
+function getParser(): UAParser {
+  if (!sharedParser) {
+    sharedParser = new UAParser();
+  }
+  return sharedParser;
 }
 function parseUserAgent(
   userAgent: string,
