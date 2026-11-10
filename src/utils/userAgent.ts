@@ -40,10 +40,17 @@ export function getUserAgent(
   req: Request,
   config: UserAgentConfig = {},
 ): string {
+  const userAgent = getRawUserAgent(req);
+  // Req object
   const rawUserAgent = req.headers["user-agent"];
   const parser = new UAParser(rawUserAgent);
   const result = parser.getResult();
   const brower = result.browser.name ?? "Unknown";
   const os = result.os.name ?? "Unknown";
   return `${brower} ${os}`;
+}
+function getRawUserAgent(req: Request): string {
+  // Req objects
+  const header = req.headers["user-agent"];
+  return "";
 }
