@@ -1,8 +1,13 @@
 import { callGetUser, delay, getUserFromDatabase } from "./cache";
 
-import { myCache } from "./cache";
+import { myCache, myNewCache } from "./cache";
 
 myCache.set("user1", "This is user 1");
+myNewCache.set("user2", {
+  browser: "Chrome",
+  os: "macOS",
+  device: "Macintoh",
+});
 
 // @ts-expect-error
 
