@@ -17,6 +17,8 @@ export interface UserAgentConfig {
   defaultBrowser?: string;
   defaultOS?: string;
 }
+
+const userAgentCache = new Map<string, UserAgentInfo>();
 export function getUserAgent(req: Request): string {
   const rawUserAgent = req.headers["user-agent"];
   const parser = new UAParser(rawUserAgent);
