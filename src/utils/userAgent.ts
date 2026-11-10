@@ -57,6 +57,18 @@ export function getUserAgent(
   const os = result.os.name ?? "Unknown";
   return `${brower} ${os}`;
 }
+function getParser() {
+  return {
+    setUA: (userAgent: string) => {
+      console.log("hello world : ", userAgent);
+      return {
+        getResult: () => {
+          console.log("and I love it.");
+        },
+      };
+    },
+  };
+}
 function parseUserAgent(
   userAgent: string,
   config: UserAgentConfig,
