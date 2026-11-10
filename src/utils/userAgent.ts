@@ -43,8 +43,9 @@ export function getUserAgent(
 ): string {
   // It gets user request header object but its result can be empty string also
   const userAgent = getRawUserAgent(req);
-
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
+  const cachedResult = userAgentCache.get(cacheKey);
+  console.log(cachedResult);
   console.log(cacheKey);
 
   // Req object
