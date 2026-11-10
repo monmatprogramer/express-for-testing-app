@@ -29,6 +29,7 @@ async function runCountDown() {
 // -- main --
 const main = () => {
   console.log(myCache.has("user2"));
+  console.log(myNewCache.get("user2"));
 };
 
 main();
