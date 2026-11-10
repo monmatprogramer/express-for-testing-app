@@ -4,6 +4,15 @@ export const myCache = new LRUCache<string, string>({
   max: 3,
   ttl: 1000 * 60 * 5,
 });
+interface UserAgentInfo {
+  browser: string;
+  os: string;
+  device: string;
+}
+export const myNewCache = new LRUCache<string, UserAgentInfo>({
+  max: 3,
+  ttl: 1000 * 60 * 5,
+});
 
 // Fake slow database function (take 2 seconds)
 export async function getUserFromDatabase(id: string): Promise<string> {
