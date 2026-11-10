@@ -40,7 +40,11 @@ export function getUserAgent(
   req: Request,
   config: UserAgentConfig = {},
 ): string {
+  // It gets user request header object but its result can be empty string also
   const userAgent = getRawUserAgent(req);
+
+  const cacheKey = `${userAgent}${JSON.stringify(config)}`;
+
   // Req object
   const rawUserAgent = req.headers["user-agent"];
   const parser = new UAParser(rawUserAgent);
@@ -56,5 +60,5 @@ function getRawUserAgent(req: Request): string {
   if (Array.isArray(header)) {
     return header[0] ?? "";
   }
-  return "";
+  return header ?? "";
 }
