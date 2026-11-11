@@ -124,3 +124,8 @@ function formatResult(info: UserAgentInfo, config: UserAgentConfig): string {
   }
   return `${info.browser}${seperator}${info.os}${seperator}${info.device}`;
 }
+
+export function getUserAgentInfo(req: Request, config: UserAgentConfig) {
+  const userAgent = getRawUserAgent(req);
+  return parseUserAgent(userAgent, config);
+}
