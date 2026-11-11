@@ -101,7 +101,7 @@ export function parseUserAgent(
     os,
     device: capitalizeDevice(device),
     isMobile,
-    fullUserAgent: result.ua,
+    fullUserAgent: userAgent,
   };
 
   console.log(userAgentInfo);
