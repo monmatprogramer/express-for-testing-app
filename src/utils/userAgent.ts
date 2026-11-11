@@ -59,7 +59,8 @@ export function getUserAgent(
 }
 
 function capitalizeDevice(deviceType: string): string {
-  return deviceType.toUpperCase();
+  if (deviceType === DEFAULT_DEVICE) return deviceType;
+  return deviceType.charAt(0).toUpperCase() + deviceType.slice(1);
 }
 //  Reusable parser instance - created once for performance
 let sharedParser: UAParser | null = null;
