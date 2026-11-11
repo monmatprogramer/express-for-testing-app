@@ -85,15 +85,16 @@ export function parseUserAgent(
   }
 
   const parser = getParser();
-  parser.setUA(userAgent).getResult();
+  // it returns ua, browser{name, version, major, type}, cpu,device,engine,os{name,version}
+  const iDate = parser.setUA(userAgent).getResult();
   console.log("👉 parser ", parser.setUA(userAgent).getResult());
   // If user agent is not empty
   const userAgentInfo: UserAgentInfo = {
-    browser: "",
-    os: "",
-    device: "",
-    isMobile: false,
-    fullUserAgent: "",
+    browser: iDate.browser.name ?? DEFAULT_BROWSER,
+    os: iDate.os.name ?? DEFAULT_OS,
+    device: iDate.device.type ?? DEFAULT_DEVICE,
+    isMobile: iDate.os.name !== "Windows",
+    fullUserAgent: iDate.ua,
   };
 
   console.log(userAgentInfo);
