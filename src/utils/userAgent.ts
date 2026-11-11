@@ -36,6 +36,7 @@ const DEFAULT_SEPARATOR = " | ";
  * // Return: "Chrome | Windows | Desktop | Mozilla/5.0"
  *
  */
+
 // Get user agent
 export function getUserAgent(
   req: Request,
@@ -54,7 +55,8 @@ export function getUserAgent(
     userAgentCache.clear();
   }
   // if cache size is <1000
-  // userAgentCache.set(cacheKey, resultNew);
+  userAgentCache.set(cacheKey, resultNew);
+  return formatResult(resultNew, config);
 
   // Req object
   const rawUserAgent = req.headers["user-agent"];
@@ -122,4 +124,11 @@ function getRawUserAgent(req: Request): string {
     return header[0] ?? "";
   }
   return header ?? "";
+}
+function formatResult(info: UserAgentInfo, config: UserAgentConfig): string {
+  const separator = config.seperator ?? DEFAULT_SEPARATOR;
+  if (config.includeDevice === false) {
+    return `${info.browser}${separator}${info.os}`;
+  }
+  return separator;
 }
