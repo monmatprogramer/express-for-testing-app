@@ -126,9 +126,10 @@ function getRawUserAgent(req: Request): string {
   return header ?? "";
 }
 function formatResult(info: UserAgentInfo, config: UserAgentConfig): string {
-  const separator = config.seperator ?? DEFAULT_SEPARATOR;
+  const seperator = config.seperator ?? DEFAULT_SEPARATOR;
+
   if (config.includeDevice === false) {
-    return `${info.browser}${separator}${info.os}`;
+    return `${info.browser}${seperator}${info.os}`;
   }
-  return separator;
+  return `${info.browser}${seperator}${info.os}${seperator}${info.device}`;
 }
