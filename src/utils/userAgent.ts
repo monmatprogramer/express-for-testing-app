@@ -93,12 +93,14 @@ export function parseUserAgent(
   const browser = result.browser.name ?? DEFAULT_BROWSER;
   const os = result.os.name ?? DEFAULT_OS;
   const device = result.device.type ?? DEFAULT_DEVICE;
+  const isMobile =
+    result.device.type === "mobile" || result.device.type === "tablet";
   // If user agent is not empty
   const userAgentInfo: UserAgentInfo = {
     browser,
     os,
     device: capitalizeDevice(device),
-    isMobile: result.os.name !== "Windows",
+    isMobile,
     fullUserAgent: result.ua,
   };
 
