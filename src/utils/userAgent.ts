@@ -19,7 +19,10 @@ export interface UserAgentConfig {
 }
 
 // Map of userAgent
-const userAgentCache = new Map<string, UserAgentInfo>();
+const cache = new LRUCache<string, UserAgentInfo>({
+  max: 1000,
+  ttl: 1000 * 60 * 60,
+});
 
 // Constants for defaults
 const DEFAULT_BROWSER = "Unknown Browser";
@@ -45,16 +48,16 @@ export function getUserAgent(
   // It gets user request header object but its result can be empty string also
   const userAgent = getRawUserAgent(req);
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
-  const cachedResult = userAgentCache.get(cacheKey);
+  const cachedResult = cache.get(cacheKey);
   // It the cache has
   if (cachedResult) return formatResult(cachedResult, config);
   const resultNew = parseUserAgent(userAgent, config);
 
-  if (userAgentCache.size >= 1000) {
-    userAgentCache.clear();
+  if (cache.size >= 1000) {
+    cache.clear();
   }
   // if cache size is <1000
-  userAgentCache.set(cacheKey, resultNew);
+  cache.set(cacheKey, resultNew);
   return formatResult(resultNew, config);
 }
 
