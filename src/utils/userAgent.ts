@@ -68,7 +68,7 @@ function getParser(): UAParser {
   return sharedParser;
 }
 
-function parseUserAgent(
+export function parseUserAgent(
   userAgent: string,
   config: UserAgentConfig,
 ): UserAgentInfo {
@@ -83,8 +83,10 @@ function parseUserAgent(
       fullUserAgent: "",
     };
   }
+
   const parser = getParser();
   parser.setUA(userAgent).getResult();
+  console.log("👉 parser ", parser.setUA(userAgent).getResult());
   // If user agent is not empty
   const userAgentInfo: UserAgentInfo = {
     browser: "",
