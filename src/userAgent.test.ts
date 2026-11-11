@@ -1,5 +1,4 @@
 import { getUserAgent } from "./utils/userAgent";
-
 import { describe, it, expect } from "vitest";
 
 describe("getUserAgent", () => {
