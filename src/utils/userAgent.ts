@@ -45,10 +45,9 @@ export function getUserAgent(
   // It gets user request header object but its result can be empty string also
   const userAgent = getRawUserAgent(req);
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
-  console.log(cacheKey);
   const cachedResult = userAgentCache.get(cacheKey);
   // It the cache has
-  // if(cachedResult) return formatResult(cachedResult, config)
+  if (cachedResult) return formatResult(cachedResult, config);
   const resultNew = parseUserAgent(userAgent, config);
 
   if (userAgentCache.size >= 1000) {
@@ -57,14 +56,6 @@ export function getUserAgent(
   // if cache size is <1000
   userAgentCache.set(cacheKey, resultNew);
   return formatResult(resultNew, config);
-
-  // Req object
-  const rawUserAgent = req.headers["user-agent"];
-  const parser = new UAParser(rawUserAgent);
-  const result = parser.getResult();
-  const brower = result.browser.name ?? "Unknown";
-  const os = result.os.name ?? "Unknown";
-  return `${brower} ${os}`;
 }
 
 function capitalizeDevice(deviceType: string): string {
