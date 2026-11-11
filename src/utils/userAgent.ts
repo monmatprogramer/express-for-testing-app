@@ -58,6 +58,9 @@ export function getUserAgent(
   return `${brower} ${os}`;
 }
 
+function capitalizeDevice(deviceType: string): string {
+  return deviceType.toUpperCase();
+}
 //  Reusable parser instance - created once for performance
 let sharedParser: UAParser | null = null;
 
@@ -86,15 +89,17 @@ export function parseUserAgent(
 
   const parser = getParser();
   // it returns ua, browser{name, version, major, type}, cpu,device,engine,os{name,version}
-  const iDate = parser.setUA(userAgent).getResult();
-  console.log("👉 parser ", parser.setUA(userAgent).getResult());
+  const result = parser.setUA(userAgent).getResult();
+  const browser = result.browser.name ?? DEFAULT_BROWSER;
+  const os = result.os.name ?? DEFAULT_OS;
+  const device = result.device.type ?? DEFAULT_DEVICE;
   // If user agent is not empty
   const userAgentInfo: UserAgentInfo = {
-    browser: iDate.browser.name ?? DEFAULT_BROWSER,
-    os: iDate.os.name ?? DEFAULT_OS,
-    device: iDate.device.type ?? DEFAULT_DEVICE,
-    isMobile: iDate.os.name !== "Windows",
-    fullUserAgent: iDate.ua,
+    browser,
+    os,
+    device: capitalizeDevice(device),
+    isMobile: result.os.name !== "Windows",
+    fullUserAgent: result.ua,
   };
 
   console.log(userAgentInfo);
