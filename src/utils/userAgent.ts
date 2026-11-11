@@ -1,7 +1,6 @@
 import { Request } from "express";
 import { UAParser } from "ua-parser-js";
 import { LRUCache } from "lru-cache";
-import { warn } from "node:console";
 // Create interface UserAgentInfo
 export interface UserAgentInfo {
   browser: string;
@@ -45,9 +44,17 @@ export function getUserAgent(
   // It gets user request header object but its result can be empty string also
   const userAgent = getRawUserAgent(req);
   const cacheKey = `${userAgent}${JSON.stringify(config)}`;
+  console.log(cacheKey);
   const cachedResult = userAgentCache.get(cacheKey);
+  // It the cache has
   // if(cachedResult) return formatResult(cachedResult, config)
   const resultNew = parseUserAgent(userAgent, config);
+
+  if (userAgentCache.size >= 1000) {
+    userAgentCache.clear();
+  }
+  // if cache size is <1000
+  // userAgentCache.set(cacheKey, resultNew);
 
   // Req object
   const rawUserAgent = req.headers["user-agent"];
@@ -72,7 +79,7 @@ function getParser(): UAParser {
   return sharedParser;
 }
 
-export function parseUserAgent(
+function parseUserAgent(
   userAgent: string,
   config: UserAgentConfig,
 ): UserAgentInfo {
@@ -104,8 +111,6 @@ export function parseUserAgent(
     isMobile,
     fullUserAgent: userAgent,
   };
-
-  console.log(userAgentInfo);
 
   return userAgentInfo;
 }
