@@ -12,6 +12,8 @@ const logDir = path.join(process.cwd(), "logs");
 mkdirSync(logDir, { recursive: true });
 
 const correlationFormat = winston.format((info) => {
+  // Get context from correlation
+  // It has {trackId, clientTrackId, actor}
   const context = getContext();
   if (context) {
     info.trackId = context.trackId;
