@@ -15,6 +15,8 @@ const correlationFormat = winston.format((info) => {
   // Get context from correlation
   // It has {trackId, clientTrackId, actor}
   const context = getContext();
+
+  // Check coontext has data
   if (context) {
     info.trackId = context.trackId;
     info.clientTracktId = context.clientTrackId;
